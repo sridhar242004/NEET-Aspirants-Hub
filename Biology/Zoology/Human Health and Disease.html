@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub - Human Health and Disease</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Human Health and Disease</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>Human health and disease in zoology examines how biological and environmental factors impact human well-being, including the roles of pathogens, genetics, and lifestyle, to develop strategies for disease prevention and treatment.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        // Function to generate quiz question
+        
+        var quizPool = [
+    {
+        question: "Which pathogen causes tuberculosis?",
+        options: ["Virus", "Bacteria", "Fungi", "Protozoa"],
+        correctAnswer: "Bacteria"
+    },
+    {
+        question: "What is the primary vector for malaria?",
+        options: ["Housefly", "Mosquito", "Tick", "Louse"],
+        correctAnswer: "Mosquito"
+    },
+    {
+        question: "Which vitamin deficiency causes scurvy?",
+        options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+        correctAnswer: "Vitamin C"
+    },
+    {
+        question: "Which disease is known as the 'silent killer'?",
+        options: ["Diabetes", "Hypertension", "Asthma", "Tuberculosis"],
+        correctAnswer: "Hypertension"
+    },
+    {
+        question: "What is the causative agent of AIDS?",
+        options: ["HIV", "HBV", "HCV", "HTLV"],
+        correctAnswer: "HIV"
+    },
+    {
+        question: "Which organ is primarily affected by hepatitis?",
+        options: ["Heart", "Liver", "Kidney", "Lung"],
+        correctAnswer: "Liver"
+    },
+    {
+        question: "What is the common name for the condition 'myocardial infarction'?",
+        options: ["Stroke", "Heart Attack", "Kidney Failure", "Liver Cirrhosis"],
+        correctAnswer: "Heart Attack"
+    },
+    {
+        question: "Which type of diabetes is characterized by insulin resistance?",
+        options: ["Type 1", "Type 2", "Gestational", "Juvenile"],
+        correctAnswer: "Type 2"
+    },
+    {
+        question: "What is the main function of red blood cells?",
+        options: ["Fight infections", "Clot blood", "Transport oxygen", "Produce antibodies"],
+        correctAnswer: "Transport oxygen"
+    },
+    {
+        question: "Which disease is caused by a deficiency of insulin?",
+        options: ["Hypertension", "Asthma", "Diabetes mellitus", "Arthritis"],
+        correctAnswer: "Diabetes mellitus"
+    },
+    {
+        question: "What is the term for high blood sugar levels?",
+        options: ["Hypoglycemia", "Hyperglycemia", "Hypotension", "Hypertension"],
+        correctAnswer: "Hyperglycemia"
+    },
+    {
+        question: "Which hormone regulates the basal metabolic rate?",
+        options: ["Insulin", "Thyroxine", "Adrenaline", "Cortisol"],
+        correctAnswer: "Thyroxine"
+    },
+    {
+        question: "What is the causative agent of syphilis?",
+        options: ["Bacteria", "Virus", "Fungi", "Protozoa"],
+        correctAnswer: "Bacteria"
+    },
+    {
+        question: "Which organ is affected by bronchitis?",
+        options: ["Liver", "Heart", "Lungs", "Kidneys"],
+        correctAnswer: "Lungs"
+    },
+    {
+        question: "What is the primary cause of emphysema?",
+        options: ["Smoking", "Viral Infection", "Bacterial Infection", "Genetic Disorder"],
+        correctAnswer: "Smoking"
+    },
+    {
+        question: "What type of disease is hemophilia?",
+        options: ["Infectious", "Autoimmune", "Genetic", "Degenerative"],
+        correctAnswer: "Genetic"
+    },
+    {
+        question: "Which disease is characterized by the destruction of the myelin sheath?",
+        options: ["Parkinson's Disease", "Multiple Sclerosis", "Alzheimer's Disease", "Epilepsy"],
+        correctAnswer: "Multiple Sclerosis"
+    },
+    {
+        question: "Which vitamin is essential for blood clotting?",
+        options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin K"],
+        correctAnswer: "Vitamin K"
+    },
+    {
+        question: "Which part of the body is affected by arthritis?",
+        options: ["Liver", "Joints", "Lungs", "Heart"],
+        correctAnswer: "Joints"
+    },
+    {
+        question: "What is the main symptom of jaundice?",
+        options: ["Fever", "Yellowing of skin and eyes", "Headache", "Rashes"],
+        correctAnswer: "Yellowing of skin and eyes"
+    },
+    {
+        question: "Which cell type is primarily involved in the immune response?",
+        options: ["Red blood cells", "White blood cells", "Platelets", "Muscle cells"],
+        correctAnswer: "White blood cells"
+    },
+    {
+        question: "What is the main function of the kidneys?",
+        options: ["Digest food", "Filter blood", "Produce hormones", "Absorb nutrients"],
+        correctAnswer: "Filter blood"
+    },
+    {
+        question: "Which disease is caused by a deficiency of iodine?",
+        options: ["Goiter", "Scurvy", "Rickets", "Pellagra"],
+        correctAnswer: "Goiter"
+    },
+    {
+        question: "Which bacteria is responsible for peptic ulcers?",
+        options: ["E. coli", "Staphylococcus", "H. pylori", "Salmonella"],
+        correctAnswer: "H. pylori"
+    },
+    {
+        question: "What is the primary mode of transmission for the common cold?",
+        options: ["Waterborne", "Airborne", "Vector-borne", "Foodborne"],
+        correctAnswer: "Airborne"
+    },
+    {
+        question: "Which organ is affected by cirrhosis?",
+        options: ["Heart", "Liver", "Kidney", "Lung"],
+        correctAnswer: "Liver"
+    },
+    {
+        question: "What type of pathogen causes athlete's foot?",
+        options: ["Virus", "Bacteria", "Fungi", "Protozoa"],
+        correctAnswer: "Fungi"
+    },
+    {
+        question: "Which hormone is primarily responsible for the fight-or-flight response?",
+        options: ["Insulin", "Adrenaline", "Glucagon", "Thyroxine"],
+        correctAnswer: "Adrenaline"
+    },
+    {
+        question: "Which organ is primarily affected by pancreatitis?",
+        options: ["Heart", "Liver", "Pancreas", "Lungs"],
+        correctAnswer: "Pancreas"
+    },
+    {
+        question: "Which disease is characterized by chronic high blood sugar levels?",
+        options: ["Hypertension", "Arthritis", "Diabetes mellitus", "Asthma"],
+        correctAnswer: "Diabetes mellitus"
+    },
+    {
+        question: "What is the primary function of platelets?",
+        options: ["Transport oxygen", "Fight infections", "Clot blood", "Produce antibodies"],
+        correctAnswer: "Clot blood"
+    },
+    {
+        question: "Which vitamin is known as the sunshine vitamin?",
+        options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+        correctAnswer: "Vitamin D"
+    },
+    {
+        question: "Which hormone regulates blood glucose levels?",
+        options: ["Thyroxine", "Adrenaline", "Insulin", "Cortisol"],
+        correctAnswer: "Insulin"
+    },
+    {
+        question: "What is the medical term for high blood pressure?",
+        options: ["Hypotension", "Hypertension", "Hyperglycemia", "Hypoglycemia"],
+        correctAnswer: "Hypertension"
+    },
+    {
+        question: "Which organ is affected by gastritis?",
+        options: ["Heart", "Liver", "Stomach", "Kidney"],
+        correctAnswer: "Stomach"
+    },
+    {
+        question: "What type of immunity is provided by vaccinations?",
+        options: ["Natural", "Artificial", "Passive", "Innate"],
+        correctAnswer: "Artificial"
+    },
+    {
+        question: "Which part of the immune system produces antibodies?",
+        options: ["T-cells", "B-cells", "Red blood cells", "Platelets"],
+        correctAnswer: "B-cells"
+    },
+    {
+        question: "Which disease is caused by a deficiency of vitamin B12?",
+        options: ["Anemia", "Rickets", "Scurvy", "Pellagra"],
+        correctAnswer: "Anemia"
+    },
+    {
+        question: "What is the main symptom of anemia?",
+        options: ["Fever", "Shortness of breath", "Fatigue", "Headache"],
+        correctAnswer: "Fatigue"
+    },
+    {
+        question: "Which condition is characterized by the thickening and hardening of the arterial walls?",
+        options: ["Arthritis", "Atherosclerosis", "Asthma", "Arrhythmia"],
+        correctAnswer: "Atherosclerosis"
+    },
+    {
+        question: "Which disease is caused by the Epstein-Barr virus?",
+        options: ["Hepatitis", "Mononucleosis", "AIDS", "Tuberculosis"],
+        correctAnswer: "Mononucleosis"
+    },
+    {
+        question: "What is the primary function of the lymphatic system?",
+        options: ["Transport oxygen", "Fight infections", "Digest food", "Clot blood"],
+        correctAnswer: "Fight infections"
+    },
+    {
+        question: "Which disease is characterized by the loss of bone density?",
+        options: ["Osteoporosis", "Arthritis", "Rickets", "Scoliosis"],
+        correctAnswer: "Osteoporosis"
+    },
+    {
+        question: "What is the main symptom of jaundice?",
+        options: ["Fever", "Yellowing of the skin", "Headache", "Rashes"],
+        correctAnswer: "Yellowing of the skin"
+    },
+    {
+        question: "Which hormone is released by the adrenal glands in response to stress?",
+        options: ["Insulin", "Thyroxine", "Cortisol", "Glucagon"],
+        correctAnswer: "Cortisol"
+    },
+    {
+        question: "What is the primary cause of chronic obstructive pulmonary disease (COPD)?",
+        options: ["Viral infection", "Bacterial infection", "Smoking", "Genetic disorder"],
+        correctAnswer: "Smoking"
+    },
+    {
+        question: "Which organ is primarily affected by cystic fibrosis?",
+        options: ["Heart", "Liver", "Pancreas", "Lungs"],
+        correctAnswer: "Lungs"
+    },
+    {
+        question: "Which vitamin deficiency causes rickets?",
+        options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+        correctAnswer: "Vitamin D"
+    },
+    {
+        question: "What type of pathogen causes ringworm?",
+        options: ["Virus", "Bacteria", "Fungi", "Protozoa"],
+        correctAnswer: "Fungi"
+    },
+    {
+        question: "Which condition is characterized by inflammation of the liver?",
+        options: ["Hepatitis", "Gastritis", "Nephritis", "Dermatitis"],
+        correctAnswer: "Hepatitis"
+    },
+    {
+        question: "Which disease is transmitted by the Aedes mosquito?",
+        options: ["Malaria", "Dengue fever", "Plague", "Leishmaniasis"],
+        correctAnswer: "Dengue fever"
+    },
+    {
+        question: "What is the medical term for low blood sugar levels?",
+        options: ["Hypoglycemia", "Hyperglycemia", "Hypotension", "Hypertension"],
+        correctAnswer: "Hypoglycemia"
+    },
+    {
+        question: "Which organ is affected by nephritis?",
+        options: ["Liver", "Heart", "Kidneys", "Lungs"],
+        correctAnswer: "Kidneys"
+    },
+    {
+        question: "Which type of cancer affects the blood and bone marrow?",
+        options: ["Lung cancer", "Breast cancer", "Leukemia", "Skin cancer"],
+        correctAnswer: "Leukemia"
+    },
+    {
+        question: "Which disease is known as 'breakbone fever'?",
+        options: ["Chikungunya", "Dengue fever", "Zika virus", "Yellow fever"],
+        correctAnswer: "Dengue fever"
+    },
+    {
+        question: "What is the primary mode of transmission for hepatitis B?",
+        options: ["Waterborne", "Airborne", "Bloodborne", "Foodborne"],
+        correctAnswer: "Bloodborne"
+    },
+    {
+        question: "Which vitamin deficiency causes pellagra?",
+        options: ["Vitamin B3", "Vitamin B12", "Vitamin C", "Vitamin D"],
+        correctAnswer: "Vitamin B3"
+    },
+    {
+        question: "Which disease is characterized by the uncontrolled growth of abnormal cells?",
+        options: ["Diabetes", "Cancer", "Arthritis", "Asthma"],
+        correctAnswer: "Cancer"
+    },
+    {
+        question: "Which organ is primarily affected by a myocardial infarction?",
+        options: ["Liver", "Kidney", "Heart", "Lung"],
+        correctAnswer: "Heart"
+    },
+    {
+        question: "Which hormone is secreted by the pancreas to lower blood sugar levels?",
+        options: ["Glucagon", "Insulin", "Adrenaline", "Thyroxine"],
+        correctAnswer: "Insulin"
+    },
+    {
+        question: "Which organ is primarily affected by jaundice?",
+        options: ["Liver", "Kidney", "Heart", "Lung"],
+        correctAnswer: "Liver"
+    },
+    {
+        question: "What is the medical term for inflammation of the joints?",
+        options: ["Nephritis", "Arthritis", "Dermatitis", "Hepatitis"],
+        correctAnswer: "Arthritis"
+    },
+    {
+        question: "Which type of pathogen causes influenza?",
+        options: ["Virus", "Bacteria", "Fungi", "Protozoa"],
+        correctAnswer: "Virus"
+    },
+    {
+        question: "Which organ is primarily affected by glaucoma?",
+        options: ["Heart", "Liver", "Eye", "Lung"],
+        correctAnswer: "Eye"
+    },
+    {
+        question: "Which hormone regulates calcium levels in the blood?",
+        options: ["Insulin", "Parathyroid hormone", "Thyroxine", "Cortisol"],
+        correctAnswer: "Parathyroid hormone"
+    },
+    {
+        question: "Which disease is caused by a deficiency of vitamin B1?",
+        options: ["Scurvy", "Pellagra", "Beriberi", "Rickets"],
+        correctAnswer: "Beriberi"
+    }
+];
+
+       
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+    function checkAnswer(option, correctAnswer) {
+    var options = option.parentNode.children;
+    for (var i = 0; i < options.length; i++) {
+        options[i].style.pointerEvents = "none";
+    }
+
+    // Trim the text content to remove any leading or trailing spaces
+    var selectedAnswer = option.innerText.substr(3).trim();
+    correctAnswer = correctAnswer.trim();
+
+    if (selectedAnswer === correctAnswer) {
+        option.style.backgroundColor = "#7FFF7F"; // Correct answer
+        correctAnswers++;
+    } else {
+        option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+        incorrectAnswers++;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].innerText.substr(3).trim() === correctAnswer) {
+                options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+            }
+        }
+    }
+    totalQuestions++;
+    updateScoreCard();
+}
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>

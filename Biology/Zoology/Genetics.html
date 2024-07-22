@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub - Genetics</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Genetics</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>Genetics in zoology is the study of heredity and variation in animals, focusing on how genes and genetic mechanisms influence physical traits, behaviors, and the evolutionary processes that shape species diversity and adaptation.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        // Function to generate quiz question
+        var quizPool = [
+    {
+        question: "What is the basic unit of heredity?",
+        options: ["Gene", "Chromosome", "Nucleus", "Cell"],
+        correctAnswer: "Gene"
+    },
+    {
+        question: "Who is known as the father of genetics?",
+        options: ["Charles Darwin", "Gregor Mendel", "James Watson", "Francis Crick"],
+        correctAnswer: "Gregor Mendel"
+    },
+    {
+        question: "Which of the following is a sex-linked trait?",
+        options: ["Hemophilia", "Albinism", "Sickle cell anemia", "Cystic fibrosis"],
+        correctAnswer: "Hemophilia"
+    },
+    {
+        question: "What is the shape of the DNA molecule?",
+        options: ["Double helix", "Single helix", "Triple helix", "Quadruple helix"],
+        correctAnswer: "Double helix"
+    },
+    {
+        question: "Which process is used for cell division in somatic cells?",
+        options: ["Mitosis", "Meiosis", "Binary fission", "Budding"],
+        correctAnswer: "Mitosis"
+    },
+    {
+        question: "What are alleles?",
+        options: ["Different forms of a gene", "Segments of RNA", "Proteins", "Enzymes"],
+        correctAnswer: "Different forms of a gene"
+    },
+    {
+        question: "What is a genotype?",
+        options: ["The genetic makeup of an organism", "The physical appearance of an organism", "The behavior of an organism", "The environment of an organism"],
+        correctAnswer: "The genetic makeup of an organism"
+    },
+    {
+        question: "What is a phenotype?",
+        options: ["The genetic makeup of an organism", "The physical appearance of an organism", "The behavior of an organism", "The environment of an organism"],
+        correctAnswer: "The physical appearance of an organism"
+    },
+    {
+        question: "What does homozygous mean?",
+        options: ["Having two identical alleles for a trait", "Having two different alleles for a trait", "Having three alleles for a trait", "Having no alleles for a trait"],
+        correctAnswer: "Having two identical alleles for a trait"
+    },
+    {
+        question: "What does heterozygous mean?",
+        options: ["Having two different alleles for a trait", "Having two identical alleles for a trait", "Having three alleles for a trait", "Having no alleles for a trait"],
+        correctAnswer: "Having two different alleles for a trait"
+    },
+    {
+        question: "What is a dominant allele?",
+        options: ["An allele that expresses its phenotype even in the presence of a recessive allele", "An allele that is masked by a recessive allele", "An allele that does not affect the phenotype", "An allele that is only found in males"],
+        correctAnswer: "An allele that expresses its phenotype even in the presence of a recessive allele"
+    },
+    {
+        question: "What is a recessive allele?",
+        options: ["An allele that is masked by the presence of a dominant allele", "An allele that expresses its phenotype even in the presence of a dominant allele", "An allele that does not affect the phenotype", "An allele that is only found in females"],
+        correctAnswer: "An allele that is masked by the presence of a dominant allele"
+    },
+    {
+        question: "What is the purpose of a Punnett square?",
+        options: ["To predict the probability of certain traits in offspring", "To map the DNA sequence", "To clone genes", "To measure the size of chromosomes"],
+        correctAnswer: "To predict the probability of certain traits in offspring"
+    },
+    {
+        question: "What is the genetic disorder caused by an extra chromosome 21?",
+        options: ["Down syndrome", "Turner syndrome", "Klinefelter syndrome", "Edward syndrome"],
+        correctAnswer: "Down syndrome"
+    },
+    {
+        question: "What is the role of mRNA in protein synthesis?",
+        options: ["To carry the genetic code from DNA to the ribosome", "To assemble amino acids into proteins", "To transport amino acids to the ribosome", "To replicate DNA"],
+        correctAnswer: "To carry the genetic code from DNA to the ribosome"
+    },
+    {
+        question: "What is the law of independent assortment?",
+        options: ["Genes for different traits can segregate independently during the formation of gametes", "Genes are inherited together with other genes", "Alleles are dominant or recessive", "The number of chromosomes is halved during meiosis"],
+        correctAnswer: "Genes for different traits can segregate independently during the formation of gametes"
+    },
+    {
+        question: "What is a mutation?",
+        options: ["A change in the DNA sequence", "A type of cell division", "A type of protein", "A type of enzyme"],
+        correctAnswer: "A change in the DNA sequence"
+    },
+    {
+        question: "What is genetic linkage?",
+        options: ["Genes located close together on the same chromosome tend to be inherited together", "Genes located on different chromosomes are inherited independently", "Genes that always mutate together", "Genes that are expressed only in certain environments"],
+        correctAnswer: "Genes located close together on the same chromosome tend to be inherited together"
+    },
+    {
+        question: "What is the function of ribosomes?",
+        options: ["Protein synthesis", "DNA replication", "Cell division", "Energy production"],
+        correctAnswer: "Protein synthesis"
+    },
+    {
+        question: "What is the role of tRNA?",
+        options: ["To bring amino acids to the ribosome", "To replicate DNA", "To carry the genetic code from DNA", "To form the ribosome"],
+        correctAnswer: "To bring amino acids to the ribosome"
+    },
+    {
+        question: "What is a karyotype?",
+        options: ["The number and appearance of chromosomes in the nucleus of a eukaryotic cell", "The physical traits of an organism", "The process of cell division", "The study of inheritance patterns"],
+        correctAnswer: "The number and appearance of chromosomes in the nucleus of a eukaryotic cell"
+    },
+    {
+        question: "What is polygenic inheritance?",
+        options: ["A trait controlled by two or more genes", "A trait controlled by a single gene", "Inheritance of genes located on sex chromosomes", "Inheritance of mutations"],
+        correctAnswer: "A trait controlled by two or more genes"
+    },
+    {
+        question: "What is a codon?",
+        options: ["A sequence of three nucleotides that corresponds with a specific amino acid or stop signal during protein synthesis", "A segment of DNA that codes for a protein", "A type of genetic mutation", "A chromosome region where genes are located"],
+        correctAnswer: "A sequence of three nucleotides that corresponds with a specific amino acid or stop signal during protein synthesis"
+    },
+    {
+        question: "What is the purpose of meiosis?",
+        options: ["To produce gametes with half the number of chromosomes", "To repair damaged cells", "To synthesize proteins", "To produce identical daughter cells"],
+        correctAnswer: "To produce gametes with half the number of chromosomes"
+    },
+    {
+        question: "What is the central dogma of molecular biology?",
+        options: ["DNA -> RNA -> Protein", "RNA -> DNA -> Protein", "Protein -> RNA -> DNA", "DNA -> Protein -> RNA"],
+        correctAnswer: "DNA -> RNA -> Protein"
+    },
+    {
+        question: "What is the function of DNA polymerase?",
+        options: ["To synthesize new strands of DNA", "To synthesize RNA", "To break down proteins", "To unwind the DNA double helix"],
+        correctAnswer: "To synthesize new strands of DNA"
+    },
+    {
+        question: "What is a genome?",
+        options: ["The complete set of genes or genetic material present in a cell or organism", "A segment of DNA that codes for a protein", "A mutation in a gene", "The physical traits of an organism"],
+        correctAnswer: "The complete set of genes or genetic material present in a cell or organism"
+    },
+    {
+        question: "What are the building blocks of proteins?",
+        options: ["Amino acids", "Nucleotides", "Carbohydrates", "Lipids"],
+        correctAnswer: "Amino acids"
+    },
+    {
+        question: "What is the function of helicase?",
+        options: ["To unwind the DNA double helix during DNA replication", "To synthesize RNA from DNA", "To assemble amino acids into proteins", "To transport amino acids to the ribosome"],
+        correctAnswer: "To unwind the DNA double helix during DNA replication"
+    },
+    {
+        question: "What is a genetic locus?",
+        options: ["A specific location on a chromosome where a particular gene or genetic marker is situated", "A type of genetic mutation", "The physical appearance of an organism", "A segment of RNA"],
+        correctAnswer: "A specific location on a chromosome where a particular gene or genetic marker is situated"
+    },
+    {
+        question: "What is the function of restriction enzymes?",
+        options: ["To cut DNA at specific sequences", "To replicate DNA", "To synthesize RNA", "To transport proteins"],
+        correctAnswer: "To cut DNA at specific sequences"
+    },
+    {
+        question: "What is an operon?",
+        options: ["A cluster of genes under the control of a single promoter and operated together", "A type of mutation", "A type of protein", "A segment of RNA"],
+        correctAnswer: "A cluster of genes under the control of a single promoter and operated together"
+    },
+    {
+        question: "What is a plasmid?",
+        options: ["A small, circular piece of DNA found in bacteria that can replicate independently", "A protein that assists in DNA replication", "A segment of RNA", "A type of chromosome"],
+        correctAnswer: "A small, circular piece of DNA found in bacteria that can replicate independently"
+    },
+    {
+        question: "What is gene expression?",
+        options: ["The process by which information from a gene is used to synthesize a functional gene product, usually a protein", "The mutation of a gene", "The inheritance of genes", "The replication of DNA"],
+        correctAnswer: "The process by which information from a gene is used to synthesize a functional gene product, usually a protein"
+    },
+    {
+        question: "What is genetic drift?",
+        options: ["A random change in allele frequencies in a population over time", "The movement of genes between populations", "The mutation of genes", "The expression of genes"],
+        correctAnswer: "A random change in allele frequencies in a population over time"
+    },
+    {
+        question: "What is the role of RNA polymerase?",
+        options: ["To synthesize RNA from a DNA template", "To synthesize proteins", "To replicate DNA", "To transport amino acids"],
+        correctAnswer: "To synthesize RNA from a DNA template"
+    },
+    {
+        question: "What is an exon?",
+        options: ["A segment of a DNA or RNA molecule containing information coding for a protein or peptide sequence", "A non-coding region of DNA", "A type of genetic mutation", "A segment of RNA that is removed during RNA processing"],
+        correctAnswer: "A segment of a DNA or RNA molecule containing information coding for a protein or peptide sequence"
+    },
+    {
+        question: "What is an intron?",
+        options: ["A non-coding region of a DNA or RNA molecule that is removed during RNA processing", "A coding region of DNA", "A type of genetic mutation", "A segment of DNA that codes for a protein"],
+        correctAnswer: "A non-coding region of a DNA or RNA molecule that is removed during RNA processing"
+    },
+    {
+        question: "What is the function of a promoter in genetics?",
+        options: ["A DNA sequence that initiates gene transcription", "A protein that binds to DNA", "A segment of RNA", "A type of enzyme"],
+        correctAnswer: "A DNA sequence that initiates gene transcription"
+    },
+    {
+        question: "What is genetic recombination?",
+        options: ["The exchange of genetic material between different chromosomes during meiosis", "The replication of DNA", "The mutation of genes", "The expression of genes"],
+        correctAnswer: "The exchange of genetic material between different chromosomes during meiosis"
+    },
+    {
+        question: "What is epigenetics?",
+        options: ["The study of changes in gene expression that do not involve alterations to the genetic code itself", "The inheritance of genetic traits", "The mutation of genes", "The replication of DNA"],
+        correctAnswer: "The study of changes in gene expression that do not involve alterations to the genetic code itself"
+    },
+    {
+        question: "What is a gene pool?",
+        options: ["The total set of genes, including all alleles, in a population", "A segment of DNA that codes for a protein", "A type of genetic mutation", "The physical traits of an organism"],
+        correctAnswer: "The total set of genes, including all alleles, in a population"
+    },
+    {
+        question: "What is gene flow?",
+        options: ["The transfer of genetic variation from one population to another", "The mutation of genes", "The expression of genes", "The replication of DNA"],
+        correctAnswer: "The transfer of genetic variation from one population to another"
+    },
+    {
+        question: "What is a polyploid organism?",
+        options: ["An organism with more than two complete sets of chromosomes", "An organism with two sets of chromosomes", "An organism with a mutation in its genes", "An organism with a single set of chromosomes"],
+        correctAnswer: "An organism with more than two complete sets of chromosomes"
+    },
+    {
+        question: "What is a genetic map?",
+        options: ["A representation of the arrangement of genes on a chromosome", "A type of chromosome", "A segment of DNA that codes for a protein", "A type of genetic mutation"],
+        correctAnswer: "A representation of the arrangement of genes on a chromosome"
+    },
+    {
+        question: "What is the function of ligase in DNA replication?",
+        options: ["To join Okazaki fragments on the lagging strand", "To synthesize new strands of DNA", "To unwind the DNA double helix", "To break down proteins"],
+        correctAnswer: "To join Okazaki fragments on the lagging strand"
+    },
+    {
+        question: "What is the genetic code?",
+        options: ["The set of rules by which information encoded in genetic material (DNA or RNA) is translated into proteins by living cells", "The physical traits of an organism", "A type of genetic mutation", "The process of DNA replication"],
+        correctAnswer: "The set of rules by which information encoded in genetic material (DNA or RNA) is translated into proteins by living cells"
+    },
+    {
+        question: "What is a transcription factor?",
+        options: ["A protein that controls the rate of transcription of genetic information from DNA to mRNA", "A segment of DNA that codes for a protein", "A type of genetic mutation", "A type of chromosome"],
+        correctAnswer: "A protein that controls the rate of transcription of genetic information from DNA to mRNA"
+    },
+    {
+        question: "What is a silent mutation?",
+        options: ["A mutation that does not result in a change in the amino acid sequence of a protein", "A mutation that results in a change in the amino acid sequence of a protein", "A mutation that causes a frameshift", "A mutation that leads to a stop codon"],
+        correctAnswer: "A mutation that does not result in a change in the amino acid sequence of a protein"
+    },
+    {
+        question: "What is the role of telomeres?",
+        options: ["To protect the ends of chromosomes from degradation", "To synthesize new strands of DNA", "To unwind the DNA double helix", "To code for proteins"],
+        correctAnswer: "To protect the ends of chromosomes from degradation"
+    },
+    {
+        question: "What is a missense mutation?",
+        options: ["A mutation that results in the substitution of one amino acid for another in a protein", "A mutation that does not change the amino acid sequence", "A mutation that results in a stop codon", "A mutation that causes a frameshift"],
+        correctAnswer: "A mutation that results in the substitution of one amino acid for another in a protein"
+    },
+    {
+        question: "What is a nonsense mutation?",
+        options: ["A mutation that results in a premature stop codon", "A mutation that changes one amino acid for another", "A mutation that does not change the amino acid sequence", "A mutation that causes a frameshift"],
+        correctAnswer: "A mutation that results in a premature stop codon"
+    },
+    {
+        question: "What is a frameshift mutation?",
+        options: ["A mutation that shifts the reading frame of the genetic message by inserting or deleting nucleotides", "A mutation that changes one amino acid for another", "A mutation that results in a stop codon", "A mutation that does not change the amino acid sequence"],
+        correctAnswer: "A mutation that shifts the reading frame of the genetic message by inserting or deleting nucleotides"
+    },
+    {
+        question: "What is a chromosomal inversion?",
+        options: ["A chromosome rearrangement in which a segment of a chromosome is reversed end to end", "The exchange of segments between nonhomologous chromosomes", "The loss of a chromosome segment", "The duplication of a chromosome segment"],
+        correctAnswer: "A chromosome rearrangement in which a segment of a chromosome is reversed end to end"
+    },
+    {
+        question: "What is an autosome?",
+        options: ["Any chromosome that is not a sex chromosome", "A chromosome involved in determining sex", "A segment of DNA that codes for a protein", "A type of genetic mutation"],
+        correctAnswer: "Any chromosome that is not a sex chromosome"
+    },
+    {
+        question: "What is the function of histones?",
+        options: ["To package and order DNA into structural units called nucleosomes", "To synthesize RNA", "To replicate DNA", "To transport amino acids"],
+        correctAnswer: "To package and order DNA into structural units called nucleosomes"
+    },
+    {
+        question: "What is genetic engineering?",
+        options: ["The direct manipulation of an organism's genes using biotechnology", "The natural process of gene expression", "The inheritance of genes", "The mutation of genes"],
+        correctAnswer: "The direct manipulation of an organism's genes using biotechnology"
+    },
+    {
+        question: "What is a genetic marker?",
+        options: ["A gene or DNA sequence with a known location on a chromosome that can be used to identify individuals or species", "A type of genetic mutation", "The physical traits of an organism", "The process of DNA replication"],
+        correctAnswer: "A gene or DNA sequence with a known location on a chromosome that can be used to identify individuals or species"
+    },
+    {
+        question: "What is the role of siRNA?",
+        options: ["To interfere with the expression of specific genes with complementary nucleotide sequences", "To replicate DNA", "To synthesize proteins", "To transport amino acids"],
+        correctAnswer: "To interfere with the expression of specific genes with complementary nucleotide sequences"
+    },
+    {
+        question: "What is the function of topoisomerase?",
+        options: ["To relieve the strain caused by unwinding of the DNA double helix during replication", "To synthesize RNA", "To replicate DNA", "To transport proteins"],
+        correctAnswer: "To relieve the strain caused by unwinding of the DNA double helix during replication"
+    },
+    {
+        question: "What is a promoter?",
+        options: ["A DNA sequence that initiates gene transcription", "A protein that assists in DNA replication", "A segment of RNA", "A type of chromosome"],
+        correctAnswer: "A DNA sequence that initiates gene transcription"
+    },
+    {
+        question: "What is the function of enhancer sequences?",
+        options: ["To increase the transcription of specific genes", "To replicate DNA", "To transport proteins", "To synthesize RNA"],
+        correctAnswer: "To increase the transcription of specific genes"
+    },
+    {
+        question: "What is a telomere?",
+        options: ["The end of a chromosome, which protects it from deterioration or from fusion with neighboring chromosomes", "A type of genetic mutation", "A segment of DNA that codes for a protein", "A type of chromosome"],
+        correctAnswer: "The end of a chromosome, which protects it from deterioration or from fusion with neighboring chromosomes"
+    },
+    {
+        question: "What is a genetic mutation?",
+        options: ["A permanent alteration in the DNA sequence that makes up a gene", "The replication of DNA", "The inheritance of genetic traits", "The expression of genes"],
+        correctAnswer: "A permanent alteration in the DNA sequence that makes up a gene"
+    },
+    {
+        question: "What is genetic counseling?",
+        options: ["The process of advising individuals and families on the nature, risks, and consequences of genetic disorders", "The inheritance of genes", "The mutation of genes", "The replication of DNA"],
+        correctAnswer: "The process of advising individuals and families on the nature, risks, and consequences of genetic disorders"
+    },
+    {
+        question: "What is a heterozygote?",
+        options: ["An organism that has two different alleles for a trait", "An organism that has two identical alleles for a trait", "An organism with a mutation in its genes", "An organism with a single allele for a trait"],
+        correctAnswer: "An organism that has two different alleles for a trait"
+    },
+    {
+        question: "What is a homozygote?",
+        options: ["An organism that has two identical alleles for a trait", "An organism that has two different alleles for a trait", "An organism with a mutation in its genes", "An organism with a single allele for a trait"],
+        correctAnswer: "An organism that has two identical alleles for a trait"
+    },
+    {
+        question: "What is the function of microRNA?",
+        options: ["To regulate gene expression by binding to complementary sequences on target mRNAs", "To replicate DNA", "To synthesize proteins", "To transport amino acids"],
+        correctAnswer: "To regulate gene expression by binding to complementary sequences on target mRNAs"
+    },
+    {
+        question: "What is the function of ribozymes?",
+        options: ["To catalyze specific biochemical reactions, similar to protein enzymes", "To synthesize RNA", "To replicate DNA", "To transport proteins"],
+        correctAnswer: "To catalyze specific biochemical reactions, similar to protein enzymes"
+    }
+];
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+       // Check user's answer
+    function checkAnswer(option, correctAnswer) {
+    var options = option.parentNode.children;
+    for (var i = 0; i < options.length; i++) {
+        options[i].style.pointerEvents = "none";
+    }
+
+    // Trim the text content to remove any leading or trailing spaces
+    var selectedAnswer = option.innerText.substr(3).trim();
+    correctAnswer = correctAnswer.trim();
+
+    if (selectedAnswer === correctAnswer) {
+        option.style.backgroundColor = "#7FFF7F"; // Correct answer
+        correctAnswers++;
+    } else {
+        option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+        incorrectAnswers++;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].innerText.substr(3).trim() === correctAnswer) {
+                options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+            }
+        }
+    }
+    totalQuestions++;
+    updateScoreCard();
+}
+
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>
