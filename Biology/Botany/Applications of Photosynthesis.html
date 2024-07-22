@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub - Applications of Photosynthesis</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="physics.html">Physics</a></li>
+                <li><a href="chemistry.html">Chemistry</a></li>
+                <li><a href="biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Applications of Photosynthesis</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>Awareness of the practical applications of photosynthesis in agriculture, industry, and environmental conservation.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        // Function to generate quiz question
+        
+        var quizPool = [
+    {
+        question: "Which of the following is an application of photosynthesis in agriculture?",
+        options: ["Production of oxygen", "Carbon sequestration", "Crop yield improvement", "Soil erosion prevention"],
+        correctAnswer: "Crop yield improvement"
+    },
+    {
+        question: "What is the primary role of photosynthesis in the carbon cycle?",
+        options: ["To produce carbohydrates", "To release carbon dioxide", "To fix atmospheric nitrogen", "To decompose organic matter"],
+        correctAnswer: "To produce carbohydrates"
+    },
+    {
+        question: "Which of the following is NOT a way in which photosynthesis contributes to environmental conservation?",
+        options: ["Reduction of greenhouse gases", "Stabilization of soil", "Preservation of biodiversity", "Depletion of ozone layer"],
+        correctAnswer: "Depletion of ozone layer"
+    },
+    {
+        question: "What is the significance of photosynthesis in maintaining oxygen levels in the atmosphere?",
+        options: ["It consumes oxygen during the process", "It releases oxygen as a byproduct", "It converts oxygen into carbon dioxide", "It has no impact on oxygen levels"],
+        correctAnswer: "It releases oxygen as a byproduct"
+    },
+    {
+        question: "Which of the following is an industrial application of photosynthesis?",
+        options: ["Production of biofuels", "Mining operations", "Textile manufacturing", "Chemical waste disposal"],
+        correctAnswer: "Production of biofuels"
+    },
+    {
+        question: "How does photosynthesis contribute to the purification of air and water?",
+        options: ["By releasing oxygen", "By absorbing nitrogen", "By emitting carbon dioxide", "By producing methane"],
+        correctAnswer: "By releasing oxygen"
+    },
+    {
+        question: "Which of the following is a potential future application of photosynthesis in technology?",
+        options: ["Artificial intelligence", "Nanotechnology", "Space exploration", "Quantum computing"],
+        correctAnswer: "Nanotechnology"
+    },
+    {
+        question: "What role does photosynthesis play in maintaining biodiversity?",
+        options: ["It provides energy for all living organisms", "It enhances soil fertility", "It stabilizes ecosystems", "It causes deforestation"],
+        correctAnswer: "It stabilizes ecosystems"
+    },
+    {
+        question: "Which of the following is an example of photosynthesis-based medicine?",
+        options: ["Antibiotics", "Herbal remedies", "Vaccines", "Chemotherapy"],
+        correctAnswer: "Herbal remedies"
+    },
+    {
+        question: "What is the primary function of photosynthesis in sustaining marine life?",
+        options: ["To provide nutrients", "To regulate temperature", "To maintain water balance", "To produce oxygen"],
+        correctAnswer: "To produce oxygen"
+    },
+    {
+        question: "Which of the following is NOT an application of photosynthesis in the food industry?",
+        options: ["Food preservation", "Flavor enhancement", "Nutrient enrichment", "Food coloring"],
+        correctAnswer: "Food preservation"
+    },
+    {
+        question: "How does photosynthesis contribute to renewable energy production?",
+        options: ["By generating electricity", "By producing biofuels", "By mining fossil fuels", "By harnessing geothermal energy"],
+        correctAnswer: "By producing biofuels"
+    },
+    {
+        question: "What is the primary role of photosynthesis in the ecosystem?",
+        options: ["To regulate the climate", "To maintain soil pH", "To provide habitat for wildlife", "To capture solar energy"],
+        correctAnswer: "To capture solar energy"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in waste management?",
+        options: ["Bioremediation", "Landfills", "Incineration", "Composting"],
+        correctAnswer: "Bioremediation"
+    },
+    {
+        question: "What is the significance of photosynthesis in combating climate change?",
+        options: ["It traps heat in the atmosphere", "It releases greenhouse gases", "It sequesters carbon dioxide", "It accelerates deforestation"],
+        correctAnswer: "It sequesters carbon dioxide"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in space exploration?",
+        options: ["Fuel for spacecraft", "Construction materials", "Food for astronauts", "Energy for propulsion"],
+        correctAnswer: "Food for astronauts"
+    },
+    {
+        question: "How does photosynthesis contribute to soil fertility?",
+        options: ["By producing organic matter", "By depleting nutrients", "By increasing salinity", "By causing erosion"],
+        correctAnswer: "By producing organic matter"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in medicine?",
+        options: ["Treatment of respiratory diseases", "Cancer therapy", "Neurological disorders management", "Skin care"],
+        correctAnswer: "Skin care"
+    },
+    {
+        question: "What is the role of photosynthesis in sustainable agriculture?",
+        options: ["To reduce crop yield", "To minimize soil erosion", "To enhance water conservation", "To increase food production"],
+        correctAnswer: "To increase food production"
+    },
+    {
+        question: "Which of the following is NOT an application of photosynthesis in renewable energy?",
+        options: ["Solar panels", "Wind turbines", "Hydropower plants", "Nuclear reactors"],
+        correctAnswer: "Nuclear reactors"
+    },
+    {
+        question: "What is the primary benefit of photosynthesis in mitigating natural disasters?",
+        options: ["Prevention of floods", "Control of wildfires", "Reduction of hurricanes", "Management of earthquakes"],
+        correctAnswer: "Control of wildfires"
+    },
+    {
+        question: "Which of the following is an example of photosynthesis-based technology?",
+        options: ["Smartphones", "Biofuels", "Satellites", "Robotics"],
+        correctAnswer: "Biofuels"
+    },
+    {
+        question: "What role does photosynthesis play in the conservation of water resources?",
+        options: ["By increasing evaporation", "By reducing transpiration", "By promoting desertification", "By causing water pollution"],
+        correctAnswer: "By reducing transpiration"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in biotechnology?",
+        options: ["Genetic engineering", "Fossil fuel extraction", "Mining operations", "Chemical synthesis"],
+        correctAnswer: "Genetic engineering"
+    },
+    {
+        question: "What is the primary function of photosynthesis in maintaining ecosystem balance?",
+        options: ["To regulate atmospheric composition", "To promote monoculture", "To increase soil acidity", "To accelerate desertification"],
+        correctAnswer: "To regulate atmospheric composition"
+    },
+    {
+        question: "What is the primary purpose of photosynthesis in reducing air pollution?",
+        options: ["By emitting greenhouse gases", "By absorbing pollutants", "By increasing smog", "By depleting the ozone layer"],
+        correctAnswer: "By absorbing pollutants"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in alternative energy?",
+        options: ["Nuclear power plants", "Geothermal energy", "Hydropower generation", "Biofuel production"],
+        correctAnswer: "Biofuel production"
+    },
+    {
+        question: "What role does photosynthesis play in the conservation of wildlife?",
+        options: ["By providing habitat", "By increasing pollution", "By promoting deforestation", "By depleting natural resources"],
+        correctAnswer: "By providing habitat"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in sustainable architecture?",
+        options: ["Building materials", "Water purification", "Waste management", "Energy efficiency"],
+        correctAnswer: "Building materials"
+    },
+    {
+        question: "How does photosynthesis contribute to the preservation of aquatic ecosystems?",
+        options: ["By releasing pollutants", "By reducing oxygen levels", "By promoting eutrophication", "By producing oxygen"],
+        correctAnswer: "By producing oxygen"
+    },
+    {
+        question: "What is the primary function of photosynthesis in climate regulation?",
+        options: ["To trap heat", "To release carbon dioxide", "To reduce greenhouse gases", "To sequester carbon"],
+        correctAnswer: "To sequester carbon"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in renewable materials?",
+        options: ["Plastic production", "Metal extraction", "Paper manufacturing", "Concrete production"],
+        correctAnswer: "Paper manufacturing"
+    },
+    {
+        question: "What role does photosynthesis play in promoting sustainable development?",
+        options: ["By increasing resource depletion", "By accelerating climate change", "By enhancing biodiversity", "By reducing ecosystem services"],
+        correctAnswer: "By enhancing biodiversity"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in waste reduction?",
+        options: ["Landfill management", "Incineration", "Biodegradable packaging", "Plastic pollution"],
+        correctAnswer: "Biodegradable packaging"
+    },
+    {
+        question: "What is the primary benefit of photosynthesis in combating desertification?",
+        options: ["Increase in soil erosion", "Promotion of vegetation growth", "Expansion of arid regions", "Intensification of droughts"],
+        correctAnswer: "Promotion of vegetation growth"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in sustainable transportation?",
+        options: ["Electric vehicles", "Gasoline engines", "Diesel vehicles", "Jet fuel production"],
+        correctAnswer: "Electric vehicles"
+    },
+    {
+        question: "How does photosynthesis contribute to sustainable farming practices?",
+        options: ["By increasing soil erosion", "By promoting monoculture", "By reducing chemical inputs", "By depleting groundwater"],
+        correctAnswer: "By reducing chemical inputs"
+    },
+    {
+        question: "What role does photosynthesis play in promoting global food security?",
+        options: ["By increasing food scarcity", "By reducing agricultural productivity", "By enhancing crop yields", "By promoting food waste"],
+        correctAnswer: "By enhancing crop yields"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in sustainable forestry?",
+        options: ["Deforestation", "Clear-cutting", "Reforestation", "Slash-and-burn agriculture"],
+        correctAnswer: "Reforestation"
+    },
+    {
+        question: "What is the primary function of photosynthesis in promoting soil conservation?",
+        options: ["By increasing erosion", "By degrading soil quality", "By stabilizing soil", "By promoting desertification"],
+        correctAnswer: "By stabilizing soil"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in climate adaptation?",
+        options: ["Heat waves management", "Flood prevention", "Drought resistance", "Hurricane control"],
+        correctAnswer: "Drought resistance"
+    },
+    {
+        question: "How does photosynthesis contribute to the preservation of freshwater ecosystems?",
+        options: ["By promoting algal blooms", "By reducing oxygen levels", "By increasing pollution", "By removing pollutants"],
+        correctAnswer: "By removing pollutants"
+    },
+    {
+        question: "What role does photosynthesis play in the conservation of endangered species?",
+        options: ["By reducing habitat loss", "By promoting invasive species", "By increasing pollution", "By accelerating climate change"],
+        correctAnswer: "By reducing habitat loss"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in sustainable fisheries?",
+        options: ["Overfishing", "Aquaculture", "Destructive fishing practices", "Coral reef destruction"],
+        correctAnswer: "Aquaculture"
+    },
+    {
+        question: "What is the primary benefit of photosynthesis in mitigating soil degradation?",
+        options: ["Increase in desertification", "Promotion of erosion", "Enhancement of soil fertility", "Depletion of nutrients"],
+        correctAnswer: "Enhancement of soil fertility"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in renewable resources?",
+        options: ["Coal mining", "Oil drilling", "Solar energy", "Natural gas extraction"],
+        correctAnswer: "Solar energy"
+    },
+    {
+        question: "What role does photosynthesis play in promoting sustainable energy production?",
+        options: ["By increasing reliance on fossil fuels", "By accelerating climate change", "By reducing carbon emissions", "By depleting natural resources"],
+        correctAnswer: "By reducing carbon emissions"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in green technology?",
+        options: ["Nuclear power plants", "Solar panels", "Oil refineries", "Coal-fired power plants"],
+        correctAnswer: "Solar panels"
+    },
+    {
+        question: "How does photosynthesis contribute to the preservation of biodiversity?",
+        options: ["By promoting monoculture", "By increasing pollution", "By enhancing ecosystem resilience", "By accelerating habitat destruction"],
+        correctAnswer: "By enhancing ecosystem resilience"
+    },
+    {
+        question: "What is the primary function of photosynthesis in promoting ecosystem stability?",
+        options: ["To reduce species diversity", "To increase soil erosion", "To provide energy for all organisms", "To deplete natural resources"],
+        correctAnswer: "To provide energy for all organisms"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in reducing ecological footprint?",
+        options: ["Deforestation", "Urbanization", "Sustainable agriculture", "Industrial pollution"],
+        correctAnswer: "Sustainable agriculture"
+    },
+    {
+        question: "What role does photosynthesis play in promoting sustainable land use?",
+        options: ["By accelerating soil erosion", "By promoting desertification", "By increasing crop yields", "By degrading soil quality"],
+        correctAnswer: "By increasing crop yields"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in environmental conservation?",
+        options: ["Wetland destruction", "Species extinction", "Habitat restoration", "Air pollution"],
+        correctAnswer: "Habitat restoration"
+    },
+    {
+        question: "How does photosynthesis contribute to the promotion of sustainable lifestyles?",
+        options: ["By encouraging wasteful practices", "By promoting resource conservation", "By accelerating climate change", "By increasing pollution levels"],
+        correctAnswer: "By promoting resource conservation"
+    },
+    {
+        question: "What is the primary benefit of photosynthesis in promoting ecological balance?",
+        options: ["Increase in pollution", "Stabilization of ecosystems", "Acceleration of habitat destruction", "Depletion of natural resources"],
+        correctAnswer: "Stabilization of ecosystems"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in climate resilience?",
+        options: ["Increase in extreme weather events", "Sea level rise", "Carbon sequestration", "Ocean acidification"],
+        correctAnswer: "Carbon sequestration"
+    },
+    {
+        question: "What role does photosynthesis play in promoting sustainable water management?",
+        options: ["By increasing water pollution", "By accelerating evaporation", "By reducing water consumption", "By depleting groundwater"],
+        correctAnswer: "By reducing water consumption"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in soil conservation?",
+        options: ["Overgrazing", "Strip mining", "Soil erosion prevention", "Pesticide use"],
+        correctAnswer: "Soil erosion prevention"
+    },
+    {
+        question: "How does photosynthesis contribute to the promotion of sustainable development?",
+        options: ["By depleting natural resources", "By increasing pollution levels", "By enhancing food security", "By accelerating climate change"],
+        correctAnswer: "By enhancing food security"
+    },
+    {
+        question: "What is the primary function of photosynthesis in mitigating natural disasters?",
+        options: ["To increase the frequency of disasters", "To decrease air quality", "To stabilize ecosystems", "To accelerate habitat destruction"],
+        correctAnswer: "To stabilize ecosystems"
+    },
+    {
+        question: "Which of the following is an application of photosynthesis in promoting sustainable fisheries?",
+        options: ["Overfishing", "Aquaculture", "Destructive fishing practices", "Coral reef destruction"],
+        correctAnswer: "Aquaculture"
+    },
+    {
+        question: "What role does photosynthesis play in promoting sustainable transportation?",
+        options: ["By increasing reliance on fossil fuels", "By accelerating climate change", "By reducing carbon emissions", "By promoting electric vehicles"],
+        correctAnswer: "By promoting electric vehicles"
+    },
+    {
+        question: "Which of the following is a potential application of photosynthesis in reducing greenhouse gas emissions?",
+        options: ["Deforestation", "Urbanization", "Reforestation", "Industrial pollution"],
+        correctAnswer: "Reforestation"
+    },
+    {
+        question: "How does photosynthesis contribute to the preservation of freshwater ecosystems?",
+        options: ["By promoting algal blooms", "By reducing oxygen levels", "By increasing pollution", "By removing pollutants"],
+        correctAnswer: "By removing pollutants"
+    },
+    {
+        question: "What is the role of photosynthesis in promoting global food security?",
+        options: ["By increasing food scarcity", "By reducing agricultural productivity", "By enhancing crop yields", "By promoting food waste"],
+        correctAnswer: "By enhancing crop yields"
+    }
+];
+
+       
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+        
+function checkAnswer(option, correctAnswer) {
+    var options = option.parentNode.children;
+    for (var i = 0; i < options.length; i++) {
+        options[i].style.pointerEvents = "none";
+    }
+
+    // Trim the text content to remove any leading or trailing spaces
+    var selectedAnswer = option.innerText.substr(3).trim();
+    correctAnswer = correctAnswer.trim();
+
+    if (selectedAnswer === correctAnswer) {
+        option.style.backgroundColor = "#7FFF7F"; // Correct answer
+        correctAnswers++;
+    } else {
+        option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+        incorrectAnswers++;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].innerText.substr(3).trim() === correctAnswer) {
+                options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+            }
+        }
+    }
+    totalQuestions++;
+    updateScoreCard();
+}
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>
