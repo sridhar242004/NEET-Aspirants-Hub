@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .profile-section {
+            text-align: center;
+        }
+        
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        
+        .username {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .email {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .navigation li {
+            margin: 15px 0;
+        }
+        
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .overview-cards {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 30%;
+        }
+        
+        .recent-activity, .quiz-streak, .performance-analytics, .user-messages, .friends-leaderboard, .discussion-forum {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .recent-activity h2, .quiz-streak h2, .performance-analytics h2, .user-messages h2, .friends-leaderboard h2, .discussion-forum h2 {
+            margin-top: 0;
+        }
+        
+        #start-quiz {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        #quiz-history {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        #quiz-history h2 {
+            margin-top: 0;
+        }
+        
+        #leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        #leaderboard-table th, #leaderboard-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        #leaderboard-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        #settings-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #settings-form label {
+            margin: 10px 0 5px;
+        }
+        
+        #settings-form input {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #settings-form button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        #logout-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+                <h2 class="username">Username</h2>
+                <p class="email">user@example.com</p>
+            </div>
+            <div class="navigation">
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#progress">Progress</a></li>
+                    <li><a href="#quizzes">Quizzes</a></li>
+                    <li><a href="#leaderboard">Leaderboard</a></li>
+                    <li><a href="#messages">Messages</a></li>
+                    <li><a href="#discussion">Discussion</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                    <li><a href="#logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="overview" class="content-section active">
+                <h1>Overview</h1>
+                <div class="overview-cards">
+                    <div class="card">
+                        <h3>Total Quizzes Taken</h3>
+                        <p id="total-quizzes">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Correct Answers</h3>
+                        <p id="correct-answers">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Incorrect Answers</h3>
+                        <p id="incorrect-answers">0</p>
+                    </div>
+                </div>
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <ul id="activity-list"></ul>
+                </div>
+                <div class="quiz-streak">
+                    <h2>Daily Quiz Streak</h2>
+                    <p id="quiz-streak">0 days</p>
+                </div>
+                <div class="performance-analytics">
+                    <h2>Performance Analytics</h2>
+                    <canvas id="performance-chart"></canvas>
+                </div>
+            </div>
+            <div id="progress" class="content-section">
+                <h1>Progress</h1>
+                <canvas id="progress-chart"></canvas>
+            </div>
+            <div id="quizzes" class="content-section">
+                <h1>Quizzes</h1>
+                <select id="quiz-category">
+                    <option value="all">All Categories</option>
+                    <option value="physics">Physics</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="biology">Biology</option>
+                </select>
+                <button id="start-quiz">Start New Quiz</button>
+                <div id="quiz-history">
+                    <h2>Quiz History</h2>
+                    <ul id="quiz-list"></ul>
+                </div>
+            </div>
+            <div id="leaderboard" class="content-section">
+                <h1>Leaderboard</h1>
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h2>Friends Leaderboard</h2>
+                <table id="friends-leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Friend</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="messages" class="content-section">
+                <h1>Messages</h1>
+                <div class="user-messages">
+                    <h2>Inbox</h2>
+                    <ul id="message-list"></ul>
+                </div>
+            </div>
+            <div id="discussion" class="content-section">
+                <h1>Discussion Forum</h1>
+                <div class="discussion-forum">
+                    <h2>Recent Topics</h2>
+                    <ul id="discussion-list"></ul>
+                </div>
+            </div>
+            <div id="settings" class="content-section">
+                <h1>Settings</h1>
+                <form id="settings-form">
+                    <label for="new-username">Username:</label>
+                    <input type="text" id="new-username" name="new-username" required>
+                    <label for="new-email">Email:</label>
+                    <input type="email" id="new-email" name="new-email" required>
+                    <button type="submit">Update</button>
+                </form>
+            </div>
+            <div id="logout" class="content-section">
+                <h1>Logout</h1>
+                <button id="logout-button">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sections = document.querySelectorAll('.content-section');
+            var navLinks = document.querySelectorAll('.navigation a');
+    
+            function showSection(sectionId) {
+                sections.forEach(function(section) {
+                    section.classList.remove('active');
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    }
+                });
+            }
+    
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    showSection(targetId);
+                });
+            });
+    
+            showSection('overview');
+    
+            function fetchData(url, callback) {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => callback(data))
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+    
+            function updateDashboard() {
+                fetchData('/api/userData', function(userData) {
+                    document.getElementById('total-quizzes').innerText = userData.totalQuizzes;
+                    document.getElementById('correct-answers').innerText = userData.correctAnswers;
+                    document.getElementById('incorrect-answers').innerText = userData.incorrectAnswers;
+                    document.getElementById('quiz-streak').innerText = userData.dailyStreak + " days";
+    
+                    var activityList = document.getElementById('activity-list');
+                    activityList.innerHTML = '';
+                    userData.recentActivity.forEach(function(activity) {
+                        var li = document.createElement('li');
+                        li.textContent = activity;
+                        activityList.appendChild(li);
+                    });
+    
+                    var quizList = document.getElementById('quiz-list');
+                    quizList.innerHTML = '';
+                    userData.quizHistory.forEach(function(quiz) {
+                        var li = document.createElement('li');
+                        li.textContent = `${quiz.date} - ${quiz.topic}: ${quiz.score}`;
+                        quizList.appendChild(li);
+                    });
+    
+                    var leaderboardTable = document.getElementById('leaderboard-table').getElementsByTagName('tbody')[0];
+                    leaderboardTable.innerHTML = '';
+                    userData.leaderboard.forEach(function(entry) {
+                        var row = leaderboardTable.insertRow();
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        cell1.textContent = entry.rank;
+                        cell2.textContent = entry.username;
+                        cell3.textContent = entry.score;
+                    });
+    
+                    var friendsLeaderboardTable = document.getElementById('friends-leaderboard-table').getElementsByTagName('tbody')[0];
+                    friendsLeaderboardTable.innerHTML = '';
+                    userData.friendsLeaderboard.forEach(function(entry) {
+                        var row = friendsLeaderboardTable.insertRow();
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        cell1.textContent = entry.rank;
+                        cell2.textContent = entry.friend;
+                        cell3.textContent = entry.score;
+                    });
+    
+                    var messageList = document.getElementById('message-list');
+                    messageList.innerHTML = '';
+                    userData.messages.forEach(function(message) {
+                        var li = document.createElement('li');
+                        li.textContent = `${message.from}: ${message.content}`;
+                        messageList.appendChild(li);
+                    });
+    
+                    var discussionList = document.getElementById('discussion-list');
+                    discussionList.innerHTML = '';
+                    userData.discussionTopics.forEach(function(topic) {
+                        var li = document.createElement('li');
+                        li.textContent = topic;
+                        discussionList.appendChild(li);
+                    });
+    
+                    var ctx = document.getElementById('progress-chart').getContext('2d');
+                    var progressChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Total Quizzes', 'Correct Answers', 'Incorrect Answers'],
+                            datasets: [{
+                                label: 'Progress',
+                                data: [userData.totalQuizzes, userData.correctAnswers, userData.incorrectAnswers],
+                                backgroundColor: ['#3498db', '#2ecc71', '#e74c3c']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+    
+                    var ctxPerformance = document.getElementById('performance-chart').getContext('2d');
+                    var performanceChart = new Chart(ctxPerformance, {
+                        type: 'pie',
+                        data: {
+                            labels: userData.performanceLabels,
+                            datasets: [{
+                                label: 'Performance',
+                                data: userData.performanceData,
+                                backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                        }
+                    });
+                });
+            }
+    
+            function handleQuizCompletion(data) {
+                fetch('/api/quizCompleted', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateDashboard();
+                    } else {
+                        console.error('Error completing quiz:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+    
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'quizCompleted') {
+                    handleQuizCompletion(event.data.quizData);
+                }
+            });
+    
+            setInterval(updateDashboard, 30000);
+    
+            document.getElementById('start-quiz').addEventListener('click', function() {
+                alert('Start a new quiz functionality will be implemented here.');
+            });
+    
+            document.getElementById('settings-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                var newUsername = document.getElementById('new-username').value;
+                var newEmail = document.getElementById('new-email').value;
+                alert('Settings updated: ' + newUsername + ', ' + newEmail);
+            });
+    
+            document.getElementById('logout-button').addEventListener('click', function() {
+                alert('Logout functionality will be implemented here.');
+            });
+    
+            updateDashboard();
+        });
+        
+    </script>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
+
