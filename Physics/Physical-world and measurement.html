@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub - Physics</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-color: #4CAF50;
+  --primary-light: #81C784;
+  --primary-dark: #388E3C;
+  --secondary-color: #2196F3;
+  --secondary-light: #64B5F6;
+  --secondary-dark: #1976D2;
+  --accent-color: #FFC107;
+  --text-color: #333;
+  --text-light: #757575;
+  --bg-color: #f4f7f9;
+  --card-bg: #fff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+  --border-radius: 12px;
+  --spacing-unit: 1rem;
+  --max-width: 1400px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-unit);
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: calc(var(--spacing-unit) * 3) 0;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+  transform: rotate(30deg);
+  animation: headerShine 10s linear infinite;
+}
+
+@keyframes headerShine {
+  0% { transform: rotate(30deg) translateY(0); }
+  100% { transform: rotate(30deg) translateY(50%); }
+}
+
+header h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: calc(var(--spacing-unit) / 2);
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+nav ul li {
+  margin: 0 calc(var(--spacing-unit) / 2);
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color var(--transition-speed) ease;
+  position: relative;
+  padding: 0.5rem 1rem;
+  overflow: hidden;
+}
+
+nav ul li a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transition: left var(--transition-speed) ease;
+}
+
+nav ul li a:hover::before {
+  left: 100%;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: calc(var(--spacing-unit) * 2);
+  padding: calc(var(--spacing-unit) * 4) 0;
+}
+
+section {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 20px var(--shadow-color);
+  padding: calc(var(--spacing-unit) * 2);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  overflow: hidden;
+  position: relative;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+section:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+section:hover::before {
+  opacity: 0.1;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vr-button {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+  border: none;
+  border-radius: calc(var(--border-radius) / 2);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vr-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.vr-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.vr-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.quiz-container {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 20px var(--shadow-color);
+  padding: calc(var(--spacing-unit) * 2);
+}
+
+.mcq-card {
+  background-color: #f9f9f9;
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 1.5);
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+  transition: all var(--transition-speed) ease;
+  border-left: 5px solid var(--primary-color);
+}
+
+.mcq-card:hover {
+  box-shadow: 0 8px 16px var(--shadow-color);
+  transform: translateY(-5px);
+}
+
+.mcq-question {
+  font-size: 1.3rem;
+  margin-bottom: var(--spacing-unit);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.mcq-options {
+  list-style-type: none;
+}
+
+.mcq-option {
+  background-color: var(--card-bg);
+  border: 2px solid var(--primary-light);
+  border-radius: calc(var(--border-radius) / 2);
+  padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+  margin-bottom: calc(var(--spacing-unit) / 2);
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mcq-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.mcq-option:hover {
+  background-color: var(--primary-light);
+  color: white;
+  transform: translateX(5px);
+}
+
+.mcq-option:hover::before {
+  left: 100%;
+}
+
+#refresh-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: calc(var(--border-radius) / 2);
+  padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#refresh-btn::after {
+  content: '↻';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+#refresh-btn:hover {
+  background-color: var(--secondary-dark);
+  transform: scale(1.05);
+  padding-right: calc(var(--spacing-unit) * 2);
+}
+
+#refresh-btn:hover::after {
+  opacity: 1;
+}
+
+#score-card {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  border-radius: var(--border-radius);
+  padding: var(--spacing-unit);
+  margin-top: calc(var(--spacing-unit) * 1.5);
+  transition: all var(--transition-speed) ease;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#score-card:hover {
+  transform: scale(1.03);
+}
+
+#score-card p {
+  margin-bottom: calc(var(--spacing-unit) / 2);
+  font-size: 1.1rem;
+}
+
+#score-card span {
+  font-weight: bold;
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: calc(var(--spacing-unit) * 2) 0;
+  margin-top: calc(var(--spacing-unit) * 4);
+  position: relative;
+  overflow: hidden;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+  animation: footerShine 15s linear infinite;
+}
+
+@keyframes footerShine {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-unit: 0.875rem;
+  }
+
+  header {
+    clip-path: none;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: calc(var(--spacing-unit) / 2) 0;
+  }
+
+  .mcq-question {
+    font-size: 1.2rem;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ar-video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.ar-video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.ar-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-unit);
+}
+
+.ar-controls button {
+  margin: 0 calc(var(--spacing-unit) / 2);
+  padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: calc(var(--border-radius) / 2);
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ar-controls button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.ar-controls button:hover {
+  background-color: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+.ar-controls button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.ar-minimize {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.ar-minimize button {
+  padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: calc(var(--border-radius) / 2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all var(--transition-speed) ease;
+}
+
+.ar-minimize button:hover {
+  background-color: var(--secondary-dark);
+  transform: scale(1.05);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  margin-top: var(--spacing-unit);
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  margin: 15% auto;
+  padding: calc(var(--spacing-unit) * 2);
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .ar-controls {
+    flex-direction: column;
+  }
+
+  .ar-controls button {
+    margin: calc(var(--spacing-unit) / 2) 0;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+}
+
+.scroll-to-top:hover {
+  background-color: var(--primary-dark);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Physical-world and measurement</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="/CBSE Class 11 __ Physics __ Physical World __ Animation __ in English @digitalguruji3147.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>This section covers the fundamental concepts related to the physical world and measurement, including units, dimensions, and errors in measurements.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+  
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+
+        var quizPool = [
+        // 50 quiz questions related to different topics
+        {
+            question: "What is the SI unit of length?",
+            options: ["Meter", "Kilogram", "Second", "Candela"],
+            correctAnswer: "Meter"
+        },
+        {
+            question: "What is the SI unit of mass?",
+            options: ["Meter", "Kilogram", "Second", "Candela"],
+            correctAnswer: "Kilogram"
+        },
+        {
+            question: "What is the SI unit of time?",
+            options: ["Meter", "Kilogram", "Second", "Candela"],
+            correctAnswer: "Second"
+        },
+        {
+            question: "What is the SI unit of electric current?",
+            options: ["Ampere", "Kilogram", "Second", "Candela"],
+            correctAnswer: "Ampere"
+        },
+        {
+            question: "What is the SI unit of temperature?",
+            options: ["Meter", "Kilogram", "Second", "Kelvin"],
+            correctAnswer: "Kelvin"
+        },
+        {
+            question: "What is the SI unit of amount of substance?",
+            options: ["Meter", "Kilogram", "Mole", "Candela"],
+            correctAnswer: "Mole"
+        },
+        {
+            question: "What is the SI unit of luminous intensity?",
+            options: ["Meter", "Kilogram", "Second", "Candela"],
+            correctAnswer: "Candela"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for density?",
+            options: ["Mass/Volume", "Volume/Mass", "Mass x Volume", "Volume - Mass"],
+            correctAnswer: "Mass/Volume"
+        },
+        {
+            question: "What is the unit of density?",
+            options: ["g/cm³", "kg/m²", "m/s²", "g/mL"],
+            correctAnswer: "g/cm³"
+        },
+        {
+            question: "What is the formula for velocity?",
+            options: ["Distance/Time", "Time/Distance", "Distance x Time", "Time - Distance"],
+            correctAnswer: "Distance/Time"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for acceleration?",
+            options: ["Change in Velocity/Time", "Change in Distance/Time", "Change in Time/Distance", "Change in Time/Velocity"],
+            correctAnswer: "Change in Velocity/Time"
+        },
+        {
+            question: "What is the unit of acceleration?",
+            options: ["m/s²", "m/s", "s/m", "m²/s"],
+            correctAnswer: "m/s²"
+        },
+        {
+            question: "What is the formula for force?",
+            options: ["Mass x Acceleration", "Acceleration x Time", "Distance x Time", "Velocity x Time"],
+            correctAnswer: "Mass x Acceleration"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is Newton's first law of motion?",
+            options: ["Law of Inertia", "F = ma", "Action and Reaction", "Equal Areas in Equal Time"],
+            correctAnswer: "Law of Inertia"
+        },
+        {
+            question: "What is Newton's second law of motion?",
+            options: ["F = ma", "Law of Inertia", "Action and Reaction", "Equal Areas in Equal Time"],
+            correctAnswer: "F = ma"
+        },
+        {
+            question: "What is Newton's third law of motion?",
+            options: ["Action and Reaction", "F = ma", "Law of Inertia", "Equal Areas in Equal Time"],
+            correctAnswer: "Action and Reaction"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is work done?",
+            options: ["Force x Distance", "Force x Time", "Force/Distance", "Force + Distance"],
+            correctAnswer: "Force x Distance"
+        },
+        {
+            question: "What is the unit of work done?",
+            options: ["Joule", "Newton", "Watt", "Coulomb"],
+            correctAnswer: "Joule"
+        },
+        {
+            question: "What is the formula for power?",
+            options: ["Work Done/Time", "Work Done x Distance", "Work Done/Distance", "Work Done + Time"],
+            correctAnswer: "Work Done/Time"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is momentum?",
+            options: ["Mass x Velocity", "Mass x Acceleration", "Force x Time", "Force x Distance"],
+            correctAnswer: "Mass x Velocity"
+        },
+        {
+            question: "What is the unit of momentum?",
+            options: ["kg m/s", "N m", "J/s", "kg m²/s"],
+            correctAnswer: "kg m/s"
+        },
+        {
+            question: "What is the principle of conservation of momentum?",
+            options: ["The total momentum of an isolated system remains constant", "The total momentum of a system is zero", "Momentum is inversely proportional to mass", "Momentum is directly proportional to velocity"],
+            correctAnswer: "The total momentum of an isolated system remains constant"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is impulse?",
+            options: ["Change in Momentum", "Force x Time", "Force x Distance", "Change in Velocity"],
+            correctAnswer: "Change in Momentum"
+        },
+        {
+            question: "What is the unit of impulse?",
+            options: ["N s", "Joule", "kg m/s", "N m"],
+            correctAnswer: "N s"
+        },
+        {
+            question: "What is the formula for impulse?",
+            options: ["Force x Time", "Change in Velocity/Time", "Change in Momentum/Time", "Force x Distance"],
+            correctAnswer: "Force x Time"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is elasticity?",
+            options: ["Property of a body to regain its original shape after deformation", "Property of a body to stretch", "Property of a body to absorb energy", "Property of a body to emit light"],
+            correctAnswer: "Property of a body to regain its original shape after deformation"
+        },
+        {
+            question: "What is Hooke's Law?",
+            options: ["The extension of a spring is directly proportional to the force applied", "The extension of a spring is inversely proportional to the force applied", "The extension of a spring is directly proportional to the distance", "The extension of a spring is inversely proportional to the distance"],
+            correctAnswer: "The extension of a spring is directly proportional to the force applied"
+        },
+        {
+            question: "What is stress?",
+            options: ["Force per unit area", "Force per unit volume", "Pressure", "Force"],
+            correctAnswer: "Force per unit area"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is strain?",
+            options: ["Change in length/original length", "Force per unit area", "Force", "Pressure"],
+            correctAnswer: "Change in length/original length"
+        },
+        {
+            question: "What is the modulus of elasticity?",
+            options: ["Stress/Strain", "Strain/Stress", "Stress x Strain", "Strain - Stress"],
+            correctAnswer: "Stress/Strain"
+        },
+        {
+            question: "What is the unit of modulus of elasticity?",
+            options: ["Pascal", "N/m", "Joule", "kg m/s"],
+            correctAnswer: "Pascal"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is Newton's law of universal gravitation?",
+            options: ["Every particle attracts every other particle with a force proportional to the product of their masses and inversely proportional to the square of the distance between their centers", "Every particle attracts every other particle with a force proportional to the square of the distance between their centers", "Every particle attracts every other particle with a force proportional to the square root of the distance between their centers", "Every particle attracts every other particle with a force proportional to the cube of the distance between their centers"],
+            correctAnswer: "Every particle attracts every other particle with a force proportional to the product of their masses and inversely proportional to the square of the distance between their centers"
+        },
+        {
+            question: "What is gravitational force?",
+            options: ["Force of attraction between two masses", "Force exerted by a body", "Force due to motion", "Force due to deformation"],
+            correctAnswer: "Force of attraction between two masses"
+        },
+        {
+            question: "What is the formula for gravitational force?",
+            options: ["(G x m₁ x m₂) / r²", "(m₁ + m₂) / r²", "(m₁ - m₂) / r²", "(G x m₁ x m₂) / r"],
+            correctAnswer: "(G x m₁ x m₂) / r²"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is centripetal force?",
+            options: ["Force acting towards the center of circular motion", "Force acting away from the center of circular motion", "Force acting in the direction of motion", "Force acting perpendicular to the direction of motion"],
+            correctAnswer: "Force acting towards the center of circular motion"
+        },
+        {
+            question: "What is centrifugal force?",
+            options: ["Fictitious force", "Force acting towards the center of circular motion", "Force acting away from the center of circular motion", "Force acting in the direction of motion"],
+            correctAnswer: "Fictitious force"
+        },
+        {
+            question: "What is escape velocity?",
+            options: ["Minimum velocity required for an object to escape the gravitational pull of a celestial body", "Velocity required for an object to remain in orbit", "Velocity required for an object to land safely", "Velocity required for an object to reach the atmosphere"],
+            correctAnswer: "Minimum velocity required for an object to escape the gravitational pull of a celestial body"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is a scalar quantity?",
+            options: ["A physical quantity with magnitude only", "A physical quantity with magnitude and direction", "A physical quantity with direction only", "A physical quantity with no units"],
+            correctAnswer: "A physical quantity with magnitude only"
+        },
+        {
+            question: "What is a vector quantity?",
+            options: ["A physical quantity with magnitude and direction", "A physical quantity with magnitude only", "A physical quantity with direction only", "A physical quantity with no units"],
+            correctAnswer: "A physical quantity with magnitude and direction"
+        },
+        {
+            question: "What is the formula for displacement?",
+            options: ["Final Position - Initial Position", "Final Velocity - Initial Velocity", "Final Time - Initial Time", "Final Acceleration - Initial Acceleration"],
+            correctAnswer: "Final Position - Initial Position"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for velocity-time graph?",
+            options: ["Gradient of the graph", "Area under the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Gradient of the graph"
+        },
+        {
+            question: "What is the formula for acceleration-time graph?",
+            options: ["Gradient of the graph", "Area under the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Gradient of the graph"
+        },
+        {
+            question: "What is the formula for work done-time graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for force-time graph?",
+            options: ["Gradient of the graph", "Area under the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for momentum-time graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for impulse-time graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for displacement-time graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for velocity-distance graph?",
+            options: ["Gradient of the graph", "Area under the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Gradient of the graph"
+        },
+        {
+            question: "What is the formula for acceleration-distance graph?",
+            options: ["Gradient of the graph", "Area under the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Gradient of the graph"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for work done-distance graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for force-distance graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for momentum-distance graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for impulse-distance graph?",
+            options: ["Area under the graph", "Gradient of the graph", "Length of the graph", "Width of the graph"],
+            correctAnswer: "Area under the graph"
+        },
+        {
+            question: "What is the formula for kinetic energy?",
+            options: ["(1/2)mv²", "mv", "F x d", "mgh"],
+            correctAnswer: "(1/2)mv²"
+        },
+        {
+            question: "What is the unit of kinetic energy?",
+            options: ["Joule", "Newton", "Watt", "kg m/s²"],
+            correctAnswer: "Joule"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for potential energy?",
+            options: ["mgh", "F x d", "(1/2)mv²", "mv"],
+            correctAnswer: "mgh"
+        },
+        {
+            question: "What is the unit of potential energy?",
+            options: ["Joule", "Newton", "Watt", "kg m/s²"],
+            correctAnswer: "Joule"
+        },
+        {
+            question: "What is the law of conservation of energy?",
+            options: ["Energy cannot be created or destroyed, only transformed from one form to another", "Energy is created and destroyed", "Energy is constant", "Energy is inversely proportional to mass"],
+            correctAnswer: "Energy cannot be created or destroyed, only transformed from one form to another"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is power?",
+            options: ["Rate of doing work", "Rate of change of momentum", "Rate of change of velocity", "Rate of change of distance"],
+            correctAnswer: "Rate of doing work"
+        },
+        {
+            question: "What is the unit of power?",
+            options: ["Watt", "Joule", "Newton", "kg m/s²"],
+            correctAnswer: "Watt"
+        },
+        {
+            question: "What is the formula for power?",
+            options: ["Work Done/Time", "Work Done x Distance", "Work Done/Distance", "Work Done + Time"],
+            correctAnswer: "Work Done/Time"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for gravitational potential energy?",
+            options: ["mgh", "(1/2)mv²", "F x d", "mv"],
+            correctAnswer: "mgh"
+        },
+        {
+            question: "What is the formula for elastic potential energy?",
+            options: ["(1/2)kx²", "mgh", "F x d", "mv"],
+            correctAnswer: "(1/2)kx²"
+        },
+        {
+            question: "What is the formula for mechanical energy?",
+            options: ["Kinetic Energy + Potential Energy", "Kinetic Energy - Potential Energy", "Kinetic Energy x Potential Energy", "Kinetic Energy / Potential Energy"],
+            correctAnswer: "Kinetic Energy + Potential Energy"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the law of reflection?",
+            options: ["Angle of incidence is equal to the angle of reflection", "Angle of incidence is greater than the angle of reflection", "Angle of incidence is less than the angle of reflection", "Angle of incidence is perpendicular to the angle of reflection"],
+            correctAnswer: "Angle of incidence is equal to the angle of reflection"
+        },
+        {
+            question: "What is refraction?",
+            options: ["Bending of light as it passes from one medium to another", "Reflection of light", "Absorption of light", "Dispersion of light"],
+            correctAnswer: "Bending of light as it passes from one medium to another"
+        },
+        {
+            question: "What is Snell's law?",
+            options: ["n₁sinθ₁ = n₂sinθ₂", "n₁cosθ₁ = n₂cosθ₂", "n₁tanθ₁ = n₂tanθ₂", "n₁cscθ₁ = n₂cscθ₂"],
+            correctAnswer: "n₁sinθ₁ = n₂sinθ₂"
+        },
+        // Add more quiz questions here...
+        {
+            question: "What is the formula for magnification?",
+            options: ["Image height/Object height", "Object height/Image height", "Image distance/Object distance", "Object distance/Image distance"],
+            correctAnswer: "Image height/Object height"
+        },
+        {
+            question: "What is the unit of magnification?",
+            options: ["No unit", "Meter", "Candela", "No option"],
+            correctAnswer: "No unit"
+        },
+        {
+            question: "What is the formula for critical angle?",
+            options: ["sin⁻¹(n₂/n₁)", "sin⁻¹(n₁/n₂)", "cos⁻¹(n₂/n₁)", "cos⁻¹(n₁/n₂)"],
+            correctAnswer: "sin⁻¹(n₂/n₁)"
+        }
+    
+    ];
+
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+
+        // Check user's answer
+        function checkAnswer(option, correctAnswer) {
+            var options = option.parentNode.children;
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = "none";
+            }
+
+            if (option.innerText.substr(3) === correctAnswer) {
+                option.style.backgroundColor = "#7FFF7F"; // Correct answer
+                correctAnswers++;
+            } else {
+                option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+                incorrectAnswers++;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].innerText.substr(3) === correctAnswer) {
+                        options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+                    }
+                }
+            }
+            totalQuestions++;
+            updateScoreCard();
+        }
+
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+        };
+
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Physical World __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Physical World __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+        window.parent.postMessage({ type: 'quizCompleted', quizData: { /* quiz data */ } }, '*');
+// Store the data in local storage
+var storedQuizzes = JSON.parse(localStorage.getItem('quizzes')) || [];
+storedQuizzes.push(quizData);
+localStorage.setItem('quizzes', JSON.stringify(storedQuizzes));
+
+// Fetch quizzes from local storage
+var storedQuizzes = JSON.parse(localStorage.getItem('quizzes')) || [];
+var quizDashboardHTML = '';
+
+// Generate HTML to display quizzes in the dashboard
+storedQuizzes.forEach(function(quizData, index) {
+    quizDashboardHTML += `<div class="quiz-item">`;
+    quizDashboardHTML += `<h3>${index + 1}. Quiz</h3>`;
+    quizDashboardHTML += `<p>Total Questions: ${quizData.length}</p>`;
+    quizDashboardHTML += `<button onclick="viewQuiz(${index})">View Quiz</button>`;
+    quizDashboardHTML += `</div>`;
+});
+
+// Display quizzes in the dashboard
+document.getElementById('quiz-dashboard').innerHTML = quizDashboardHTML;
+
+// Function to view a specific quiz
+function viewQuiz(index) {
+    var quizData = storedQuizzes[index];
+    var quizHTML = '';
+
+    quizData.forEach(function(quiz, questionIndex) {
+        quizHTML += `<div class='mcq-card'>`;
+        quizHTML += `<h3 class='mcq-question'>${questionIndex + 1}. ${quiz.question}</h3>`;
+        quizHTML += `<ul class='mcq-options'>`;
+
+        quiz.options.forEach(function(option, optionIndex) {
+            quizHTML += `<li class='mcq-option'>${String.fromCharCode(65 + optionIndex)}. ${option}</li>`;
+        });
+
+        quizHTML += `</ul>`;
+        quizHTML += `</div>`;
+    });
+
+    document.getElementById('view-quiz').innerHTML = quizHTML;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch quiz data from the server
+    function fetchQuizzes(callback) {
+        fetch('/api/quizzes')
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error('Error fetching quizzes:', error));
+    }
+
+    // Function to display quizzes in the dashboard
+    function displayQuizzes(quizzes) {
+        var quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = '';
+
+        quizzes.forEach(function(quiz, index) {
+            var quizCard = document.createElement('div');
+            quizCard.classList.add('quiz-card');
+            
+            var quizTitle = document.createElement('h3');
+            quizTitle.textContent = quiz.title;
+            quizCard.appendChild(quizTitle);
+
+            var startButton = document.createElement('button');
+            startButton.textContent = 'Start Quiz';
+            startButton.addEventListener('click', function() {
+                viewQuiz(index);
+            });
+            quizCard.appendChild(startButton);
+
+            quizContainer.appendChild(quizCard);
+        });
+    }
+
+    // Function to view a specific quiz
+    function viewQuiz(index) {
+        // Logic to view the quiz goes here
+        console.log('Viewing quiz at index:', index);
+    }
+
+    // Fetch quizzes and display them on the dashboard
+    fetchQuizzes(displayQuizzes);
+});
+    </script>
+</body>
+</html>
