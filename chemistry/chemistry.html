@@ -1,1 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub - Chemistry</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        :root {
+            --primary: #66BB6A;
+            --secondary: #4CAF50;
+            --text: #333;
+            --bg: #f0f4f0;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 40%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        main {
+            padding: 4rem 0;
+        }
+
+        .topic-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .topic-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .topic-card a {
+            display: block;
+            padding: 2rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .topic-card a:hover {
+            color: var(--primary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #f0f0f0;
+                --bg: #1a1a1a;
+                --white: #2a2a2a;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Chemistry Topics for NEET</h2>
+            <div class="topic-container">
+                <div class="topic-card">
+                    <a href="/Chemistry/Some Basic Concepts of Chemistry.html">Some Basic Concepts of Chemistry</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/chemistry/Structure of Atom.html">Structure of Atom</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Classification of Elements and Periodicity in Properties.html">Classification of Elements and Periodicity in Properties</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Chemical Bonding and Molecular Structure.html">Chemical Bonding and Molecular Structure</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/States of Matter Gases and Liquids.html">States of Matter: Gases and Liquids</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Thermodynamics.html">Thermodynamics</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Equilibrium.html">Equilibrium</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Redox Reactions.html">Redox Reactions</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Hydrogen.html">Hydrogen</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/s-Block Elements (Alkali and Alkaline Earth Metals).html">s-Block Elements (Alkali and Alkaline Earth Metals)</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Some p-Block Elements.html">Some p-Block Elements</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Organic Chemistry Some Basic Principles and Techniques.html">Organic Chemistry: Some Basic Principles and Techniques</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Hydrocarbons.html">Hydrocarbons</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Environmental Chemistry.html">Environmental Chemistry</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Solid State.html">Solid State</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Solutions.html">Solutions</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Electrochemistry.html">Electrochemistry</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Chemical Kinetics.html">Chemical Kinetics</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Surface Chemistry.html">Surface Chemistry</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/General Principles and Processes of Isolation of Elements.html">General Principles and Processes of Isolation of Elements</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/p-Block Elements.html">p-Block Elements</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/d- and f-Block Elements.html">d- and f-Block Elements</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Coordination Compounds.html">Coordination Compounds</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Haloalkanes and Haloarenes.html">Haloalkanes and Haloarenes</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Alcohols and Ethers.html">Alcohols, Phenols, and Ethers</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Aldehydes, Ketones, and Carboxylic Acids.html">Aldehydes, Ketones, and Carboxylic Acids</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Organic Compounds Containing Nitrogen.html">Organic Compounds Containing Nitrogen</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Biomolecules.html">Biomolecules</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Polymers.html">Polymers</a>
+                </div>
+                <div class="topic-card">
+                    <a href="/Chemistry/Chemistry in Everyday Life.html">Chemistry in Everyday Life</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub -Surface Chemistry</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Surface Chemistry</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>Surface chemistry deals with the study of chemical processes that occur at the interfaces of substances. It explores phenomena such as adsorption, catalysis, and reactions on surfaces, crucial for understanding various industrial processes, environmental remediation, and biological systems. Surface chemistry plays a pivotal role in designing materials with specific properties and enhancing the efficiency of chemical reactions in diverse applications.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        var quizPool = [
+    {
+        question: "What is surface chemistry?",
+        options: ["The study of chemical reactions on the surfaces of materials", "The study of chemical reactions in solution", "The study of chemical reactions in gases", "The study of chemical reactions in solids"],
+        correctAnswer: "The study of chemical reactions on the surfaces of materials"
+    },
+    {
+        question: "What is adsorption?",
+        options: ["The process of a substance absorbing light energy", "The process of a substance releasing light energy", "The process of molecules sticking to the surface of a solid", "The process of molecules evaporating from a liquid"],
+        correctAnswer: "The process of molecules sticking to the surface of a solid"
+    },
+    {
+        question: "What is the difference between physical adsorption and chemical adsorption?",
+        options: ["Physical adsorption is reversible and weak, while chemical adsorption is irreversible and strong", "Physical adsorption is irreversible and strong, while chemical adsorption is reversible and weak", "Physical adsorption involves a chemical reaction, while chemical adsorption does not", "Physical adsorption occurs only in liquids, while chemical adsorption occurs only in gases"],
+        correctAnswer: "Physical adsorption is reversible and weak, while chemical adsorption is irreversible and strong"
+    },
+    {
+        question: "What is desorption?",
+        options: ["The process of a substance absorbing light energy", "The process of a substance releasing light energy", "The process of molecules sticking to the surface of a solid", "The process of molecules evaporating from a liquid"],
+        correctAnswer: "The process of molecules releasing from the surface of a solid"
+    },
+    {
+        question: "What is meant by Langmuir adsorption isotherm?",
+        options: ["An equation describing the relationship between the pressure of a gas and its volume", "An equation describing the relationship between the concentration of a solute and its solubility", "An equation describing the relationship between the pressure of a gas and its solubility", "An equation describing the relationship between the coverage of adsorbate on a surface and the pressure of the gas"],
+        correctAnswer: "An equation describing the relationship between the coverage of adsorbate on a surface and the pressure of the gas"
+    },
+    {
+        question: "What is the role of catalysts in surface chemistry?",
+        options: ["To increase the surface area of reactants", "To speed up chemical reactions by lowering activation energy", "To change the color of the surface of reactants", "To decrease the surface area of reactants"],
+        correctAnswer: "To speed up chemical reactions by lowering activation energy"
+    },
+    {
+        question: "What is heterogeneous catalysis?",
+        options: ["A catalytic process where the catalyst and reactants are in different phases", "A catalytic process where the catalyst and reactants are in the same phase", "A catalytic process where the catalyst is solid and the reactants are liquid", "A catalytic process where the catalyst is liquid and the reactants are solid"],
+        correctAnswer: "A catalytic process where the catalyst and reactants are in different phases"
+    },
+    {
+        question: "What is an enzyme?",
+        options: ["A substance that speeds up chemical reactions without being consumed", "A substance that releases energy in the form of light", "A substance that absorbs light energy", "A substance that evaporates from a liquid"],
+        correctAnswer: "A substance that speeds up chemical reactions without being consumed"
+    },
+    {
+        question: "What is the role of surfactants in surface chemistry?",
+        options: ["To increase the surface area of reactants", "To decrease the surface area of reactants", "To reduce surface tension between liquids", "To increase surface tension between liquids"],
+        correctAnswer: "To reduce surface tension between liquids"
+    },
+    {
+        question: "What is colloidal chemistry?",
+        options: ["The study of chemical reactions in gases", "The study of chemical reactions in solids", "The study of chemical reactions on the surfaces of materials", "The study of heterogeneous mixtures where particles are intermediate in size between molecules and bulk solids or liquids"],
+        correctAnswer: "The study of heterogeneous mixtures where particles are intermediate in size between molecules and bulk solids or liquids"
+    },
+    {
+        question: "What are micelles?",
+        options: ["Large molecules formed by covalent bonds", "Spherical clusters of surfactant molecules", "Irregularly shaped particles in a colloid", "Small particles formed by physical adsorption"],
+        correctAnswer: "Spherical clusters of surfactant molecules"
+    },
+    {
+        question: "What is Brownian motion?",
+        options: ["The movement of colloidal particles under an applied electric field", "The random movement of colloidal particles due to collisions with solvent molecules", "The movement of surfactant molecules on a surface", "The movement of catalysts during a chemical reaction"],
+        correctAnswer: "The random movement of colloidal particles due to collisions with solvent molecules"
+    },
+    {
+        question: "What is Tyndall effect?",
+        options: ["The scattering of light by colloidal particles", "The absorption of light by colloidal particles", "The reflection of light by colloidal particles", "The transmission of light through colloidal particles"],
+        correctAnswer: "The scattering of light by colloidal particles"
+    },
+    {
+        question: "What is electrophoresis?",
+        options: ["The movement of colloidal particles under an applied electric field", "The random movement of colloidal particles due to collisions with solvent molecules", "The movement of surfactant molecules on a surface", "The movement of catalysts during a chemical reaction"],
+        correctAnswer: "The movement of colloidal particles under an applied electric field"
+    },
+    {
+        question: "What is coagulation?",
+        options: ["The separation of colloidal particles into smaller particles", "The aggregation of colloidal particles into larger particles", "The absorption of light by colloidal particles", "The reflection of light by colloidal particles"],
+        correctAnswer: "The aggregation of colloidal particles into larger particles"
+    },
+    {
+        question: "What is peptization?",
+        options: ["The formation of a colloidal solution from a precipitate", "The separation of a colloidal solution into its components", "The formation of a thin film on the surface of a solid", "The removal of impurities from a colloidal solution"],
+        correctAnswer: "The formation of a colloidal solution from a precipitate"
+    },
+    {
+        question: "What is emulsification?",
+        options: ["The separation of colloidal particles into smaller particles", "The aggregation of colloidal particles into larger particles", "The formation of a colloidal solution from a precipitate", "The formation of a stable suspension of small droplets of one liquid in another"],
+        correctAnswer: "The formation of a stable suspension of small droplets of one liquid in another"
+    },
+    {
+        question: "What is adsorption chromatography?",
+        options: ["A technique used to separate components of a mixture based on their interactions with a stationary phase", "A technique used to separate components of a mixture based on their solubility in a solvent", "A technique used to separate components of a mixture based on their boiling points", "A technique used to separate components of a mixture based on their electrical conductivity"],
+        correctAnswer: "A technique used to separate components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of zeolites in catalysis?",
+        options: ["To increase the surface area of reactants", "To decrease the surface area of reactants", "To act as catalysts in chemical reactions", "To change the color of the surface of reactants"],
+        correctAnswer: "To act as catalysts in chemical reactions"
+    },
+    {
+        question: "What is the principle of chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their electrical conductivity"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of adsorbents in chromatography?",
+        options: ["To increase the surface area of reactants", "To decrease the surface area of reactants", "To act as the stationary phase for separating components", "To change the color of the surface of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of ion exchange chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their electrical charge", "The separation of components of a mixture based on their boiling points"],
+        correctAnswer: "The separation of components of a mixture based on their electrical charge"
+    },
+    {
+        question: "What is the role of silica gel in TLC?",
+        options: ["To increase the surface area of reactants", "To decrease the surface area of reactants", "To act as the stationary phase for separating components", "To change the color of the surface of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of gas chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their volatility and interaction with a stationary phase"],
+        correctAnswer: "The separation of components of a mixture based on their volatility and interaction with a stationary phase"
+    },
+    {
+        question: "What is the role of the mobile phase in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the role of TLC in surface chemistry?",
+        options: ["To analyze the structure of molecules", "To separate components of a mixture based on their interactions with a stationary phase", "To determine the chemical composition of a substance", "To increase the surface area of reactants"],
+        correctAnswer: "To separate components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the principle of paper chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their electrical conductivity"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of solvent in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the mobile phase for separating components"
+    },
+    {
+        question: "What is the principle of size exclusion chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their boiling points"],
+        correctAnswer: "The separation of components of a mixture based on their size"
+    },
+    {
+        question: "What is the role of gel electrophoresis in surface chemistry?",
+        options: ["To separate DNA fragments based on their size", "To separate proteins based on their charge and size", "To analyze the structure of molecules", "To separate components of a mixture based on their interactions with a stationary phase"],
+        correctAnswer: "To separate proteins based on their charge and size"
+    },
+    {
+        question: "What is the principle of affinity chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their specific interactions with a ligand"],
+        correctAnswer: "The separation of components of a mixture based on their specific interactions with a ligand"
+    },
+    {
+        question: "What is the role of column chromatography in surface chemistry?",
+        options: ["To separate components of a mixture based on their interactions with a stationary phase", "To analyze the structure of molecules", "To determine the chemical composition of a substance", "To increase the surface area of reactants"],
+        correctAnswer: "To separate components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the principle of reversed-phase chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their polarity"],
+        correctAnswer: "The separation of components of a mixture based on their polarity"
+    },
+    {
+        question: "What is the role of silica gel in column chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of thin-layer chromatography (TLC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their volatility and interaction with a stationary phase"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of alumina in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of gas-liquid chromatography (GLC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their volatility and interaction with a stationary phase"
+    },
+    {
+        question: "What is the role of stationary phase in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of preparative chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their size"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of ion-exchange resin in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of chiral chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of enantiomers based on their chirality", "The separation of components of a mixture based on their boiling points", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of enantiomers based on their chirality"
+    },
+    {
+        question: "What is the role of cyclodextrin in chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of supercritical fluid chromatography (SFC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of CO2 in supercritical fluid chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the mobile phase for separating components"
+    },
+    {
+        question: "What is the principle of ion chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of ions based on their charge", "The separation of components of a mixture based on their boiling points"],
+        correctAnswer: "The separation of ions based on their charge"
+    },
+    {
+        question: "What is the role of ion-exchange membrane in ion chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of liquid-liquid chromatography (LLC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their solubility in a solvent"
+    },
+    {
+        question: "What is the role of aqueous phase in liquid-liquid chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the mobile phase for separating components"
+    },
+    {
+        question: "What is the principle of hydrophobic interaction chromatography (HIC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their hydrophobicity", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their hydrophobicity"
+    },
+    {
+        question: "What is the role of hydrophobic ligand in hydrophobic interaction chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of size exclusion chromatography (SEC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their size"
+    },
+    {
+        question: "What is the role of gel filtration resin in size exclusion chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the stationary phase for separating components", "To act as the catalyst for the reaction", "To decrease the surface area of reactants"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of affinity chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their specific interactions with a ligand", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their specific interactions with a ligand"
+    },
+    {
+        question: "What is the role of specific ligand in affinity chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of high performance liquid chromatography (HPLC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of stationary phase in HPLC?",
+        options: ["To increase the surface area of reactants", "To act as the catalyst for the reaction", "To act as the mobile phase for separating components", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of gas chromatography (GC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their volatility and interaction with a stationary phase"
+    },
+    {
+        question: "What is the role of carrier gas in gas chromatography?",
+        options: ["To act as the mobile phase for separating components", "To increase the surface area of reactants", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the mobile phase for separating components"
+    },
+    {
+        question: "What is the principle of paper chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of filter paper in paper chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of affinity chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their specific interactions with a ligand", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their specific interactions with a ligand"
+    },
+    {
+        question: "What is the role of specific ligand in affinity chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of high performance liquid chromatography (HPLC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their solubility in a solvent", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of stationary phase in HPLC?",
+        options: ["To increase the surface area of reactants", "To act as the catalyst for the reaction", "To act as the mobile phase for separating components", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    },
+    {
+        question: "What is the principle of gas chromatography (GC)?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their volatility and interaction with a stationary phase"
+    },
+    {
+        question: "What is the role of carrier gas in gas chromatography?",
+        options: ["To act as the mobile phase for separating components", "To increase the surface area of reactants", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the mobile phase for separating components"
+    },
+    {
+        question: "What is the principle of paper chromatography?",
+        options: ["The separation of components of a mixture based on their interactions with a stationary phase", "The separation of components of a mixture based on their size", "The separation of components of a mixture based on their volatility and interaction with a stationary phase", "The separation of components of a mixture based on their electrical charge"],
+        correctAnswer: "The separation of components of a mixture based on their interactions with a stationary phase"
+    },
+    {
+        question: "What is the role of filter paper in paper chromatography?",
+        options: ["To increase the surface area of reactants", "To act as the mobile phase for separating components", "To act as the catalyst for the reaction", "To act as the stationary phase for separating components"],
+        correctAnswer: "To act as the stationary phase for separating components"
+    }
+];
+
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+        function checkAnswer(option, correctAnswer) {
+            var options = option.parentNode.children;
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = "none";
+            }
+    
+            if (option.innerText.substr(3) === correctAnswer) {
+                option.style.backgroundColor = "#7FFF7F"; // Correct answer
+                correctAnswers++;
+            } else {
+                option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+                incorrectAnswers++;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].innerText.substr(3) === correctAnswer) {
+                        options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+                    }
+                }
+            }
+            totalQuestions++;
+            updateScoreCard();
+        }
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>

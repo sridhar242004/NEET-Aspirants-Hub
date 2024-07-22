@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub -Structure of Atom</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Structure of Atom</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>The structure of an atom consists of a nucleus containing protons and neutrons, surrounded by electrons in specific energy levels or orbitals. This arrangement determines the atom's chemical properties and behavior.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        
+
+        var quizPool = [
+    {
+        question: "What is the charge of an electron?",
+        options: ["Positive", "Negative", "Neutral", "Variable"],
+        correctAnswer: "Negative"
+    },
+    {
+        question: "Who discovered the electron?",
+        options: ["J.J. Thomson", "Ernest Rutherford", "Niels Bohr", "Max Planck"],
+        correctAnswer: "J.J. Thomson"
+    },
+    {
+        question: "What particles are found in the nucleus of an atom?",
+        options: ["Protons and electrons", "Protons and neutrons", "Neutrons and electrons", "Only protons"],
+        correctAnswer: "Protons and neutrons"
+    },
+    {
+        question: "Which model of the atom was proposed by Niels Bohr?",
+        options: ["Plum pudding model", "Nuclear model", "Planetary model", "Quantum mechanical model"],
+        correctAnswer: "Planetary model"
+    },
+    {
+        question: "What is the relative mass of a proton?",
+        options: ["1 amu", "0 amu", "1/1836 amu", "4 amu"],
+        correctAnswer: "1 amu"
+    },
+    {
+        question: "What is the relative charge of a neutron?",
+        options: ["+1", "0", "-1", "+2"],
+        correctAnswer: "0"
+    },
+    {
+        question: "Which subatomic particle has the smallest mass?",
+        options: ["Proton", "Neutron", "Electron", "Nucleus"],
+        correctAnswer: "Electron"
+    },
+    {
+        question: "What does the atomic number of an element represent?",
+        options: ["Number of neutrons", "Number of protons", "Number of electrons", "Number of nucleons"],
+        correctAnswer: "Number of protons"
+    },
+    {
+        question: "Who proposed the plum pudding model of the atom?",
+        options: ["Ernest Rutherford", "J.J. Thomson", "Niels Bohr", "James Chadwick"],
+        correctAnswer: "J.J. Thomson"
+    },
+    {
+        question: "What did Rutherford's gold foil experiment demonstrate?",
+        options: ["Atoms are solid spheres", "Atoms have a dense nucleus", "Electrons orbit the nucleus", "Atoms are mostly empty space"],
+        correctAnswer: "Atoms have a dense nucleus"
+    },
+    {
+        question: "Which experiment led to the discovery of the nucleus?",
+        options: ["Oil drop experiment", "Gold foil experiment", "Cathode ray experiment", "Alpha particle scattering experiment"],
+        correctAnswer: "Gold foil experiment"
+    },
+    {
+        question: "What is the principal quantum number?",
+        options: ["It describes the shape of an orbital", "It describes the size and energy level of an orbital", "It describes the orientation of an orbital", "It describes the spin of an electron"],
+        correctAnswer: "It describes the size and energy level of an orbital"
+    },
+    {
+        question: "What is the azimuthal quantum number (l)?",
+        options: ["It describes the size of an orbital", "It describes the shape of an orbital", "It describes the orientation of an orbital", "It describes the spin of an electron"],
+        correctAnswer: "It describes the shape of an orbital"
+    },
+    {
+        question: "What is the magnetic quantum number (m)?",
+        options: ["It describes the size of an orbital", "It describes the shape of an orbital", "It describes the orientation of an orbital", "It describes the spin of an electron"],
+        correctAnswer: "It describes the orientation of an orbital"
+    },
+    {
+        question: "What is the spin quantum number?",
+        options: ["It describes the size of an orbital", "It describes the shape of an orbital", "It describes the orientation of an orbital", "It describes the spin of an electron"],
+        correctAnswer: "It describes the spin of an electron"
+    },
+    {
+        question: "What is the Pauli exclusion principle?",
+        options: ["No two electrons can have the same set of four quantum numbers", "Electrons fill orbitals starting with the lowest energy level", "Electrons occupy degenerate orbitals singly first", "The probability of finding an electron is greatest in the densest part of the cloud"],
+        correctAnswer: "No two electrons can have the same set of four quantum numbers"
+    },
+    {
+        question: "What is Hund's rule?",
+        options: ["No two electrons can have the same set of four quantum numbers", "Electrons fill orbitals starting with the lowest energy level", "Electrons occupy degenerate orbitals singly first", "The probability of finding an electron is greatest in the densest part of the cloud"],
+        correctAnswer: "Electrons occupy degenerate orbitals singly first"
+    },
+    {
+        question: "What is the Aufbau principle?",
+        options: ["No two electrons can have the same set of four quantum numbers", "Electrons fill orbitals starting with the lowest energy level", "Electrons occupy degenerate orbitals singly first", "The probability of finding an electron is greatest in the densest part of the cloud"],
+        correctAnswer: "Electrons fill orbitals starting with the lowest energy level"
+    },
+    {
+        question: "What is an atomic orbital?",
+        options: ["The path an electron takes around the nucleus", "A region of space where there is a high probability of finding an electron", "The distance between the nucleus and the electron", "The energy required to remove an electron from an atom"],
+        correctAnswer: "A region of space where there is a high probability of finding an electron"
+    },
+    {
+        question: "What shape is an s orbital?",
+        options: ["Dumbbell-shaped", "Spherical", "Double dumbbell-shaped", "Complex"],
+        correctAnswer: "Spherical"
+    },
+    {
+        question: "What shape is a p orbital?",
+        options: ["Dumbbell-shaped", "Spherical", "Double dumbbell-shaped", "Complex"],
+        correctAnswer: "Dumbbell-shaped"
+    },
+    {
+        question: "How many p orbitals are there in a p subshell?",
+        options: ["1", "2", "3", "4"],
+        correctAnswer: "3"
+    },
+    {
+        question: "How many d orbitals are there in a d subshell?",
+        options: ["1", "3", "5", "7"],
+        correctAnswer: "5"
+    },
+    {
+        question: "Which element has the electronic configuration 1s2 2s2 2p6 3s2 3p5?",
+        options: ["Neon", "Chlorine", "Argon", "Fluorine"],
+        correctAnswer: "Chlorine"
+    },
+    {
+        question: "What does the Heisenberg uncertainty principle state?",
+        options: ["It is impossible to know the exact position and momentum of an electron simultaneously", "Electrons occupy degenerate orbitals singly first", "Electrons fill orbitals starting with the lowest energy level", "No two electrons can have the same set of four quantum numbers"],
+        correctAnswer: "It is impossible to know the exact position and momentum of an electron simultaneously"
+    },
+    {
+        question: "What is the maximum number of electrons that can be accommodated in a single orbital?",
+        options: ["1", "2", "3", "4"],
+        correctAnswer: "2"
+    },
+    {
+        question: "What is the significance of the Schrödinger equation in atomic structure?",
+        options: ["It describes the path of an electron around the nucleus", "It describes the probability distribution of an electron", "It describes the exact location of an electron", "It describes the energy levels in the nucleus"],
+        correctAnswer: "It describes the probability distribution of an electron"
+    },
+    {
+        question: "Which principle states that lower energy orbitals are filled before higher energy orbitals?",
+        options: ["Pauli exclusion principle", "Hund's rule", "Aufbau principle", "Heisenberg uncertainty principle"],
+        correctAnswer: "Aufbau principle"
+    },
+    {
+        question: "What is the term for the number of protons in the nucleus of an atom?",
+        options: ["Atomic mass", "Atomic number", "Mass number", "Nucleon number"],
+        correctAnswer: "Atomic number"
+    },
+    {
+        question: "What is the term for the total number of protons and neutrons in the nucleus of an atom?",
+        options: ["Atomic mass", "Atomic number", "Mass number", "Nucleon number"],
+        correctAnswer: "Mass number"
+    },
+    {
+        question: "What does the term 'isotope' refer to?",
+        options: ["Atoms with the same number of protons but different numbers of neutrons", "Atoms with the same number of neutrons but different numbers of protons", "Atoms with the same number of protons and neutrons", "Atoms with different numbers of protons and neutrons"],
+        correctAnswer: "Atoms with the same number of protons but different numbers of neutrons"
+    },
+    {
+        question: "Which element has the atomic number 6?",
+        options: ["Oxygen", "Carbon", "Nitrogen", "Fluorine"],
+        correctAnswer: "Carbon"
+    },
+    {
+        question: "What is the mass number of an element with 6 protons and 6 neutrons?",
+        options: ["6", "12", "18", "24"],
+        correctAnswer: "12"
+    },
+    {
+        question: "What does the electron cloud model describe?",
+        options: ["The exact path of electrons around the nucleus", "The most probable locations of electrons in an atom", "The exact position and momentum of electrons", "The energy levels within the nucleus"],
+        correctAnswer: "The most probable locations of electrons in an atom"
+    },
+    {
+        question: "Which quantum number specifies the orientation of an orbital?",
+        options: ["Principal quantum number", "Azimuthal quantum number", "Magnetic quantum number", "Spin quantum number"],
+        correctAnswer: "Magnetic quantum number"
+    },
+    {
+        question: "How many electrons can the first energy level hold?",
+        options: ["2", "4", "6", "8"],
+        correctAnswer: "2"
+    },
+    {
+        question: "How many electrons can the second energy level hold?",
+        options: ["2", "4", "8", "18"],
+        correctAnswer: "8"
+    },
+    {
+        question: "Who proposed the nuclear model of the atom?",
+        options: ["J.J. Thomson", "Ernest Rutherford", "Niels Bohr", "James Chadwick"],
+        correctAnswer: "Ernest Rutherford"
+    },
+    {
+        question: "Which particle was discovered by James Chadwick?",
+        options: ["Proton", "Electron", "Neutron", "Positron"],
+        correctAnswer: "Neutron"
+    },
+    {
+        question: "What is the shape of a d orbital?",
+        options: ["Spherical", "Dumbbell-shaped", "Double dumbbell-shaped", "Complex"],
+        correctAnswer: "Double dumbbell-shaped"
+    },
+    {
+        question: "What is the significance of the principal quantum number (n)?",
+        options: ["It determines the shape of the orbital", "It determines the energy level and size of the orbital", "It determines the orientation of the orbital", "It determines the spin of the electron"],
+        correctAnswer: "It determines the energy level and size of the orbital"
+    },
+    {
+        question: "What does the term 'ground state' refer to?",
+        options: ["The highest energy state of an atom", "The lowest energy state of an atom", "A state where electrons are unpaired", "A state where electrons are excited"],
+        correctAnswer: "The lowest energy state of an atom"
+    },
+    {
+        question: "What is the term for the spectrum of frequencies emitted by an atom's electrons?",
+        options: ["Continuous spectrum", "Line spectrum", "Absorption spectrum", "Emission spectrum"],
+        correctAnswer: "Emission spectrum"
+    },
+    {
+        question: "What is the Heisenberg uncertainty principle?",
+        options: ["Electrons occupy orbitals singly before pairing", "No two electrons can have the same set of four quantum numbers", "It is impossible to know both the exact position and momentum of an electron simultaneously", "Electrons fill orbitals starting with the lowest energy first"],
+        correctAnswer: "It is impossible to know both the exact position and momentum of an electron simultaneously"
+    },
+    {
+        question: "What is an electron configuration?",
+        options: ["The number of protons and neutrons in an atom", "The arrangement of electrons in an atom", "The distribution of neutrons in the nucleus", "The mass and charge of an atom"],
+        correctAnswer: "The arrangement of electrons in an atom"
+    },
+    {
+        question: "Which rule states that electrons will fill degenerate orbitals singly before pairing?",
+        options: ["Pauli exclusion principle", "Hund's rule", "Aufbau principle", "Heisenberg uncertainty principle"],
+        correctAnswer: "Hund's rule"
+    },
+    {
+        question: "Which principle states that no two electrons in an atom can have the same set of four quantum numbers?",
+        options: ["Pauli exclusion principle", "Hund's rule", "Aufbau principle", "Heisenberg uncertainty principle"],
+        correctAnswer: "Pauli exclusion principle"
+    },
+    {
+        question: "What does the Aufbau principle describe?",
+        options: ["Electrons occupy orbitals singly before pairing", "Electrons fill orbitals starting with the lowest energy first", "No two electrons can have the same set of four quantum numbers", "It is impossible to know both the exact position and momentum of an electron simultaneously"],
+        correctAnswer: "Electrons fill orbitals starting with the lowest energy first"
+    },
+    {
+        question: "What is the maximum number of electrons in a p subshell?",
+        options: ["2", "6", "10", "14"],
+        correctAnswer: "6"
+    },
+    {
+        question: "Which orbital has the highest energy in a multi-electron atom?",
+        options: ["1s", "2p", "3d", "4s"],
+        correctAnswer: "3d"
+    },
+    {
+        question: "What is the maximum number of electrons that can occupy the third energy level?",
+        options: ["8", "18", "32", "50"],
+        correctAnswer: "18"
+    },
+    {
+        question: "Which principle explains the arrangement of electrons in an atom in terms of energy levels?",
+        options: ["Pauli exclusion principle", "Hund's rule", "Aufbau principle", "Heisenberg uncertainty principle"],
+        correctAnswer: "Aufbau principle"
+    },
+    {
+        question: "How are orbitals within a subshell filled according to Hund's rule?",
+        options: ["Pairing all electrons first", "Filling one electron per orbital before pairing", "Filling the lowest energy orbital first", "Filling orbitals with the same spin"],
+        correctAnswer: "Filling one electron per orbital before pairing"
+    },
+    {
+        question: "What is an atomic orbital?",
+        options: ["The path of an electron around the nucleus", "A region in space where there is a high probability of finding an electron", "The distance between the nucleus and the electron", "The energy required to remove an electron"],
+        correctAnswer: "A region in space where there is a high probability of finding an electron"
+    },
+    {
+        question: "Which quantum number is associated with the shape of an orbital?",
+        options: ["Principal quantum number", "Azimuthal quantum number", "Magnetic quantum number", "Spin quantum number"],
+        correctAnswer: "Azimuthal quantum number"
+    },
+    {
+        question: "Which orbital is filled after the 3p orbital?",
+        options: ["3d", "4s", "4p", "3f"],
+        correctAnswer: "4s"
+    },
+    {
+        question: "What is the maximum number of electrons that can occupy a d subshell?",
+        options: ["2", "6", "10", "14"],
+        correctAnswer: "10"
+    },
+    {
+        question: "What is the electron configuration of oxygen?",
+        options: ["1s2 2s2 2p4", "1s2 2s2 2p6", "1s2 2s2 2p5", "1s2 2s2 3p4"],
+        correctAnswer: "1s2 2s2 2p4"
+    },
+    {
+        question: "Which quantum number describes the spin of an electron?",
+        options: ["Principal quantum number", "Azimuthal quantum number", "Magnetic quantum number", "Spin quantum number"],
+        correctAnswer: "Spin quantum number"
+    }
+];
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+        function checkAnswer(option, correctAnswer) {
+            var options = option.parentNode.children;
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = "none";
+            }
+    
+            if (option.innerText.substr(3) === correctAnswer) {
+                option.style.backgroundColor = "#7FFF7F"; // Correct answer
+                correctAnswers++;
+            } else {
+                option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+                incorrectAnswers++;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].innerText.substr(3) === correctAnswer) {
+                        options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+                    }
+                }
+            }
+            totalQuestions++;
+            updateScoreCard();
+        }
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>

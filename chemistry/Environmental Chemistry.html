@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub -Environmental Chemistry</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Environmental Chemistry</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>Environmental chemistry is the study of chemical processes occurring in the environment, focusing on understanding how pollutants arise, transform, and impact ecosystems and human health. It examines the interactions between chemical elements, compounds, and natural systems, aiming to mitigate environmental degradation and promote sustainable practices.            </p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        var quizPool = [
+    {
+        question: "What is environmental chemistry?",
+        options: ["Study of chemical processes occurring in the environment", "Study of chemicals used in cleaning environments", "Study of chemical reactions in industrial environments", "Study of chemical properties of the Earth's atmosphere"],
+        correctAnswer: "Study of chemical processes occurring in the environment"
+    },
+    {
+        question: "Which gas is primarily responsible for global warming?",
+        options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Methane"],
+        correctAnswer: "Carbon dioxide"
+    },
+    {
+        question: "What is the major source of sulfur dioxide in the atmosphere?",
+        options: ["Volcanic eruptions", "Forest fires", "Industrial processes", "Biological decay"],
+        correctAnswer: "Industrial processes"
+    },
+    {
+        question: "What is the primary source of nitrogen oxides in urban areas?",
+        options: ["Agricultural activities", "Automobile exhaust", "Natural gas emissions", "Coal combustion"],
+        correctAnswer: "Automobile exhaust"
+    },
+    {
+        question: "What is the greenhouse effect?",
+        options: ["Absorption of ultraviolet radiation by the ozone layer", "Absorption of infrared radiation by greenhouse gases", "Reflection of solar radiation by polar ice caps", "Absorption of visible light by the atmosphere"],
+        correctAnswer: "Absorption of infrared radiation by greenhouse gases"
+    },
+    {
+        question: "Which of the following is a greenhouse gas?",
+        options: ["Oxygen", "Nitrogen", "Argon", "Methane"],
+        correctAnswer: "Methane"
+    },
+    {
+        question: "What is acid rain?",
+        options: ["Rain with high salt content", "Rain with high sulfur dioxide content", "Rain with high nitric oxide content", "Rain with high carbon dioxide content"],
+        correctAnswer: "Rain with high sulfur dioxide content"
+    },
+    {
+        question: "Which compound contributes to the formation of acid rain?",
+        options: ["Nitrogen dioxide", "Methane", "Ozone", "Carbon monoxide"],
+        correctAnswer: "Nitrogen dioxide"
+    },
+    {
+        question: "What is eutrophication?",
+        options: ["Increase in nutrients in water bodies leading to excessive plant growth", "Decrease in nutrients in water bodies leading to fish kills", "Increase in salinity of water bodies leading to desertification", "Decrease in oxygen levels in water bodies leading to marine life extinction"],
+        correctAnswer: "Increase in nutrients in water bodies leading to excessive plant growth"
+    },
+    {
+        question: "Which pollutant is responsible for ozone depletion?",
+        options: ["Carbon monoxide", "Chlorofluorocarbons (CFCs)", "Particulate matter", "Sulfur dioxide"],
+        correctAnswer: "Chlorofluorocarbons (CFCs)"
+    },
+    {
+        question: "What is biomagnification?",
+        options: ["Increase in concentration of toxins in organisms at higher trophic levels", "Decrease in concentration of toxins in organisms at higher trophic levels", "Increase in concentration of nutrients in organisms at lower trophic levels", "Decrease in concentration of nutrients in organisms at lower trophic levels"],
+        correctAnswer: "Increase in concentration of toxins in organisms at higher trophic levels"
+    },
+    {
+        question: "Which substance is known as a persistent organic pollutant (POP)?",
+        options: ["Chlorofluorocarbons (CFCs)", "Sulfur dioxide", "Dioxins", "Carbon monoxide"],
+        correctAnswer: "Dioxins"
+    },
+    {
+        question: "What is the primary source of mercury pollution in aquatic ecosystems?",
+        options: ["Industrial wastewater", "Agricultural runoff", "Coal-fired power plants", "Marine vessel emissions"],
+        correctAnswer: "Coal-fired power plants"
+    },
+    {
+        question: "Which of the following is a non-point source of pollution?",
+        options: ["Industrial discharge pipes", "Oil spills", "Urban sewage systems", "Agricultural runoff"],
+        correctAnswer: "Agricultural runoff"
+    },
+    {
+        question: "What is the primary cause of the ozone hole?",
+        options: ["Industrial emissions", "Deforestation", "Excessive use of aerosols", "Release of chlorine and bromine compounds"],
+        correctAnswer: "Release of chlorine and bromine compounds"
+    },
+    {
+        question: "Which process involves the breakdown of chemical contaminants by living organisms?",
+        options: ["Bioremediation", "Chemical oxidation", "Absorption", "Desorption"],
+        correctAnswer: "Bioremediation"
+    },
+    {
+        question: "What is the term for the introduction of harmful substances into the environment?",
+        options: ["Pollution", "Erosion", "Eutrophication", "Deforestation"],
+        correctAnswer: "Pollution"
+    },
+    {
+        question: "Which pollutant primarily contributes to smog formation?",
+        options: ["Carbon dioxide", "Sulfur dioxide", "Ozone", "Nitrogen oxides"],
+        correctAnswer: "Nitrogen oxides"
+    },
+    {
+        question: "What is the term for the study of the movement and transformation of pollutants in the environment?",
+        options: ["Environmental chemistry", "Environmental physics", "Environmental biology", "Environmental geology"],
+        correctAnswer: "Environmental chemistry"
+    },
+    {
+        question: "Which chemical is responsible for the destruction of stratospheric ozone?",
+        options: ["Chlorine", "Oxygen", "Nitrogen", "Methane"],
+        correctAnswer: "Chlorine"
+    },
+    {
+        question: "What is the primary source of lead pollution in urban environments?",
+        options: ["Paints and pigments", "Automobile exhaust", "Coal combustion", "Fertilizer runoff"],
+        correctAnswer: "Paints and pigments"
+    },
+    {
+        question: "Which process involves the removal of pollutants from a contaminated area?",
+        options: ["Remediation", "Absorption", "Biodegradation", "Oxidation"],
+        correctAnswer: "Remediation"
+    },
+    {
+        question: "What is the term for the gradual increase in the Earth's average temperature?",
+        options: ["Global warming", "Climate change", "Greenhouse effect", "Ocean acidification"],
+        correctAnswer: "Global warming"
+    },
+    {
+        question: "Which substance is responsible for acidifying oceans?",
+        options: ["Carbon dioxide", "Sulfur dioxide", "Ozone", "Methane"],
+        correctAnswer: "Carbon dioxide"
+    },
+    {
+        question: "What is the term for the loss of biodiversity due to human activities?",
+        options: ["Biodiversity loss", "Habitat destruction", "Species extinction", "Deforestation"],
+        correctAnswer: "Biodiversity loss"
+    },
+    {
+        question: "Which chemical is a major component of photochemical smog?",
+        options: ["Sulfur dioxide", "Carbon monoxide", "Ozone", "Nitrogen dioxide"],
+        correctAnswer: "Nitrogen dioxide"
+    },
+    {
+        question: "What is the primary source of particulate matter in urban air pollution?",
+        options: ["Agricultural activities", "Construction activities", "Automobile exhaust", "Marine vessel emissions"],
+        correctAnswer: "Automobile exhaust"
+    },
+    {
+        question: "Which pollutant is responsible for respiratory problems in urban areas?",
+        options: ["Carbon dioxide", "Sulfur dioxide", "Particulate matter", "Ozone"],
+        correctAnswer: "Particulate matter"
+    },
+    {
+        question: "What is the term for the biological amplification of toxins in food chains?",
+        options: ["Biomagnification", "Bioaccumulation", "Bioremediation", "Biodegradation"],
+        correctAnswer: "Biomagnification"
+    },
+    {
+        question: "Which pollutant is primarily responsible for ozone depletion?",
+        options: ["Sulfur dioxide", "Chlorofluorocarbons (CFCs)", "Carbon monoxide", "Methane"],
+        correctAnswer: "Chlorofluorocarbons (CFCs)"
+    },
+    {
+        question: "What is the term for the conversion of atmospheric nitrogen into biologically available forms?",
+        options: ["Denitrification", "Nitrification", "Nitrogen fixation", "Nitrogen assimilation"],
+        correctAnswer: "Nitrogen fixation"
+    },
+    {
+        question: "Which chemical is a major contributor to air pollution in industrial areas?",
+        options: ["Methane", "Nitrogen dioxide", "Ozone", "Carbon dioxide"],
+        correctAnswer: "Nitrogen dioxide"
+    },
+    {
+        question: "What is the primary source of mercury pollution in aquatic ecosystems?",
+        options: ["Industrial wastewater", "Agricultural runoff", "Coal-fired power plants", "Marine vessel emissions"],
+        correctAnswer: "Coal-fired power plants"
+    },
+    {
+        question: "Which substance is known as a persistent organic pollutant (POP)?",
+        options: ["Chlorofluorocarbons (CFCs)", "Sulfur dioxide", "Dioxins", "Carbon monoxide"],
+        correctAnswer: "Dioxins"
+    },
+    {
+        question: "What is the term for the process of breaking down pollutants through exposure to sunlight?",
+        options: ["Photolysis", "Oxidation", "Reduction", "Hydrolysis"],
+        correctAnswer: "Photolysis"
+    },
+    {
+        question: "Which pollutant is primarily responsible for acid rain?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Sulfur dioxide", "Methane"],
+        correctAnswer: "Sulfur dioxide"
+    },
+    {
+        question: "What is the term for the release of pollutants from a point source?",
+        options: ["Emission", "Absorption", "Remediation", "Biodegradation"],
+        correctAnswer: "Emission"
+    },
+    {
+        question: "Which chemical is a major contributor to soil pollution?",
+        options: ["Nitrogen dioxide", "Heavy metals", "Carbon monoxide", "Ozone"],
+        correctAnswer: "Heavy metals"
+    },
+    {
+        question: "What is the term for the accumulation of persistent pollutants in organisms over time?",
+        options: ["Bioaccumulation", "Biomagnification", "Biodegradation", "Bioremediation"],
+        correctAnswer: "Bioaccumulation"
+    },
+    {
+        question: "Which pollutant is associated with the depletion of the ozone layer?",
+        options: ["Carbon dioxide", "Chlorofluorocarbons (CFCs)", "Sulfur dioxide", "Nitrogen dioxide"],
+        correctAnswer: "Chlorofluorocarbons (CFCs)"
+    },
+    {
+        question: "What is the primary source of lead contamination in drinking water?",
+        options: ["Industrial discharges", "Automobile emissions", "Corroded plumbing systems", "Natural rock formations"],
+        correctAnswer: "Corroded plumbing systems"
+    },
+    {
+        question: "Which chemical is a major contributor to indoor air pollution?",
+        options: ["Ozone", "Carbon monoxide", "Nitrogen dioxide", "Methane"],
+        correctAnswer: "Carbon monoxide"
+    },
+    {
+        question: "What is the term for the process of removing contaminants from groundwater?",
+        options: ["Groundwater purification", "Groundwater filtration", "Groundwater remediation", "Groundwater desalination"],
+        correctAnswer: "Groundwater remediation"
+    },
+    {
+        question: "Which pollutant is associated with ocean acidification?",
+        options: ["Sulfur dioxide", "Carbon dioxide", "Nitrogen dioxide", "Methane"],
+        correctAnswer: "Carbon dioxide"
+    },
+    {
+        question: "What is the term for the process of breaking down pollutants using chemicals?",
+        options: ["Oxidation", "Reduction", "Hydrolysis", "Chemical degradation"],
+        correctAnswer: "Chemical degradation"
+    },
+    {
+        question: "Which pollutant is primarily responsible for smog formation in urban areas?",
+        options: ["Carbon dioxide", "Nitrogen oxides", "Sulfur dioxide", "Methane"],
+        correctAnswer: "Nitrogen oxides"
+    },
+    {
+        question: "What is the term for the process of removing pollutants from the air?",
+        options: ["Air purification", "Air filtration", "Air remediation", "Air desalination"],
+        correctAnswer: "Air remediation"
+    },
+    {
+        question: "Which chemical is a major component of secondary air pollutants?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Ozone", "Sulfur dioxide"],
+        correctAnswer: "Ozone"
+    },
+    {
+        question: "What is the term for the process of converting waste materials into reusable materials?",
+        options: ["Recycling", "Incineration", "Landfilling", "Composting"],
+        correctAnswer: "Recycling"
+    },
+    {
+        question: "Which pollutant is associated with the formation of photochemical smog?",
+        options: ["Sulfur dioxide", "Nitrogen oxides", "Carbon monoxide", "Methane"],
+        correctAnswer: "Nitrogen oxides"
+    },
+    {
+        question: "What is the primary source of arsenic contamination in groundwater?",
+        options: ["Industrial discharges", "Agricultural runoff", "Natural geological deposits", "Coal-fired power plants"],
+        correctAnswer: "Natural geological deposits"
+    },
+    {
+        question: "Which chemical is a major contributor to indoor radon pollution?",
+        options: ["Ozone", "Carbon monoxide", "Radon", "Methane"],
+        correctAnswer: "Radon"
+    },
+    {
+        question: "What is the term for the process of restoring contaminated land to a usable condition?",
+        options: ["Land restoration", "Land reclamation", "Land remediation", "Land purification"],
+        correctAnswer: "Land remediation"
+    },
+    {
+        question: "Which pollutant is primarily responsible for acidification of lakes and rivers?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Sulfur dioxide", "Ammonia"],
+        correctAnswer: "Sulfur dioxide"
+    },
+    {
+        question: "What is the term for the process of converting organic waste into compost?",
+        options: ["Composting", "Incineration", "Pyrolysis", "Anaerobic digestion"],
+        correctAnswer: "Composting"
+    },
+    {
+        question: "Which chemical is a major component of volatile organic compounds (VOCs)?",
+        options: ["Methane", "Carbon monoxide", "Benzene", "Sulfur dioxide"],
+        correctAnswer: "Benzene"
+    },
+    {
+        question: "What is the term for the process of converting solid waste into energy?",
+        options: ["Incineration", "Landfilling", "Recycling", "Composting"],
+        correctAnswer: "Incineration"
+    },
+    {
+        question: "Which pollutant is associated with the formation of ground-level ozone?",
+        options: ["Carbon dioxide", "Nitrogen oxides", "Sulfur dioxide", "Methane"],
+        correctAnswer: "Nitrogen oxides"
+    },
+    {
+        question: "What is the primary source of phosphate pollution in aquatic ecosystems?",
+        options: ["Industrial discharges", "Agricultural runoff", "Natural geological deposits", "Coal-fired power plants"],
+        correctAnswer: "Agricultural runoff"
+    },
+    {
+        question: "Which chemical is a major contributor to indoor formaldehyde pollution?",
+        options: ["Ozone", "Carbon monoxide", "Formaldehyde", "Methane"],
+        correctAnswer: "Formaldehyde"
+    },
+    {
+        question: "What is the term for the process of preventing soil erosion?",
+        options: ["Soil conservation", "Soil purification", "Soil remediation", "Soil reclamation"],
+        correctAnswer: "Soil conservation"
+    },
+    {
+        question: "Which pollutant is primarily responsible for acidification of soil?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Sulfur dioxide", "Ammonia"],
+        correctAnswer: "Nitrogen dioxide"
+    },
+    {
+        question: "What is the term for the process of reducing waste generation?",
+        options: ["Waste reduction", "Waste treatment", "Waste disposal", "Waste management"],
+        correctAnswer: "Waste reduction"
+    },
+    {
+        question: "Which chemical is a major component of hydrocarbon pollution?",
+        options: ["Methane", "Carbon monoxide", "Benzene", "Sulfur dioxide"],
+        correctAnswer: "Benzene"
+    },
+    {
+        question: "What is the term for the process of filtering contaminants from water using natural materials?",
+        options: ["Phytoremediation", "Bioremediation", "Oxidation", "Filtration"],
+        correctAnswer: "Phytoremediation"
+    },
+    {
+        question: "Which pollutant is associated with the formation of black carbon aerosols?",
+        options: ["Carbon dioxide", "Nitrogen oxides", "Sulfur dioxide", "Particulate matter"],
+        correctAnswer: "Particulate matter"
+    },
+    {
+        question: "What is the primary source of cadmium pollution in terrestrial ecosystems?",
+        options: ["Industrial discharges", "Agricultural runoff", "Natural geological deposits", "Coal-fired power plants"],
+        correctAnswer: "Industrial discharges"
+    },
+    {
+        question: "Which chemical is a major contributor to indoor phthalate pollution?",
+        options: ["Ozone", "Carbon monoxide", "Phthalates", "Methane"],
+        correctAnswer: "Phthalates"
+    },
+    {
+        question: "What is the term for the process of capturing carbon dioxide emissions from power plants?",
+        options: ["Carbon capture and storage (CCS)", "Carbon sequestration", "Carbon offsetting", "Carbon remediation"],
+        correctAnswer: "Carbon capture and storage (CCS)"
+    },
+    {
+        question: "Which pollutant is primarily responsible for ocean pollution?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Microplastics", "Sulfur dioxide"],
+        correctAnswer: "Microplastics"
+    },
+    {
+        question: "What is the term for the process of treating contaminated water using ultraviolet light?",
+        options: ["UV disinfection", "UV filtration", "UV remediation", "UV oxidation"],
+        correctAnswer: "UV disinfection"
+    },
+    {
+        question: "Which chemical is a major component of persistent organic pollutants (POPs)?",
+        options: ["Methane", "Dioxins", "Benzene", "Sulfur dioxide"],
+        correctAnswer: "Dioxins"
+    },
+    {
+        question: "What is the term for the process of reducing noise pollution?",
+        options: ["Noise reduction", "Noise remediation", "Noise abatement", "Noise conservation"],
+        correctAnswer: "Noise abatement"
+    },
+    {
+        question: "Which pollutant is associated with the formation of acid mine drainage?",
+        options: ["Carbon dioxide", "Nitrogen dioxide", "Sulfur dioxide", "Iron sulfide"],
+        correctAnswer: "Iron sulfide"
+    }
+];
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+        function checkAnswer(option, correctAnswer) {
+            var options = option.parentNode.children;
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = "none";
+            }
+    
+            if (option.innerText.substr(3) === correctAnswer) {
+                option.style.backgroundColor = "#7FFF7F"; // Correct answer
+                correctAnswers++;
+            } else {
+                option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+                incorrectAnswers++;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].innerText.substr(3) === correctAnswer) {
+                        options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+                    }
+                }
+            }
+            totalQuestions++;
+            updateScoreCard();
+        }
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>

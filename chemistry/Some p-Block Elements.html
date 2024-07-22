@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Aspirants Hub -Some p-Block Elements</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.2/aframe/build/aframe-ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+          --primary-color: #4CAF50;
+          --primary-light: #81C784;
+          --primary-dark: #388E3C;
+          --secondary-color: #2196F3;
+          --secondary-light: #64B5F6;
+          --secondary-dark: #1976D2;
+          --accent-color: #FFC107;
+          --text-color: #333;
+          --text-light: #757575;
+          --bg-color: #f4f7f9;
+          --card-bg: #fff;
+          --shadow-color: rgba(0, 0, 0, 0.1);
+          --transition-speed: 0.3s;
+          --border-radius: 12px;
+          --spacing-unit: 1rem;
+          --max-width: 1400px;
+        }
+        
+        *, *::before, *::after {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          font-size: 16px;
+          overflow-x: hidden;
+        }
+        
+        .container {
+          width: 100%;
+          max-width: var(--max-width);
+          margin: 0 auto;
+          padding: 0 var(--spacing-unit);
+        }
+        
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+          color: white;
+          padding: calc(var(--spacing-unit) * 3) 0;
+          position: relative;
+          overflow: hidden;
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          transform: rotate(30deg);
+          animation: headerShine 10s linear infinite;
+        }
+        
+        @keyframes headerShine {
+          0% { transform: rotate(30deg) translateY(0); }
+          100% { transform: rotate(30deg) translateY(50%); }
+        }
+        
+        header h1 {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          position: relative;
+          z-index: 1;
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          position: relative;
+          z-index: 1;
+        }
+        
+        nav ul li {
+          margin: 0 calc(var(--spacing-unit) / 2);
+        }
+        
+        nav ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: color var(--transition-speed) ease;
+          position: relative;
+          padding: 0.5rem 1rem;
+          overflow: hidden;
+        }
+        
+        nav ul li a::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255,255,255,0.2);
+          transition: left var(--transition-speed) ease;
+        }
+        
+        nav ul li a:hover::before {
+          left: 100%;
+        }
+        
+        main {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: calc(var(--spacing-unit) * 2);
+          padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        section {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+          transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        section::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        section:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        section:hover::before {
+          opacity: 0.1;
+        }
+        
+        .video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .vr-button {
+          display: inline-block;
+          background-color: var(--accent-color);
+          color: var(--text-color);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .vr-button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .vr-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .vr-button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .quiz-container {
+          background-color: var(--card-bg);
+          border-radius: var(--border-radius);
+          box-shadow: 0 10px 20px var(--shadow-color);
+          padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .mcq-card {
+          background-color: #f9f9f9;
+          border-radius: var(--border-radius);
+          padding: calc(var(--spacing-unit) * 1.5);
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          border-left: 5px solid var(--primary-color);
+        }
+        
+        .mcq-card:hover {
+          box-shadow: 0 8px 16px var(--shadow-color);
+          transform: translateY(-5px);
+        }
+        
+        .mcq-question {
+          font-size: 1.3rem;
+          margin-bottom: var(--spacing-unit);
+          color: var(--text-color);
+          font-weight: 600;
+        }
+        
+        .mcq-options {
+          list-style-type: none;
+        }
+        
+        .mcq-option {
+          background-color: var(--card-bg);
+          border: 2px solid var(--primary-light);
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 0.75);
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .mcq-option::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .mcq-option:hover {
+          background-color: var(--primary-light);
+          color: white;
+          transform: translateX(5px);
+        }
+        
+        .mcq-option:hover::before {
+          left: 100%;
+        }
+        
+        #refresh-btn {
+          background-color: var(--secondary-color);
+          color: white;
+          border: none;
+          border-radius: calc(var(--border-radius) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        #refresh-btn::after {
+          content: '↻';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        #refresh-btn:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+          padding-right: calc(var(--spacing-unit) * 2);
+        }
+        
+        #refresh-btn:hover::after {
+          opacity: 1;
+        }
+        
+        #score-card {
+          background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+          border-radius: var(--border-radius);
+          padding: var(--spacing-unit);
+          margin-top: calc(var(--spacing-unit) * 1.5);
+          transition: all var(--transition-speed) ease;
+          color: white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        #score-card:hover {
+          transform: scale(1.03);
+        }
+        
+        #score-card p {
+          margin-bottom: calc(var(--spacing-unit) / 2);
+          font-size: 1.1rem;
+        }
+        
+        #score-card span {
+          font-weight: bold;
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: calc(var(--spacing-unit) * 2) 0;
+          margin-top: calc(var(--spacing-unit) * 4);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        footer::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+          animation: footerShine 15s linear infinite;
+        }
+        
+        @keyframes footerShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+          :root {
+            --spacing-unit: 0.875rem;
+          }
+        
+          header {
+            clip-path: none;
+          }
+        
+          header h1 {
+            font-size: 2.5rem;
+          }
+        
+          nav ul {
+            flex-direction: column;
+            align-items: center;
+          }
+        
+          nav ul li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .mcq-question {
+            font-size: 1.2rem;
+          }
+        
+          main {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ar-video-container {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+          margin-bottom: calc(var(--spacing-unit) * 1.5);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .ar-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        
+        .ar-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--spacing-unit);
+        }
+        
+        .ar-controls button {
+          margin: 0 calc(var(--spacing-unit) / 2);
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--primary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          transition: all var(--transition-speed) ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .ar-controls button::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background-color: rgba(255,255,255,0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ar-controls button:hover {
+          background-color: var(--primary-dark);
+          transform: scale(1.05);
+        }
+        
+        .ar-controls button:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+        
+        .ar-minimize {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        
+        .ar-minimize button {
+          padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+          font-size: 1rem;
+          cursor: pointer;
+          border: none;
+          background-color: var(--secondary-color);
+          color: white;
+          border-radius: calc(var(--border-radius) / 2);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          transition: all var(--transition-speed) ease;
+        }
+        
+        .ar-minimize button:hover {
+          background-color: var(--secondary-dark);
+          transform: scale(1.05);
+        }
+        
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #e0e0e0;
+          border-radius: 10px;
+          margin-top: var(--spacing-unit);
+          overflow: hidden;
+        }
+        
+        .progress {
+          height: 100%;
+          background-color: var(--primary-color);
+          width: 0;
+          transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          margin-left: -60px;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+        
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: var(--card-bg);
+          margin: 15% auto;
+          padding: calc(var(--spacing-unit) * 2);
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 600px;
+          border-radius: var(--border-radius);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+          .ar-controls {
+            flex-direction: column;
+          }
+        
+          .ar-controls button {
+            margin: calc(var(--spacing-unit) / 2) 0;
+          }
+        
+          .modal-content {
+            width: 95%;
+            margin: 10% auto;
+          }
+        }
+        
+        .scroll-to-top {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity var(--transition-speed) ease;
+        }
+        
+        .scroll-to-top.visible {
+          opacity: 1;
+        }
+        
+        .scroll-to-top:hover {
+          background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to NEET Aspirants Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="/Physics/physics.html">Physics</a></li>
+                <li><a href="/chemistry/chemistry.html">Chemistry</a></li>
+                <li><a href="/Biology/biology.html">Biology</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Some p-Block Elements</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>In chemistry, p-block elements occupy groups 13 to 18 on the periodic table, encompassing a diverse range of elements from metals like aluminum and gallium to nonmetals like carbon and nitrogen, as well as metalloids like boron and silicon. These elements typically have their valence electrons in the p orbital, making them crucial for various chemical reactions and industrial applications. Their properties vary widely, from semiconductor characteristics in silicon to the diverse oxidation states seen in nitrogen and phosphorus compounds, making p-block elements essential components in biological processes, materials science, and environmental chemistry.</p>
+            <button class="vr-button" onclick="convertToAR()">Experience in AR</button>
+        </section>
+        <section class="quiz-container">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <!-- Quiz questions will be generated dynamically here -->
+            </div>
+            <button id="refresh-btn">Refresh Quiz</button>
+            <div id="score-card"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NEET Aspirants Hub</p>
+    </footer>
+    <script>
+        var totalQuestions = 0;
+        var correctAnswers = 0;
+        var incorrectAnswers = 0;
+        var quizPool = [
+    {
+        question: "Which group of the periodic table contains p-block elements?",
+        options: ["Group 1 and 2", "Group 13 to 18", "Group 3 to 12", "Group 17 and 18"],
+        correctAnswer: "Group 13 to 18"
+    },
+    {
+        question: "Which element is a noble gas?",
+        options: ["Oxygen", "Neon", "Chlorine", "Sulfur"],
+        correctAnswer: "Neon"
+    },
+    {
+        question: "What is the general electronic configuration of p-block elements?",
+        options: ["ns^2 np^6", "ns^2 np^1-6", "ns^2 np^5", "ns^2 np^4"],
+        correctAnswer: "ns^2 np^1-6"
+    },
+    {
+        question: "Which group of p-block elements is known as the 'pnictogens'?",
+        options: ["Group 13", "Group 14", "Group 15", "Group 16"],
+        correctAnswer: "Group 15"
+    },
+    {
+        question: "Which p-block element is essential for biological processes and is found in hemoglobin?",
+        options: ["Iron", "Magnesium", "Copper", "Nitrogen"],
+        correctAnswer: "Iron"
+    },
+    {
+        question: "Which p-block element is commonly used in fertilizers and explosives?",
+        options: ["Nitrogen", "Phosphorus", "Sulfur", "Chlorine"],
+        correctAnswer: "Nitrogen"
+    },
+    {
+        question: "Which p-block element is a semiconductor used extensively in electronics?",
+        options: ["Silicon", "Carbon", "Germanium", "Arsenic"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in dental fillings and batteries?",
+        options: ["Aluminum", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Mercury"
+    },
+    {
+        question: "Which p-block element is a halogen known for its use in disinfectants and bleaching agents?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Chlorine"
+    },
+    {
+        question: "Which p-block element is a metalloid known for its role in fireproof materials and ceramics?",
+        options: ["Boron", "Carbon", "Arsenic", "Antimony"],
+        correctAnswer: "Arsenic"
+    },
+    {
+        question: "Which p-block element is used in the manufacture of glass and as a flux in metallurgy?",
+        options: ["Boron", "Silicon", "Selenium", "Germanium"],
+        correctAnswer: "Boron"
+    },
+    {
+        question: "Which p-block element is a common constituent of bones and teeth?",
+        options: ["Calcium", "Magnesium", "Phosphorus", "Sulfur"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and cryogenic applications?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Argon"
+    },
+    {
+        question: "Which p-block element is a metalloid used in solar cells and fiber optics?",
+        options: ["Boron", "Silicon", "Arsenic", "Antimony"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in antifreeze and as a solvent?",
+        options: ["Ethanol", "Methanol", "Glycerol", "Ethylene glycol"],
+        correctAnswer: "Ethylene glycol"
+    },
+    {
+        question: "Which p-block element is a rare noble gas used in lighting and laser technology?",
+        options: ["Neon", "Xenon", "Argon", "Krypton"],
+        correctAnswer: "Xenon"
+    },
+    {
+        question: "Which p-block element is essential for the formation of bones and teeth?",
+        options: ["Calcium", "Magnesium", "Phosphorus", "Sulfur"],
+        correctAnswer: "Calcium"
+    },
+    {
+        question: "Which p-block element is used in the production of steel and as a dietary supplement?",
+        options: ["Iron", "Copper", "Zinc", "Magnesium"],
+        correctAnswer: "Iron"
+    },
+    {
+        question: "Which p-block element is a halogen used in water purification and as an essential nutrient?",
+        options: ["Fluorine", "Chlorine", "Bromine", "Iodine"],
+        correctAnswer: "Fluorine"
+    },
+    {
+        question: "Which p-block element is known for its use in batteries and protective coatings?",
+        options: ["Lead", "Cadmium", "Zinc", "Mercury"],
+        correctAnswer: "Zinc"
+    },
+    {
+        question: "Which p-block element is a semiconductor used in photovoltaic cells and integrated circuits?",
+        options: ["Silicon", "Germanium", "Arsenic", "Antimony"],
+        correctAnswer: "Germanium"
+    },
+    {
+        question: "Which p-block element is a metalloid used in fireproof materials and as a semiconductor?",
+        options: ["Boron", "Carbon", "Arsenic", "Antimony"],
+        correctAnswer: "Antimony"
+    },
+    {
+        question: "Which p-block element is known for its role in plant nutrition and as a component of DNA?",
+        options: ["Nitrogen", "Phosphorus", "Potassium", "Sulfur"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a halogen used in photography and as a disinfectant?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Bromine"
+    },
+    {
+        question: "Which p-block element is used in the production of rubber and as a fire retardant?",
+        options: ["Sulfur", "Phosphorus", "Silicon", "Boron"],
+        correctAnswer: "Sulfur"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and advertising signs?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Neon"
+    },
+    {
+        question: "Which p-block element is used in the production of plastics and as a fertilizer?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Oxygen"],
+        correctAnswer: "Nitrogen"
+    },
+    {
+        question: "Which p-block element is known for its use in semiconductors and infrared optics?",
+        options: ["Silicon", "Germanium", "Arsenic", "Antimony"],
+        correctAnswer: "Arsenic"
+    },
+    {
+        question: "Which p-block element is essential for the formation of amino acids and proteins?",
+        options: ["Carbon", "Nitrogen", "Oxygen", "Sulfur"],
+        correctAnswer: "Nitrogen"
+    },
+    {
+        question: "Which p-block element is a metalloid used in alloys and as a catalyst?",
+        options: ["Boron", "Carbon", "Arsenic", "Silicon"],
+        correctAnswer: "Boron"
+    },
+    {
+        question: "Which p-block element is a halogen used in toothpaste and water purification?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Fluorine"
+    },
+    {
+        question: "Which p-block element is known for its use in batteries and as a protective plating?",
+        options: ["Copper", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Zinc"
+    },
+    {
+        question: "Which p-block element is a metal used in construction and as a structural material?",
+        options: ["Iron", "Aluminum", "Magnesium", "Calcium"],
+        correctAnswer: "Aluminum"
+    },
+    {
+        question: "Which p-block element is a semiconductor used in computer chips and solar cells?",
+        options: ["Silicon", "Carbon", "Germanium", "Arsenic"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in alloys and electrical components?",
+        options: ["Copper", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Copper"
+    },
+    {
+        question: "Which p-block element is used in the manufacture of soap and as a dietary mineral?",
+        options: ["Sodium", "Potassium", "Calcium", "Magnesium"],
+        correctAnswer: "Calcium"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and as a cryogen?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Krypton"
+    },
+    {
+        question: "Which p-block element is used in the production of pharmaceuticals and as a solvent?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Oxygen"],
+        correctAnswer: "Carbon"
+    },
+    {
+        question: "Which p-block element is known for its use in alloys and batteries?",
+        options: ["Aluminum", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Lead"
+    },
+    {
+        question: "Which p-block element is essential for the formation of ATP and DNA?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Phosphorus"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a halogen used in disinfectants and water purification?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Iodine"
+    },
+    {
+        question: "Which p-block element is used in the production of ceramics and as a desiccant?",
+        options: ["Sulfur", "Phosphorus", "Silicon", "Boron"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lasers and lighting?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Argon"
+    },
+    {
+        question: "Which p-block element is used in the production of fertilizers and explosives?",
+        options: ["Nitrogen", "Phosphorus", "Sulfur", "Chlorine"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a metalloid used in semiconductors and optics?",
+        options: ["Boron", "Carbon", "Arsenic", "Silicon"],
+        correctAnswer: "Arsenic"
+    },
+    {
+        question: "Which p-block element is known for its use in dental amalgams and thermometers?",
+        options: ["Iron", "Copper", "Mercury", "Zinc"],
+        correctAnswer: "Mercury"
+    },
+    {
+        question: "Which p-block element is used in the production of glass and as a flux in metallurgy?",
+        options: ["Boron", "Silicon", "Selenium", "Germanium"],
+        correctAnswer: "Boron"
+    },
+    {
+        question: "Which p-block element is a common constituent of bones and teeth?",
+        options: ["Calcium", "Magnesium", "Phosphorus", "Sulfur"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a semiconductor used extensively in electronics?",
+        options: ["Silicon", "Carbon", "Germanium", "Arsenic"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in dental fillings and batteries?",
+        options: ["Aluminum", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Mercury"
+    },
+    {
+        question: "Which p-block element is a halogen known for its use in disinfectants and bleaching agents?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Chlorine"
+    },
+    {
+        question: "Which p-block element is a metalloid known for its role in fireproof materials and ceramics?",
+        options: ["Boron", "Carbon", "Arsenic", "Antimony"],
+        correctAnswer: "Arsenic"
+    },
+    {
+        question: "Which p-block element is used in the manufacture of glass and as a flux in metallurgy?",
+        options: ["Boron", "Silicon", "Selenium", "Germanium"],
+        correctAnswer: "Boron"
+    },
+    {
+        question: "Which p-block element is a common constituent of bones and teeth?",
+        options: ["Calcium", "Magnesium", "Phosphorus", "Sulfur"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and cryogenic applications?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Argon"
+    },
+    {
+        question: "Which p-block element is a metalloid used in solar cells and fiber optics?",
+        options: ["Boron", "Silicon", "Arsenic", "Antimony"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in antifreeze and as a solvent?",
+        options: ["Ethanol", "Methanol", "Glycerol", "Ethylene glycol"],
+        correctAnswer: "Ethylene glycol"
+    },
+    {
+        question: "Which p-block element is a rare noble gas used in lighting and laser technology?",
+        options: ["Neon", "Xenon", "Argon", "Krypton"],
+        correctAnswer: "Xenon"
+    },
+    {
+        question: "Which p-block element is essential for the formation of bones and teeth?",
+        options: ["Calcium", "Magnesium", "Phosphorus", "Sulfur"],
+        correctAnswer: "Calcium"
+    },
+    {
+        question: "Which p-block element is used in the production of steel and as a dietary supplement?",
+        options: ["Iron", "Copper", "Zinc", "Magnesium"],
+        correctAnswer: "Iron"
+    },
+    {
+        question: "Which p-block element is a halogen used in water purification and as an essential nutrient?",
+        options: ["Fluorine", "Chlorine", "Bromine", "Iodine"],
+        correctAnswer: "Fluorine"
+    },
+    {
+        question: "Which p-block element is known for its use in batteries and protective coatings?",
+        options: ["Lead", "Cadmium", "Zinc", "Mercury"],
+        correctAnswer: "Zinc"
+    },
+    {
+        question: "Which p-block element is a semiconductor used in photovoltaic cells and integrated circuits?",
+        options: ["Silicon", "Germanium", "Arsenic", "Antimony"],
+        correctAnswer: "Germanium"
+    },
+    {
+        question: "Which p-block element is a metalloid used in fireproof materials and as a semiconductor?",
+        options: ["Boron", "Carbon", "Arsenic", "Antimony"],
+        correctAnswer: "Antimony"
+    },
+    {
+        question: "Which p-block element is known for its role in plant nutrition and as a component of DNA?",
+        options: ["Nitrogen", "Phosphorus", "Potassium", "Sulfur"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a halogen used in photography and as a disinfectant?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Bromine"
+    },
+    {
+        question: "Which p-block element is used in the production of rubber and as a fire retardant?",
+        options: ["Sulfur", "Phosphorus", "Silicon", "Boron"],
+        correctAnswer: "Sulfur"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and advertising signs?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Neon"
+    },
+    {
+        question: "Which p-block element is used in the production of plastics and as a fertilizer?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Oxygen"],
+        correctAnswer: "Nitrogen"
+    },
+    {
+        question: "Which p-block element is known for its use in semiconductors and optics?",
+        options: ["Silicon", "Germanium", "Arsenic", "Antimony"],
+        correctAnswer: "Arsenic"
+    },
+    {
+        question: "Which p-block element is essential for the formation of amino acids and proteins?",
+        options: ["Carbon", "Nitrogen", "Oxygen", "Sulfur"],
+        correctAnswer: "Nitrogen"
+    },
+    {
+        question: "Which p-block element is a metalloid used in alloys and as a catalyst?",
+        options: ["Boron", "Carbon", "Arsenic", "Silicon"],
+        correctAnswer: "Boron"
+    },
+    {
+        question: "Which p-block element is a halogen used in toothpaste and water purification?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Fluorine"
+    },
+    {
+        question: "Which p-block element is known for its use in batteries and as a protective plating?",
+        options: ["Lead", "Cadmium", "Zinc", "Mercury"],
+        correctAnswer: "Zinc"
+    },
+    {
+        question: "Which p-block element is a metal used in construction and as a structural material?",
+        options: ["Iron", "Aluminum", "Magnesium", "Calcium"],
+        correctAnswer: "Aluminum"
+    },
+    {
+        question: "Which p-block element is a semiconductor used in computer chips and solar cells?",
+        options: ["Silicon", "Carbon", "Germanium", "Arsenic"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is known for its use in alloys and electrical components?",
+        options: ["Copper", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Copper"
+    },
+    {
+        question: "Which p-block element is used in the manufacture of soap and as a dietary mineral?",
+        options: ["Sodium", "Potassium", "Calcium", "Magnesium"],
+        correctAnswer: "Calcium"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lighting and as a cryogen?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Krypton"
+    },
+    {
+        question: "Which p-block element is used in the production of pharmaceuticals and as a solvent?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Oxygen"],
+        correctAnswer: "Carbon"
+    },
+    {
+        question: "Which p-block element is known for its use in alloys and batteries?",
+        options: ["Aluminum", "Zinc", "Mercury", "Lead"],
+        correctAnswer: "Lead"
+    },
+    {
+        question: "Which p-block element is essential for the formation of ATP and DNA?",
+        options: ["Carbon", "Hydrogen", "Nitrogen", "Phosphorus"],
+        correctAnswer: "Phosphorus"
+    },
+    {
+        question: "Which p-block element is a halogen used in disinfectants and water purification?",
+        options: ["Chlorine", "Fluorine", "Bromine", "Iodine"],
+        correctAnswer: "Iodine"
+    },
+    {
+        question: "Which p-block element is used in the production of ceramics and as a desiccant?",
+        options: ["Sulfur", "Phosphorus", "Silicon", "Boron"],
+        correctAnswer: "Silicon"
+    },
+    {
+        question: "Which p-block element is a noble gas used in lasers and lighting?",
+        options: ["Helium", "Neon", "Argon", "Krypton"],
+        correctAnswer: "Argon"
+    }
+];
+
+
+        // Function to shuffle the options array
+        function shuffleOptions(options) {
+            for (var i = options.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = options[i];
+                options[i] = options[j];
+                options[j] = temp;
+            }
+            return options;
+        }
+    
+        // Shuffle options for each quiz question
+        quizPool.forEach(function (quiz) {
+            quiz.options = shuffleOptions(quiz.options);
+        });
+    
+        // Generate quiz dynamically
+        function generateQuiz() {
+            totalQuestions = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            updateScoreCard();
+    
+            var remainingQuestions = quizPool.slice(); // Copy the original pool of questions
+            var selectedQuestions = [];
+    
+            // Select 10 random questions from the pool
+            for (var i = 0; i < 10; i++) {
+                var randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                selectedQuestions.push(remainingQuestions[randomIndex]);
+                remainingQuestions.splice(randomIndex, 1); // Remove the selected question from the remaining questions
+            }
+    
+            var quizHTML = "";
+            for (var i = 0; i < selectedQuestions.length; i++) {
+                quizHTML += "<div class='mcq-card'>";
+                quizHTML += "<h3 class='mcq-question'>" + (i + 1) + ". " + selectedQuestions[i].question + "</h3>";
+                quizHTML += "<ul class='mcq-options'>";
+                for (var j = 0; j < selectedQuestions[i].options.length; j++) {
+                    quizHTML += "<li class='mcq-option' onclick='checkAnswer(this, \"" + selectedQuestions[i].correctAnswer + "\")'>" + String.fromCharCode(65 + j) + ". " + selectedQuestions[i].options[j] + "</li>";
+                }
+                quizHTML += "</ul>";
+                quizHTML += "</div>";
+            }
+    
+            document.getElementById("quiz").innerHTML = quizHTML;
+        }
+    
+        // Check user's answer
+        function checkAnswer(option, correctAnswer) {
+            var options = option.parentNode.children;
+            for (var i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = "none";
+            }
+    
+            if (option.innerText.substr(3) === correctAnswer) {
+                option.style.backgroundColor = "#7FFF7F"; // Correct answer
+                correctAnswers++;
+            } else {
+                option.style.backgroundColor = "#FF7F7F"; // Incorrect answer
+                incorrectAnswers++;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].innerText.substr(3) === correctAnswer) {
+                        options[i].style.backgroundColor = "#7FFF7F"; // Highlight correct answer
+                    }
+                }
+            }
+            totalQuestions++;
+            updateScoreCard();
+        }
+    
+        // Update score card
+        function updateScoreCard() {
+            var scoreCardHTML = "<p><span>Total Questions:</span> " + totalQuestions + "</p>";
+            scoreCardHTML += "<p><span>Correct Answers:</span> " + correctAnswers + "</p>";
+            scoreCardHTML += "<p><span>Incorrect Answers:</span> " + incorrectAnswers + "</p>";
+            document.getElementById("score-card").innerHTML = scoreCardHTML;
+        }
+    
+        // Load quiz on page load
+        window.onload = function () {
+            generateQuiz();
+            setInterval(function() {
+                generateQuiz();
+            }, 20000);
+        };
+    
+        // Refresh quiz
+        document.getElementById("refresh-btn").addEventListener("click", function () {
+            generateQuiz();
+        });
+    
+        // Convert video to AR
+        function convertToAR() {
+            // Replace the video with an AR-enabled version using AR.js or any other AR framework
+            var videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = '<div class="ar-video-container"><a-scene embedded arjs="sourceType: video; sourceUrl: CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4; patternRatio: custom; patternRatioCustom: 0.5;"><a-video src="CBSE Class 11 __ Physics __ Laws of Motion __ Animation __ in English @digitalguruji3147.mp4" width="16" height="9" rotation="-90 0 0"></a-video><div class="ar-controls"><button onclick="minimizeVideo()">Minimize</button><button onclick="pauseVideo()">Pause</button><button onclick="playVideo()">Play</button></div></a-scene></div>';
+        }
+    
+        // Minimize video function
+        function minimizeVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            arVideoContainer.style.display = 'none';
+            var minimizeButton = document.createElement('div');
+            minimizeButton.className = 'ar-minimize';
+            minimizeButton.innerHTML = '<button onclick="restoreVideo()">Restore</button>';
+            document.body.appendChild(minimizeButton);
+            arControls.style.display = 'none';
+        }
+    
+        // Restore video function
+        function restoreVideo() {
+            var arVideoContainer = document.querySelector('.ar-video-container');
+            var arControls = document.querySelector('.ar-controls');
+            var minimizeButton = document.querySelector('.ar-minimize');
+            arVideoContainer.style.display = 'block';
+            minimizeButton.parentNode.removeChild(minimizeButton);
+            arControls.style.display = 'block';
+        }
+    
+        // Pause video function
+        function pauseVideo() {
+            var video = document.querySelector('video');
+            video.pause();
+        }
+    
+        // Play video function
+        function playVideo() {
+            var video = document.querySelector('video');
+            video.play();
+        }
+    </script>
+    
+</body>
+</html>
