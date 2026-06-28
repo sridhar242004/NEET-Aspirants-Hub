@@ -88,7 +88,7 @@ The visual identity runs entirely on **CSS custom properties** defined once in `
 
 ## Architecture
 
-<img src="docs/assets/architecture.svg" alt="Architecture and data flow diagram" width="100%" />
+<img src="architecture.svg" alt="Architecture and data flow diagram" width="100%" />
 
 There are no client-side routes, no state management library, and no virtual DOM. The "architecture" is three independent layers sharing one document:
 
