@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="NEET Aspirants Hub" width="100%" />
+<img src="banner.svg" alt="NEET Aspirants Hub" width="100%" />
 
 <br/>
 
@@ -63,7 +63,7 @@ The page covers the full top-of-funnel journey for a NEET aspirant:
 
 ## Design System
 
-<img src="docs/assets/design-tokens.svg" alt="Design tokens extracted from CSS custom properties" width="100%" />
+<img src="design-tokens.svg" alt="Design tokens extracted from CSS custom properties" width="100%" />
 
 The visual identity runs entirely on **CSS custom properties** defined once in `:root`, which is what makes the swatch strip above accurate — every color in this README's diagrams was extracted directly from the stylesheet, not eyeballed.
 
