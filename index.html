@@ -1,221 +1,2384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEET Aspirants Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4CAF50;
-            --secondary: #45a049;
-            --text: #333;
-            --bg: #f0f4f0;
-            --white: #ffffff;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEET Aspirants Hub — Master Medicine, Ace NEET</title>
+<meta name="description" content="India's premier AI-powered NEET preparation platform with 3D visualizations, AI mentor, mock tests and structured roadmaps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --midnight: #04080F;
+  --deep: #070E1C;
+  --surface: #0C1628;
+  --surface-2: #111F38;
+  --blue: #2563EB;
+  --blue-light: #60A5FA;
+  --phys: #F59E0B;
+  --phys-light: #FCD34D;
+  --chem: #8B5CF6;
+  --chem-light: #C4B5FD;
+  --bio: #10B981;
+  --bio-light: #6EE7B7;
+  --text-1: #F1F5FF;
+  --text-2: #94A3B8;
+  --text-3: #475569;
+  --glass: rgba(255,255,255,0.04);
+  --glass-strong: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-border-strong: rgba(255,255,255,0.14);
+  --shadow-glow-blue: 0 0 40px rgba(37,99,235,0.25);
+  --shadow-glow-phys: 0 0 40px rgba(245,158,11,0.25);
+  --shadow-glow-chem: 0 0 40px rgba(139,92,246,0.25);
+  --shadow-glow-bio: 0 0 40px rgba(16,185,129,0.25);
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--midnight);
+  color: var(--text-1);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+/* ====== SCROLLBAR ====== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--midnight); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
 
-        header {
-            background: var(--gradient);
-            color: var(--white);
-            padding: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
+/* ====== NAVBAR ====== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(4,8,15,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--chem));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.5px;
+}
+.logo-text {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-1);
+  letter-spacing: -0.3px;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.25rem;
+  align-items: center;
+}
+.nav-links a {
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--text-1); background: var(--glass); }
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+.btn-nav-outline {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--glass-border-strong);
+  background: transparent;
+  color: var(--text-1);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-nav-outline:hover { border-color: var(--blue-light); background: var(--glass); }
+.btn-nav-primary {
+  padding: 0.5rem 1.1rem;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-nav-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--text-1);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 40%);
-            animation: rotate 20s linear infinite;
-        }
+/* ====== HERO ====== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, #0B1E40 0%, var(--midnight) 70%);
+}
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center bottom, rgba(4,8,15,0.8) 0%, transparent 60%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 860px;
+  padding: 0 1.5rem;
+  padding-top: 80px;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: 100px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(12px);
+}
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--bio);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--text-1);
+  margin-bottom: 1.5rem;
+}
+.hero-title .line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--blue-light) 0%, var(--chem-light) 50%, var(--bio-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  font-weight: 400;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+}
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.5); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border-strong);
+  color: var(--text-1);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+}
+.btn-secondary:hover { background: var(--glass-strong); border-color: var(--blue-light); color: var(--blue-light); transform: translateY(-2px); }
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin-top: 1rem;
-        }
+.hero-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.hero-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  background: var(--glass);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-2);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+.hero-pill:hover { border-color: var(--glass-border-strong); color: var(--text-1); }
+.hero-pill.phys { border-color: rgba(245,158,11,0.3); }
+.hero-pill.phys:hover { background: rgba(245,158,11,0.1); color: var(--phys-light); }
+.hero-pill.chem { border-color: rgba(139,92,246,0.3); }
+.hero-pill.chem:hover { background: rgba(139,92,246,0.1); color: var(--chem-light); }
+.hero-pill.bio { border-color: rgba(16,185,129,0.3); }
+.hero-pill.bio:hover { background: rgba(16,185,129,0.1); color: var(--bio-light); }
 
-        nav ul li {
-            margin: 0 15px;
-        }
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+  color: var(--text-3);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.scroll-mouse {
+  width: 22px; height: 36px;
+  border: 2px solid var(--text-3);
+  border-radius: 11px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.scroll-mouse::after {
+  content: '';
+  width: 3px; height: 7px;
+  background: var(--text-3);
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  animation: scroll-down 2s ease-in-out infinite;
+}
+@keyframes scroll-down { 0%,100%{opacity:1;top:6px} 50%{opacity:0;top:16px} }
 
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
-            position: relative;
-            padding: 5px 0;
-        }
+/* ====== STATS ====== */
+.stats-section {
+  padding: 3rem 0;
+  background: var(--deep);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat-item {
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-right: 1px solid var(--glass-border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-1);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-number span { color: var(--blue-light); }
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  font-weight: 400;
+}
 
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--white);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
+/* ====== SECTION COMMON ====== */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+section { padding: 6rem 0; }
 
-        nav ul li a:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+  color: var(--text-1);
+}
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+}
 
-        h1, h2 {
-            text-align: center;
-        }
+/* ====== SUBJECTS ====== */
+.subjects-section { background: var(--midnight); }
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.subject-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 2.5rem;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  transition: opacity 0.3s ease;
+}
+.subject-card.phys::before { background: linear-gradient(90deg, var(--phys), transparent); }
+.subject-card.chem::before { background: linear-gradient(90deg, var(--chem), transparent); }
+.subject-card.bio::before  { background: linear-gradient(90deg, var(--bio),  transparent); }
 
-        h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1rem;
-        }
+.subject-card:hover { transform: translateY(-8px); }
+.subject-card.phys:hover { border-color: rgba(245,158,11,0.4); box-shadow: var(--shadow-glow-phys); }
+.subject-card.chem:hover { border-color: rgba(139,92,246,0.4); box-shadow: var(--shadow-glow-chem); }
+.subject-card.bio:hover  { border-color: rgba(16,185,129,0.4); box-shadow: var(--shadow-glow-bio); }
 
-        main {
-            padding: 4rem 0;
-        }
+.subject-icon-wrap {
+  width: 60px; height: 60px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.75rem;
+}
+.phys .subject-icon-wrap { background: rgba(245,158,11,0.12); }
+.chem .subject-icon-wrap { background: rgba(139,92,246,0.12); }
+.bio  .subject-icon-wrap { background: rgba(16,185,129,0.12); }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+.subject-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin: 0;
+}
+.subject-desc {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  flex: 1;
+}
+.subject-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.topic-tag {
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+.phys .topic-tag { background: rgba(245,158,11,0.08); color: var(--phys-light); border-color: rgba(245,158,11,0.2); }
+.chem .topic-tag { background: rgba(139,92,246,0.08); color: var(--chem-light); border-color: rgba(139,92,246,0.2); }
+.bio  .topic-tag { background: rgba(16,185,129,0.08); color: var(--bio-light);  border-color: rgba(16,185,129,0.2); }
 
-        .card {
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+.subject-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--glass-border);
+}
+.subject-meta-item { text-align: center; }
+.meta-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: block;
+}
+.phys .meta-num { color: var(--phys); }
+.chem .meta-num { color: var(--chem); }
+.bio  .meta-num { color: var(--bio); }
+.meta-label { font-size: 0.75rem; color: var(--text-2); }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
+.subject-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+.phys .subject-cta { color: var(--phys); }
+.chem .subject-cta { color: var(--chem); }
+.bio  .subject-cta { color: var(--bio); }
+.subject-cta:hover { gap: 0.75rem; }
 
-        .card-content {
-            padding: 2rem;
-        }
+/* ====== COUNTDOWN ====== */
+.countdown-section {
+  background: var(--deep);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+.countdown-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.countdown-left {}
+.countdown-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(37,99,235,0.12);
+  border: 1px solid rgba(37,99,235,0.3);
+  border-radius: 100px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 1.5rem;
+}
+.countdown-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--text-1);
+  margin-bottom: 1rem;
+}
+.countdown-sub { font-size: 0.95rem; color: var(--text-2); line-height: 1.6; margin-bottom: 2rem; }
 
-        .card h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
+.readiness-wrap { margin-top: 2rem; }
+.readiness-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin-bottom: 0.5rem;
+}
+.progress-track {
+  height: 6px;
+  background: var(--glass-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--bio));
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.5s ease;
+}
 
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: var(--gradient);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.timer-unit {
+  background: var(--surface);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  min-width: 90px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.timer-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-1);
+  display: block;
+  line-height: 1;
+}
+.timer-label { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.4rem; display: block; }
+.timer-sep { font-family: 'JetBrains Mono', monospace; font-size: 2rem; color: var(--text-3); }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
+/* ====== BENTO FEATURES ====== */
+.features-section { background: var(--midnight); }
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1.25rem;
+}
+.bento-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.bento-card:hover { border-color: var(--glass-border-strong); transform: translateY(-4px); }
+.bento-card.span-2 { grid-column: span 2; }
+.bento-card.span-3 { grid-column: span 3; }
+.bento-card.tall { grid-row: span 2; }
 
-        footer {
-            background: var(--text);
-            color: var(--white);
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 4rem;
-        }
+.bento-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+}
+.bento-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.bento-card-desc { font-size: 0.875rem; color: var(--text-2); line-height: 1.6; }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --text: #f0f0f0;
-                --bg: #1a1a1a;
-                --white: #2a2a2a;
-            }
-        }
+.bento-hero-card {
+  background: linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(139,92,246,0.15) 100%);
+  border-color: rgba(37,99,235,0.3);
+}
+.bento-hero-card .bento-card-title { font-size: 1.4rem; }
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-    </style>
+.bento-vis {
+  margin-top: 1.5rem;
+  height: 120px;
+  background: var(--glass);
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* AI Thinking dots animation */
+.ai-dots { display: flex; gap: 8px; align-items: center; }
+.ai-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  animation: ai-bounce 1.4s ease-in-out infinite;
+}
+.ai-dot:nth-child(2) { animation-delay: 0.2s; background: var(--chem-light); }
+.ai-dot:nth-child(3) { animation-delay: 0.4s; background: var(--bio-light); }
+@keyframes ai-bounce { 0%,80%,100%{transform:scale(0.7);opacity:0.5} 40%{transform:scale(1.2);opacity:1} }
+
+/* Analytics mini-chart */
+.mini-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; padding: 0 1rem; }
+.mini-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(to top, var(--blue), var(--blue-light));
+  opacity: 0.8;
+  transition: height 0.5s ease;
+}
+
+/* ====== AI MENTOR ====== */
+.ai-section { background: var(--deep); }
+.ai-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 5rem;
+  align-items: center;
+}
+.ai-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--text-1);
+  margin-bottom: 1rem;
+}
+.ai-desc { font-size: 0.95rem; color: var(--text-2); line-height: 1.7; margin-bottom: 2rem; }
+.ai-caps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ai-caps li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+.ai-caps li::before {
+  content: '';
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.15);
+  border: 1.5px solid var(--bio);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath stroke='%2310B981' stroke-width='2' fill='none' d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Chat widget */
+.chat-widget {
+  background: var(--surface);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.chat-header {
+  background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(139,92,246,0.2));
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.chat-avatar {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--blue), var(--chem));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.chat-name { font-weight: 700; font-size: 0.95rem; color: var(--text-1); display: block; }
+.chat-status { font-size: 0.75rem; color: var(--bio); display: block; }
+
+.chat-messages {
+  height: 280px;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--glass-border-strong); }
+
+.msg {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.msg-bot {
+  background: var(--surface-2);
+  border: 1px solid var(--glass-border);
+  color: var(--text-2);
+  align-self: flex-start;
+  border-radius: var(--radius-sm) var(--radius) var(--radius) var(--radius);
+}
+.msg-user {
+  background: var(--blue);
+  color: #fff;
+  align-self: flex-end;
+  border-radius: var(--radius) var(--radius-sm) var(--radius) var(--radius);
+}
+.msg-typing { display: flex; align-items: center; gap: 4px; padding: 0.75rem 1rem; }
+.typing-dot { width: 7px; height: 7px; background: var(--text-3); border-radius: 50%; animation: ai-bounce 1s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+.quick-chips {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.quick-chip {
+  padding: 0.35rem 0.75rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.quick-chip:hover { color: var(--text-1); border-color: var(--blue-light); background: rgba(37,99,235,0.1); }
+
+.chat-input-row {
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+.chat-textarea {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  color: var(--text-1);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  max-height: 100px;
+  line-height: 1.5;
+}
+.chat-textarea::placeholder { color: var(--text-3); }
+.chat-textarea:focus { border-color: var(--blue); }
+.chat-send {
+  width: 42px; height: 42px;
+  background: var(--blue);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s;
+  color: #fff;
+  font-size: 1rem;
+}
+.chat-send:hover { background: #1d4ed8; transform: scale(1.05); }
+.chat-send:disabled { background: var(--text-3); cursor: not-allowed; transform: none; }
+
+/* ====== ROADMAP ====== */
+.roadmap-section { background: var(--midnight); }
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  position: relative;
+}
+.roadmap-grid::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: calc(12.5% + 0px);
+  right: calc(12.5% + 0px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--chem), var(--bio), var(--phys));
+  z-index: 0;
+}
+.roadmap-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.roadmap-card:hover { transform: translateY(-6px); border-color: var(--glass-border-strong); }
+.roadmap-num {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 auto 1.25rem;
+  border: 2px solid;
+}
+.roadmap-card:nth-child(1) .roadmap-num { background: rgba(37,99,235,0.15); border-color: var(--blue); color: var(--blue-light); }
+.roadmap-card:nth-child(2) .roadmap-num { background: rgba(139,92,246,0.15); border-color: var(--chem); color: var(--chem-light); }
+.roadmap-card:nth-child(3) .roadmap-num { background: rgba(16,185,129,0.15); border-color: var(--bio); color: var(--bio-light); }
+.roadmap-card:nth-child(4) .roadmap-num { background: rgba(245,158,11,0.15); border-color: var(--phys); color: var(--phys-light); }
+.roadmap-phase { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 0.5rem; }
+.roadmap-title { font-weight: 700; font-size: 1rem; color: var(--text-1); margin-bottom: 0.75rem; }
+.roadmap-desc { font-size: 0.825rem; color: var(--text-2); line-height: 1.6; }
+.roadmap-tags {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.r-tag {
+  padding: 0.2rem 0.6rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  color: var(--text-3);
+}
+
+/* ====== RESOURCES ====== */
+.resources-section { background: var(--deep); }
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.resource-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.3s, border-color 0.3s;
+  text-decoration: none;
+}
+.resource-card:hover { transform: translateY(-5px); border-color: var(--glass-border-strong); }
+.resource-icon { font-size: 2rem; }
+.resource-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-3); }
+.resource-title { font-weight: 700; font-size: 1.05rem; color: var(--text-1); }
+.resource-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.5; flex: 1; }
+.resource-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--blue-light);
+  margin-top: 0.5rem;
+}
+
+/* ====== TESTIMONIALS ====== */
+.testimonials-section { background: var(--midnight); }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: transform 0.3s;
+}
+.testimonial-card:hover { transform: translateY(-5px); }
+.score-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.score-badge.gold { background: rgba(245,158,11,0.15); color: var(--phys-light); border: 1px solid rgba(245,158,11,0.3); }
+.score-badge.silver { background: rgba(148,163,184,0.15); color: #CBD5E1; border: 1px solid rgba(148,163,184,0.3); }
+.score-badge.bronze { background: rgba(16,185,129,0.15); color: var(--bio-light); border: 1px solid rgba(16,185,129,0.3); }
+.testimonial-quote {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--glass-border);
+}
+.testimonial-quote::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--blue); line-height: 0; vertical-align: -1rem; margin-right: 0.3rem; }
+.t-author { display: flex; align-items: center; gap: 0.75rem; }
+.t-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.t-name { font-weight: 600; font-size: 0.9rem; color: var(--text-1); }
+.t-detail { font-size: 0.775rem; color: var(--text-3); }
+
+/* ====== MOCK TEST CTA ====== */
+.mock-section { background: var(--deep); }
+.mock-card {
+  background: linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(139,92,246,0.1) 100%);
+  border: 1px solid rgba(37,99,235,0.25);
+  border-radius: var(--radius-xl);
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.mock-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(139,92,246,0.12), transparent 70%);
+  pointer-events: none;
+}
+.mock-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--bio-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 1.25rem;
+}
+.mock-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--text-1);
+  margin-bottom: 1rem;
+}
+.mock-desc { font-size: 0.95rem; color: var(--text-2); line-height: 1.6; margin-bottom: 2rem; }
+.mock-types { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+.mock-type-btn {
+  padding: 0.45rem 0.9rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.mock-type-btn.active,
+.mock-type-btn:hover { background: rgba(37,99,235,0.15); border-color: var(--blue); color: var(--blue-light); }
+
+.mock-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.exam-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.esv { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 700; }
+.esl { font-size: 0.8rem; color: var(--text-2); }
+.esv.blue { color: var(--blue-light); }
+.esv.purple { color: var(--chem-light); }
+.esv.green { color: var(--bio-light); }
+
+/* ====== FOOTER ====== */
+footer {
+  background: var(--midnight);
+  border-top: 1px solid var(--glass-border);
+  padding: 4rem 0 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 0.75rem;
+}
+.footer-tagline { font-size: 0.875rem; color: var(--text-2); line-height: 1.6; margin-bottom: 1.5rem; }
+.footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-3); margin-bottom: 1rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { font-size: 0.875rem; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text-1); }
+.newsletter-input-row { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.newsletter-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  color: var(--text-1);
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-input::placeholder { color: var(--text-3); }
+.newsletter-input:focus { border-color: var(--blue); }
+.newsletter-btn {
+  padding: 0.6rem 1rem;
+  background: var(--blue);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.newsletter-btn:hover { background: #1d4ed8; }
+.footer-bottom {
+  border-top: 1px solid var(--glass-border);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy { font-size: 0.8rem; color: var(--text-3); }
+.footer-made { font-size: 0.8rem; color: var(--text-3); }
+.footer-made span { color: #e11d48; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1024px) {
+  .subjects-grid { grid-template-columns: 1fr; }
+  .ai-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .countdown-wrap { grid-template-columns: 1fr; }
+  .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+  .roadmap-grid::before { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .mock-card { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem; }
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-card.span-2 { grid-column: span 2; }
+  .bento-card.span-3 { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-actions { display: none; }
+  .nav-hamburger { display: flex; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--glass-border); }
+  .stat-item:nth-child(odd) { border-right: 1px solid var(--glass-border); }
+  .stat-item:last-child, .stat-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+  .subjects-grid { grid-template-columns: 1fr; }
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card.span-2, .bento-card.span-3, .bento-card.tall { grid-column: span 1; grid-row: span 1; }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .resources-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .timer-display { gap: 0.4rem; }
+  .timer-unit { min-width: 65px; padding: 1rem 0.75rem; }
+  section { padding: 4rem 0; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 1.25rem; }
+  .hero-title { letter-spacing: -1px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas a { text-align: center; justify-content: center; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ====== MOBILE MENU ====== */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(4,8,15,0.95);
+  backdrop-filter: blur(24px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-1);
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--blue-light); }
+.mobile-close {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ====== ANIMATIONS init state ====== */
+.reveal { opacity: 0; }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>NEET Aspirants Hub</h1>
-            <nav>
-                <ul>
-                    <li><a href="Physics/physics.html">Physics</a></li>
-                    <li><a href="chemistry/chemistry.html">Chemistry</a></li>
-                    <li><a href="Biology/biology.html">Biology</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main class="container">
-        <div class="grid">
-            <div class="card">
-                <div class="card-content">
-                    <h2>About NEET</h2>
-                    <p>NEET (National Eligibility cum Entrance Test) is the qualifying exam for MBBS and BDS programs in Indian medical and dental colleges.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h2>AR and VR Content</h2>
-                    <p>Explore interactive AR and VR content to enhance your learning experience.</p>
-                    <a href="#" class="btn">Explore AR/VR</a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h2>Quizzes and Mock Tests</h2>
-                    <p>Test your knowledge with our comprehensive quizzes and mock tests.</p>
-                    <a href="#" class="btn">Take Quizzes</a>
-                </div>
-            </div>
-        </div>
-    </main>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <a href="#subjects" onclick="closeMobileMenu()">Subjects</a>
+  <a href="#features" onclick="closeMobileMenu()">Features</a>
+  <a href="#ai-mentor" onclick="closeMobileMenu()">AI Mentor</a>
+  <a href="#roadmap" onclick="closeMobileMenu()">Roadmap</a>
+  <a href="#resources" onclick="closeMobileMenu()">Resources</a>
+  <a href="#mock-test" onclick="closeMobileMenu()" style="color:var(--blue-light)">Free Mock Test</a>
+</div>
 
-    <footer>
-        <p>&copy; 2024 NEET Aspirants Hub</p>
-    </footer>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="NEET Hub home">
+      <div class="logo-mark" aria-hidden="true">NH</div>
+      <span class="logo-text">NEET Aspirants Hub</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#subjects">Subjects</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#ai-mentor">AI Mentor</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#resources">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#mock-test" class="btn-nav-outline">Take Mock Test</a>
+      <a href="#subjects" class="btn-nav-primary">Start Learning</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero section">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow">
+      <span class="eyebrow-dot" aria-hidden="true"></span>
+      India's Premier AI-Powered NEET Platform
+    </div>
+    <h1 class="hero-title" id="heroTitle">
+      Master Medicine.<br>
+      <span class="line2">Ace NEET.</span>
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      AI-powered learning, 3D visualizations, and expert-curated content — everything you need to clear NEET with confidence.
+    </p>
+    <div class="hero-ctas" id="heroCtas">
+      <a href="#subjects" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Start Learning Free
+      </a>
+      <a href="#mock-test" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zM8 6v2.5L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Take Free Mock Test
+      </a>
+    </div>
+    <div class="hero-pills" id="heroPills">
+      <div class="hero-pill phys" aria-label="Physics subject">⚛️ Physics — 45 Qs</div>
+      <div class="hero-pill chem" aria-label="Chemistry subject">🧪 Chemistry — 45 Qs</div>
+      <div class="hero-pill bio"  aria-label="Biology subject">🧬 Biology — 90 Qs</div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" aria-label="Platform statistics">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-number" id="s1">0<span>L+</span></span>
+        <span class="stat-label">Annual Aspirants</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number" id="s2">0<span>+</span></span>
+        <span class="stat-label">Practice Questions</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number" id="s3">0<span>%</span></span>
+        <span class="stat-label">Student Satisfaction</span>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-number" id="s4">0<span>+</span></span>
+        <span class="stat-label">Government Colleges</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section id="subjects" class="subjects-section" aria-labelledby="subjects-heading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Core Disciplines</div>
+      <h2 class="section-title" id="subjects-heading">Choose Your Subject</h2>
+      <p class="section-desc">Dive deep into structured content, visual aids, and practice questions for every NEET topic.</p>
+    </div>
+    <div class="subjects-grid">
+
+      <a href="Physics/physics.html" class="subject-card phys reveal" aria-label="Physics section">
+        <div class="subject-icon-wrap" aria-hidden="true">⚛️</div>
+        <h3 class="subject-name">Physics</h3>
+        <p class="subject-desc">Master mechanics, optics, thermodynamics, and modern physics with visual problem-solving techniques.</p>
+        <div class="subject-topics">
+          <span class="topic-tag">Mechanics</span>
+          <span class="topic-tag">Optics</span>
+          <span class="topic-tag">Electrostatics</span>
+          <span class="topic-tag">Thermodynamics</span>
+          <span class="topic-tag">+14 topics</span>
+        </div>
+        <div class="subject-meta">
+          <div class="subject-meta-item">
+            <span class="meta-num">45</span>
+            <span class="meta-label">NEET Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">180</span>
+            <span class="meta-label">Practice Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">19</span>
+            <span class="meta-label">Chapters</span>
+          </div>
+        </div>
+        <span class="subject-cta">Explore Physics
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="chemistry/chemistry.html" class="subject-card chem reveal" aria-label="Chemistry section">
+        <div class="subject-icon-wrap" aria-hidden="true">🧪</div>
+        <h3 class="subject-name">Chemistry</h3>
+        <p class="subject-desc">From organic reactions to electrochemistry — master all reactions, mechanisms, and periodic trends.</p>
+        <div class="subject-topics">
+          <span class="topic-tag">Organic Chemistry</span>
+          <span class="topic-tag">Physical Chem</span>
+          <span class="topic-tag">Inorganic</span>
+          <span class="topic-tag">Equilibrium</span>
+          <span class="topic-tag">+18 topics</span>
+        </div>
+        <div class="subject-meta">
+          <div class="subject-meta-item">
+            <span class="meta-num">45</span>
+            <span class="meta-label">NEET Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">200</span>
+            <span class="meta-label">Practice Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">28</span>
+            <span class="meta-label">Chapters</span>
+          </div>
+        </div>
+        <span class="subject-cta">Explore Chemistry
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a href="Biology/biology.html" class="subject-card bio reveal" aria-label="Biology section">
+        <div class="subject-icon-wrap" aria-hidden="true">🧬</div>
+        <h3 class="subject-name">Biology</h3>
+        <p class="subject-desc">Botany and zoology: cell biology, genetics, evolution, ecology and human physiology in depth.</p>
+        <div class="subject-topics">
+          <span class="topic-tag">Cell Biology</span>
+          <span class="topic-tag">Genetics</span>
+          <span class="topic-tag">Ecology</span>
+          <span class="topic-tag">Human Physiology</span>
+          <span class="topic-tag">+20 topics</span>
+        </div>
+        <div class="subject-meta">
+          <div class="subject-meta-item">
+            <span class="meta-num">90</span>
+            <span class="meta-label">NEET Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">400</span>
+            <span class="meta-label">Practice Qs</span>
+          </div>
+          <div class="subject-meta-item">
+            <span class="meta-num">38</span>
+            <span class="meta-label">Chapters</span>
+          </div>
+        </div>
+        <span class="subject-cta">Explore Biology
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="countdown-section" aria-label="NEET exam countdown">
+  <div class="container">
+    <div class="countdown-wrap">
+      <div class="countdown-left reveal">
+        <div class="countdown-badge">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="var(--blue-light)" aria-hidden="true"><circle cx="5" cy="5" r="5"/></svg>
+          Live Countdown
+        </div>
+        <h2 class="countdown-title">NEET 2026 — The Clock Is Ticking</h2>
+        <p class="countdown-sub">Every day counts. Set daily goals, track weekly progress, and approach exam day with full preparation.</p>
+        <div class="readiness-wrap">
+          <div class="readiness-label">
+            <span>Platform Readiness Score</span>
+            <span id="readinessNum" style="color:var(--bio-light);font-family:'JetBrains Mono',monospace">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="timer-display reveal" aria-live="polite" aria-label="Time remaining until NEET exam">
+        <div class="timer-unit">
+          <span class="timer-num" id="cd-days">---</span>
+          <span class="timer-label">Days</span>
+        </div>
+        <div class="timer-sep" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <span class="timer-num" id="cd-hours">--</span>
+          <span class="timer-label">Hours</span>
+        </div>
+        <div class="timer-sep" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <span class="timer-num" id="cd-mins">--</span>
+          <span class="timer-label">Mins</span>
+        </div>
+        <div class="timer-sep" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <span class="timer-num" id="cd-secs">--</span>
+          <span class="timer-label">Secs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES BENTO -->
+<section id="features" class="features-section" aria-labelledby="features-heading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Platform Capabilities</div>
+      <h2 class="section-title" id="features-heading">Everything You Need to Clear NEET</h2>
+      <p class="section-desc">A complete ecosystem built specifically for serious NEET aspirants.</p>
+    </div>
+    <div class="bento-grid">
+
+      <div class="bento-card bento-hero-card span-2 tall reveal">
+        <div class="bento-icon-wrap" aria-hidden="true">🤖</div>
+        <h3 class="bento-card-title">AI NEET Mentor — Dr. NEET</h3>
+        <p class="bento-card-desc">Powered by advanced AI, Dr. NEET instantly solves Physics, Chemistry, and Biology problems step by step. Ask anything — from Newton's Laws to DNA transcription — and get crystal-clear explanations with memory mnemonics.</p>
+        <div class="bento-vis" aria-hidden="true">
+          <div class="ai-dots">
+            <div class="ai-dot"></div>
+            <div class="ai-dot"></div>
+            <div class="ai-dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card reveal">
+        <div class="bento-icon-wrap" aria-hidden="true">📊</div>
+        <h3 class="bento-card-title">Performance Analytics</h3>
+        <p class="bento-card-desc">Track accuracy by topic, identify weak areas, and see your improvement over time.</p>
+        <div class="bento-vis" aria-hidden="true">
+          <div class="mini-chart">
+            <div class="mini-bar" style="height:40%"></div>
+            <div class="mini-bar" style="height:65%"></div>
+            <div class="mini-bar" style="height:50%"></div>
+            <div class="mini-bar" style="height:80%"></div>
+            <div class="mini-bar" style="height:70%"></div>
+            <div class="mini-bar" style="height:90%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card reveal" style="border-color:rgba(245,158,11,0.2)">
+        <div class="bento-icon-wrap" style="background:rgba(245,158,11,0.1)" aria-hidden="true">⏱️</div>
+        <h3 class="bento-card-title">Timed Practice Mode</h3>
+        <p class="bento-card-desc">Topic-wise sessions with real exam timing to build speed and accuracy under pressure.</p>
+      </div>
+
+      <div class="bento-card span-2 reveal" style="border-color:rgba(16,185,129,0.2)">
+        <div class="bento-icon-wrap" style="background:rgba(16,185,129,0.1)" aria-hidden="true">🧬</div>
+        <h3 class="bento-card-title">3D Visualizations & AR Content</h3>
+        <p class="bento-card-desc">Understand cell division, molecular structures, optics experiments, and circuit diagrams through immersive 3D models and augmented reality experiences — making abstract concepts concrete.</p>
+      </div>
+
+      <div class="bento-card reveal" style="border-color:rgba(139,92,246,0.2)">
+        <div class="bento-icon-wrap" style="background:rgba(139,92,246,0.1)" aria-hidden="true">📚</div>
+        <h3 class="bento-card-title">Previous Year Papers</h3>
+        <p class="bento-card-desc">10+ years of NEET papers with topic-wise filtering and detailed video explanations.</p>
+      </div>
+
+      <div class="bento-card reveal">
+        <div class="bento-icon-wrap" aria-hidden="true">🎯</div>
+        <h3 class="bento-card-title">Full Mock Tests</h3>
+        <p class="bento-card-desc">Realistic NEET mock exams with NTA-pattern, instant marking, and percentile prediction.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AI MENTOR -->
+<section id="ai-mentor" class="ai-section" aria-labelledby="ai-heading">
+  <div class="container">
+    <div class="ai-layout">
+      <div class="ai-info reveal">
+        <div class="section-eyebrow">Powered by Claude AI</div>
+        <h2 class="ai-title" id="ai-heading">Meet Dr. NEET — Your Personal AI Study Partner</h2>
+        <p class="ai-desc">Ask any NEET question in plain English. Get step-by-step solutions, memory mnemonics, and concept explanations — available 24/7, for free.</p>
+        <ul class="ai-caps" aria-label="AI capabilities">
+          <li>Solves Physics, Chemistry &amp; Biology problems instantly</li>
+          <li>Explains NEET concepts with step-by-step breakdowns</li>
+          <li>Generates memory mnemonics and shortcuts</li>
+          <li>Creates personalized daily study plans</li>
+          <li>Analyzes your weak areas from mock test results</li>
+        </ul>
+      </div>
+      <div class="chat-widget reveal" role="region" aria-label="AI chat assistant">
+        <div class="chat-header">
+          <div class="chat-avatar" aria-hidden="true">🩺</div>
+          <div>
+            <span class="chat-name">Dr. NEET — AI Mentor</span>
+            <span class="chat-status">● Online &amp; Ready</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages">
+          <div class="msg msg-bot">
+            Hello! I'm Dr. NEET, your AI study companion. Ask me anything about Physics, Chemistry, or Biology — I'll explain it step by step. 🎯
+          </div>
+        </div>
+        <div class="quick-chips" role="group" aria-label="Quick question suggestions">
+          <button class="quick-chip" onclick="askPreset('Explain DNA replication mechanism step by step for NEET')">🧬 DNA Replication</button>
+          <button class="quick-chip" onclick="askPreset('Newton\\'s Laws of Motion key points and NEET tricks')">⚛️ Newton's Laws</button>
+          <button class="quick-chip" onclick="askPreset('IUPAC nomenclature rules for organic compounds NEET')">🧪 IUPAC Rules</button>
+          <button class="quick-chip" onclick="askPreset('High weightage topics in NEET Biology for quick revision')">📊 Top Biology Topics</button>
+        </div>
+        <div class="chat-input-row">
+          <textarea class="chat-textarea" id="chatInput" placeholder="Ask any NEET question…" rows="2" aria-label="Type your question here" onkeydown="handleChatKey(event)"></textarea>
+          <button class="chat-send" id="chatSend" onclick="sendChat()" aria-label="Send message">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3.5 6L2 14l12-6z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="roadmap-section" aria-labelledby="roadmap-heading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Study Strategy</div>
+      <h2 class="section-title" id="roadmap-heading">Your NEET Preparation Roadmap</h2>
+      <p class="section-desc">A structured, phase-based plan used by thousands of top scorers.</p>
+    </div>
+    <div class="roadmap-grid">
+      <div class="roadmap-card reveal">
+        <div class="roadmap-num">01</div>
+        <div class="roadmap-phase">Months 1–3</div>
+        <h3 class="roadmap-title">Foundation Phase</h3>
+        <p class="roadmap-desc">Build strong fundamentals with NCERT. Focus on concept clarity, detailed notes, and understanding over rote learning.</p>
+        <div class="roadmap-tags">
+          <span class="r-tag">NCERT Mastery</span>
+          <span class="r-tag">Concept Notes</span>
+          <span class="r-tag">Visual Learning</span>
+        </div>
+      </div>
+      <div class="roadmap-card reveal">
+        <div class="roadmap-num">02</div>
+        <div class="roadmap-phase">Months 4–6</div>
+        <h3 class="roadmap-title">Practice Phase</h3>
+        <p class="roadmap-desc">Topic-wise tests, MCQ drills, and performance analytics. Identify gaps and close them with targeted revision.</p>
+        <div class="roadmap-tags">
+          <span class="r-tag">MCQ Practice</span>
+          <span class="r-tag">Weak Area Focus</span>
+          <span class="r-tag">Speed Building</span>
+        </div>
+      </div>
+      <div class="roadmap-card reveal">
+        <div class="roadmap-num">03</div>
+        <div class="roadmap-phase">Months 7–9</div>
+        <h3 class="roadmap-title">Mock Test Phase</h3>
+        <p class="roadmap-desc">Full-length mocks every week under real exam conditions. Analyze every error. Revise high-weightage formulas and diagrams.</p>
+        <div class="roadmap-tags">
+          <span class="r-tag">Full Mocks</span>
+          <span class="r-tag">Error Analysis</span>
+          <span class="r-tag">Deep Revision</span>
+        </div>
+      </div>
+      <div class="roadmap-card reveal">
+        <div class="roadmap-num">04</div>
+        <div class="roadmap-phase">Final Month</div>
+        <h3 class="roadmap-title">Final Sprint</h3>
+        <p class="roadmap-desc">High-weightage topics only. 10-year PYQs. Stress management, sleep optimization, and exam-day strategy.</p>
+        <div class="roadmap-tags">
+          <span class="r-tag">PYQ Revision</span>
+          <span class="r-tag">High Weightage</span>
+          <span class="r-tag">Exam Strategy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" class="resources-section" aria-labelledby="resources-heading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Resource Library</div>
+      <h2 class="section-title" id="resources-heading">Quick Access to Study Material</h2>
+      <p class="section-desc">Curated, exam-relevant resources — all in one place.</p>
+    </div>
+    <div class="resources-grid">
+      <a href="#" class="resource-card reveal" aria-label="Formula sheets resource">
+        <div class="resource-icon" aria-hidden="true">📐</div>
+        <div class="resource-label">Physics &amp; Chemistry</div>
+        <div class="resource-title">Formula Sheets</div>
+        <div class="resource-desc">Complete, topic-wise formula compilation for Physics and Physical Chemistry — print-ready and downloadable.</div>
+        <span class="resource-action">Download Free
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="resource-card reveal" aria-label="Previous year papers resource">
+        <div class="resource-icon" aria-hidden="true">📋</div>
+        <div class="resource-label">2015–2024</div>
+        <div class="resource-title">Previous Year Papers</div>
+        <div class="resource-desc">10 years of NEET question papers with full solutions, topic tagging, and difficulty ratings for every question.</div>
+        <span class="resource-action">Explore Papers
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="resource-card reveal" aria-label="Biology diagrams resource">
+        <div class="resource-icon" aria-hidden="true">🧬</div>
+        <div class="resource-label">Must-Know Diagrams</div>
+        <div class="resource-title">Biology Diagrams Atlas</div>
+        <div class="resource-desc">All NEET-important diagrams — cell structures, human anatomy, plant morphology — with labelling practice mode.</div>
+        <span class="resource-action">View Diagrams
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="resource-card reveal" aria-label="Revision notes resource">
+        <div class="resource-icon" aria-hidden="true">📝</div>
+        <div class="resource-label">Concise &amp; Complete</div>
+        <div class="resource-title">Rapid Revision Notes</div>
+        <div class="resource-desc">Chapter-wise condensed notes covering all NCERT points. Ideal for last-week revision before the exam.</div>
+        <span class="resource-action">Open Notes
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="resource-card reveal" aria-label="Mnemonics resource">
+        <div class="resource-icon" aria-hidden="true">🧠</div>
+        <div class="resource-label">Memory Tricks</div>
+        <div class="resource-title">Mnemonics Vault</div>
+        <div class="resource-desc">300+ NEET-specific memory techniques for taxonomy, periodic trends, reactions, and anatomy — generated by AI.</div>
+        <span class="resource-action">Browse Mnemonics
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="resource-card reveal" aria-label="Study planner resource">
+        <div class="resource-icon" aria-hidden="true">📅</div>
+        <div class="resource-label">Personalized</div>
+        <div class="resource-title">AI Study Planner</div>
+        <div class="resource-desc">Input your exam date and available hours per day. Get a custom, adaptive study schedule optimized for your target score.</div>
+        <span class="resource-action">Build My Plan
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Student Success</div>
+      <h2 class="section-title" id="testimonials-heading">Toppers Who Used NEET Hub</h2>
+      <p class="section-desc">Real results from students who cleared NEET with us.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="score-badge gold">720 / 720</div>
+        <p class="testimonial-quote">The AI mentor explained cell signalling in a way no coaching class could. I got AIR 23 because I finally understood, not just memorized.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#2563EB,#7C3AED)">AP</div>
+          <div>
+            <div class="t-name">Arjun Prakash</div>
+            <div class="t-detail">AIR 23 — AIIMS New Delhi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="score-badge silver">710 / 720</div>
+        <p class="testimonial-quote">The 3D biology visualizations were a game changer. I could finally see how the heart works instead of just reading about it. Cleared with AIR 67.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#10B981,#059669)">SR</div>
+          <div>
+            <div class="t-name">Sneha Rao</div>
+            <div class="t-detail">AIR 67 — JIPMER Puducherry</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="score-badge bronze">698 / 720</div>
+        <p class="testimonial-quote">Used the mock tests every weekend for 6 months. The detailed error analysis showed me exactly what to fix. From 580 to 698 — NEET Hub made it happen.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">KM</div>
+          <div>
+            <div class="t-name">Karthik Menon</div>
+            <div class="t-detail">AIR 312 — Maulana Azad Medical College</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOCK TEST CTA -->
+<section id="mock-test" class="mock-section" aria-labelledby="mock-heading">
+  <div class="container">
+    <div class="mock-card reveal">
+      <div class="mock-info">
+        <div class="mock-tag">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="var(--bio)" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+          Free — No Registration Required
+        </div>
+        <h2 class="mock-title" id="mock-heading">Take a Full NEET Mock Test Right Now</h2>
+        <p class="mock-desc">Experience real NTA exam conditions — 180 questions, 3 hours 20 minutes, instant scoring with percentile ranking.</p>
+        <div class="mock-types" role="group" aria-label="Test type selection">
+          <button class="mock-type-btn active" onclick="selectMock(this,'full')" aria-pressed="true">Full NEET (3h 20m)</button>
+          <button class="mock-type-btn" onclick="selectMock(this,'phys')" aria-pressed="false">Physics Only</button>
+          <button class="mock-type-btn" onclick="selectMock(this,'chem')" aria-pressed="false">Chemistry Only</button>
+          <button class="mock-type-btn" onclick="selectMock(this,'bio')"  aria-pressed="false">Biology Only</button>
+        </div>
+        <a href="#" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zM8 6v2.5L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Start Test Now →
+        </a>
+      </div>
+      <div class="mock-visual" aria-label="Exam statistics">
+        <div class="exam-stat-card">
+          <div>
+            <div class="esv blue" id="mockQs">180</div>
+            <div class="esl">Total Questions</div>
+          </div>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="var(--blue)" stroke-width="1.5" opacity="0.5"/><path d="M10 16l4 4 8-8" stroke="var(--blue-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="exam-stat-card">
+          <div>
+            <div class="esv purple" id="mockMarks">720</div>
+            <div class="esl">Maximum Marks</div>
+          </div>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" stroke="var(--chem)" stroke-width="1.5" opacity="0.6"/></svg>
+        </div>
+        <div class="exam-stat-card">
+          <div>
+            <div class="esv green" id="mockTime">200 min</div>
+            <div class="esl">Time Allowed</div>
+          </div>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="17" r="11" stroke="var(--bio)" stroke-width="1.5" opacity="0.5"/><path d="M16 10v7l4 3" stroke="var(--bio-light)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">NEET Aspirants Hub</div>
+        <p class="footer-tagline">Empowering India's future doctors through smart, AI-powered, and accessible NEET preparation.</p>
+        <div style="display:flex;gap:0.75rem">
+          <a href="#" aria-label="Twitter" style="color:var(--text-3);font-size:1.2rem;text-decoration:none">𝕏</a>
+          <a href="#" aria-label="Instagram" style="color:var(--text-3);font-size:1.2rem;text-decoration:none">📷</a>
+          <a href="#" aria-label="YouTube" style="color:var(--text-3);font-size:1.2rem;text-decoration:none">▶</a>
+          <a href="#" aria-label="Telegram" style="color:var(--text-3);font-size:1.2rem;text-decoration:none">✈</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Subjects</div>
+        <ul class="footer-links">
+          <li><a href="Physics/physics.html">Physics</a></li>
+          <li><a href="chemistry/chemistry.html">Chemistry</a></li>
+          <li><a href="Biology/biology.html">Biology</a></li>
+          <li><a href="#">Botany</a></li>
+          <li><a href="#">Zoology</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <ul class="footer-links">
+          <li><a href="#">Mock Tests</a></li>
+          <li><a href="#">Previous Papers</a></li>
+          <li><a href="#">Formula Sheets</a></li>
+          <li><a href="#">Study Planner</a></li>
+          <li><a href="#">Mnemonics Vault</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Weekly NEET Tips</div>
+        <p style="font-size:0.85rem;color:var(--text-2);line-height:1.6;margin-bottom:0.75rem">Get curated study tips, important topics, and motivation every week.</p>
+        <div class="newsletter-input-row">
+          <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address for newsletter">
+          <button class="newsletter-btn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 NEET Aspirants Hub. All rights reserved.</p>
+      <p class="footer-made">Built with <span>♥</span> for India's future doctors</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ==============================
+// THREE.JS MOLECULAR HERO
+// ==============================
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 14;
+
+  // Mouse tracking
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // ---- BACKGROUND PARTICLE FIELD ----
+  const particleCount = window.innerWidth < 768 ? 600 : 1400;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(particleCount * 3);
+  const pColor = new Float32Array(particleCount * 3);
+  const colorChoices = [
+    [0.37, 0.60, 0.93],  // blue
+    [0.55, 0.36, 0.96],  // purple
+    [0.06, 0.73, 0.50],  // green
+    [0.96, 0.62, 0.04],  // amber
+  ];
+  for (let i = 0; i < particleCount; i++) {
+    pPos[i*3]   = (Math.random()-0.5)*40;
+    pPos[i*3+1] = (Math.random()-0.5)*40;
+    pPos[i*3+2] = (Math.random()-0.5)*20;
+    const c = colorChoices[Math.floor(Math.random() * colorChoices.length)];
+    pColor[i*3] = c[0]; pColor[i*3+1] = c[1]; pColor[i*3+2] = c[2];
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(pColor, 3));
+  const pMat = new THREE.PointsMaterial({
+    size: 0.06,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.55,
+    sizeAttenuation: true
+  });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  // ---- DNA HELIX ----
+  function createHelix() {
+    const group = new THREE.Group();
+    const N = 120;
+    const pts1 = [], pts2 = [], rungPts = [];
+
+    for (let i = 0; i < N; i++) {
+      const t = (i / (N-1)) * Math.PI * 6;
+      const y = (i/(N-1)) * 14 - 7;
+      const r = 2.2;
+      pts1.push(new THREE.Vector3(Math.cos(t)*r, y, Math.sin(t)*r));
+      pts2.push(new THREE.Vector3(Math.cos(t+Math.PI)*r, y, Math.sin(t+Math.PI)*r));
+    }
+
+    const geo1 = new THREE.BufferGeometry().setFromPoints(pts1);
+    const geo2 = new THREE.BufferGeometry().setFromPoints(pts2);
+    const mat1 = new THREE.LineBasicMaterial({ color: 0x60A5FA, transparent: true, opacity: 0.7 });
+    const mat2 = new THREE.LineBasicMaterial({ color: 0x6EE7B7, transparent: true, opacity: 0.7 });
+
+    group.add(new THREE.Line(geo1, mat1));
+    group.add(new THREE.Line(geo2, mat2));
+
+    // Rungs
+    for (let i = 0; i < N; i += 8) {
+      const t = (i/(N-1)) * Math.PI * 6;
+      const y = (i/(N-1)) * 14 - 7;
+      const r = 2.2;
+      const rg = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(Math.cos(t)*r, y, Math.sin(t)*r),
+        new THREE.Vector3(Math.cos(t+Math.PI)*r, y, Math.sin(t+Math.PI)*r)
+      ]);
+      const rm = new THREE.LineBasicMaterial({ color: 0xC4B5FD, transparent: true, opacity: 0.35 });
+      group.add(new THREE.Line(rg, rm));
+    }
+
+    // Base pair spheres
+    for (let i = 0; i < N; i += 15) {
+      const t = (i/(N-1)) * Math.PI * 6;
+      const y = (i/(N-1)) * 14 - 7;
+      const r = 2.2;
+      [0, Math.PI].forEach((offset, idx) => {
+        const sg = new THREE.SphereGeometry(0.12, 8, 8);
+        const sm = new THREE.MeshBasicMaterial({ color: idx === 0 ? 0x60A5FA : 0x6EE7B7, transparent: true, opacity: 0.85 });
+        const sphere = new THREE.Mesh(sg, sm);
+        sphere.position.set(Math.cos(t+offset)*r, y, Math.sin(t+offset)*r);
+        group.add(sphere);
+      });
+    }
+
+    return group;
+  }
+
+  const helix = createHelix();
+  helix.position.x = -4;
+  helix.rotation.z = 0.15;
+  scene.add(helix);
+
+  // ---- FLOATING ATOMS ----
+  function createAtom(pos, nucleusColor, ringColor, ringRadius, ringTilt) {
+    const group = new THREE.Group();
+
+    // Nucleus glow layers
+    [0.25, 0.45, 0.7].forEach((r, i) => {
+      const sg = new THREE.SphereGeometry(r, 12, 12);
+      const opacity = i === 2 ? 0.85 : (i === 1 ? 0.25 : 0.1);
+      const sm = new THREE.MeshBasicMaterial({ color: nucleusColor, transparent: true, opacity });
+      group.add(new THREE.Mesh(sg, sm));
+    });
+
+    // Orbit rings
+    const orbitGeo = new THREE.TorusGeometry(ringRadius, 0.025, 8, 64);
+    const orbitMat = new THREE.MeshBasicMaterial({ color: ringColor, transparent: true, opacity: 0.5 });
+    const orbit = new THREE.Mesh(orbitGeo, orbitMat);
+    orbit.rotation.x = ringTilt;
+    orbit.rotation.z = Math.random() * Math.PI;
+    group.add(orbit);
+
+    // Second orbit (tilted differently)
+    const orbit2Geo = new THREE.TorusGeometry(ringRadius, 0.018, 8, 64);
+    const orbit2 = new THREE.Mesh(orbit2Geo, new THREE.MeshBasicMaterial({ color: ringColor, transparent: true, opacity: 0.3 }));
+    orbit2.rotation.x = ringTilt + 1.2;
+    orbit2.rotation.y = 0.8;
+    group.add(orbit2);
+
+    // Electrons
+    const electrons = [];
+    [orbit, orbit2].forEach((orb, oi) => {
+      const eGeo = new THREE.SphereGeometry(0.07, 6, 6);
+      const eMat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.9 });
+      const e = new THREE.Mesh(eGeo, eMat);
+      group.add(e);
+      electrons.push({ mesh: e, ring: oi, orb, speed: (Math.random() * 0.4 + 0.3) * (oi === 0 ? 1 : -0.7), radius: ringRadius });
+    });
+
+    group.position.copy(pos);
+    group.userData.electrons = electrons;
+    group.userData.floatOffset = Math.random() * Math.PI * 2;
+    group.userData.floatSpeed = 0.3 + Math.random() * 0.2;
+    return group;
+  }
+
+  const atoms = [];
+  const atomDefs = [
+    { pos: new THREE.Vector3(5, 2.5, -2),  nc: 0xF59E0B, rc: 0xFCD34D, rr: 1.2, rt: 0.7 },
+    { pos: new THREE.Vector3(6, -2,   1),  nc: 0x8B5CF6, rc: 0xC4B5FD, rr: 1.0, rt: 0.5 },
+    { pos: new THREE.Vector3(-7, 3,  -1),  nc: 0x10B981, rc: 0x6EE7B7, rr: 0.9, rt: 0.9 },
+    { pos: new THREE.Vector3(7.5, 0.5, 0), nc: 0x2563EB, rc: 0x60A5FA, rr: 1.3, rt: 0.4 },
+    { pos: new THREE.Vector3(-6,-2.5, 2),  nc: 0xF59E0B, rc: 0xFCD34D, rr: 0.8, rt: 0.6 },
+  ];
+  atomDefs.forEach(def => {
+    const a = createAtom(def.pos, def.nc, def.rc, def.rr, def.rt);
+    atoms.push(a);
+    scene.add(a);
+  });
+
+  // ---- CONNECTION LINES ----
+  const connGeo = new THREE.BufferGeometry();
+  const connPos = [];
+  const connectionPairs = [
+    [atomDefs[0].pos, atomDefs[1].pos],
+    [atomDefs[1].pos, atomDefs[3].pos],
+    [atomDefs[2].pos, atomDefs[4].pos],
+  ];
+  connectionPairs.forEach(([a, b]) => {
+    connPos.push(a.x, a.y, a.z, b.x, b.y, b.z);
+  });
+  connGeo.setAttribute('position', new THREE.Float32BufferAttribute(connPos, 3));
+  const connMat = new THREE.LineBasicMaterial({ color: 0x2563EB, transparent: true, opacity: 0.15 });
+  const connLines = new THREE.LineSegments(connGeo, connMat);
+  scene.add(connLines);
+
+  // ---- ANIMATION ----
+  let frameId;
+  const clock = new THREE.Clock();
+
+  function animate() {
+    frameId = requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    // Helix gentle rotation
+    helix.rotation.y = t * 0.12;
+
+    // Particle field slow drift
+    particles.rotation.y = t * 0.015;
+    particles.rotation.x = t * 0.008;
+
+    // Camera mouse parallax
+    camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.03;
+    camera.position.y += (mouseY * 1.0 - camera.position.y) * 0.03;
+    camera.lookAt(scene.position);
+
+    // Animate atoms
+    atoms.forEach(atom => {
+      const fo = atom.userData.floatOffset;
+      const fs = atom.userData.floatSpeed;
+      atom.position.y += Math.sin(t * fs + fo) * 0.003;
+
+      // Animate electrons
+      if (atom.userData.electrons) {
+        atom.userData.electrons.forEach((e, i) => {
+          const angle = t * e.speed + i * Math.PI;
+          const tiltX = atomDefs[atoms.indexOf(atom)].rt;
+          e.mesh.position.x = Math.cos(angle) * e.radius;
+          e.mesh.position.y = Math.sin(angle) * e.radius * Math.sin(tiltX + i * 1.2);
+          e.mesh.position.z = Math.sin(angle) * e.radius * Math.cos(tiltX + i * 1.2);
+        });
+      }
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+
+// ==============================
+// GSAP SCROLL ANIMATIONS
+// ==============================
+(function() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero entrance
+  gsap.fromTo('#heroEyebrow', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' });
+  gsap.fromTo('#heroTitle',   { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: 'power3.out' });
+  gsap.fromTo('#heroSub',     { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.7, ease: 'power3.out' });
+  gsap.fromTo('#heroCtas',    { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.9, ease: 'power3.out' });
+  gsap.fromTo('#heroPills',   { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 1.1, ease: 'power3.out' });
+
+  // Scroll reveals
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+})();
+
+// ==============================
+// NAVBAR SCROLL
+// ==============================
+window.addEventListener('scroll', () => {
+  const nb = document.getElementById('navbar');
+  if (nb) nb.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ==============================
+// MOBILE MENU
+// ==============================
+const hamburger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  });
+  if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+}
+
+// ==============================
+// ANIMATED STATS COUNTER
+// ==============================
+function animateCount(el, target, suffix, prefix) {
+  const duration = 2000;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = Math.floor(ease * target);
+    el.innerHTML = (prefix || '') + val + '<span>' + suffix + '</span>';
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statsObserver.unobserve(e.target);
+      animateCount(document.getElementById('s1'), 20, 'L+');
+      animateCount(document.getElementById('s2'), 1500, '+');
+      animateCount(document.getElementById('s3'), 97, '%');
+      animateCount(document.getElementById('s4'), 540, '+');
+    }
+  });
+}, { threshold: 0.4 });
+const statsSection = document.querySelector('.stats-section');
+if (statsSection) statsObserver.observe(statsSection);
+
+// Progress bar animation on countdown section visible
+const countdownObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      countdownObs.unobserve(e.target);
+      setTimeout(() => {
+        const fill = document.getElementById('progressFill');
+        const label = document.getElementById('readinessNum');
+        if (fill) fill.style.width = '72%';
+        let count = 0;
+        const interval = setInterval(() => {
+          count++;
+          if (label) label.textContent = count + '%';
+          if (count >= 72) clearInterval(interval);
+        }, 20);
+      }, 400);
+    }
+  });
+}, { threshold: 0.3 });
+const countdownSection = document.querySelector('.countdown-section');
+if (countdownSection) countdownObs.observe(countdownSection);
+
+// ==============================
+// COUNTDOWN TIMER
+// ==============================
+(function() {
+  // NEET 2026 - typically first Sunday of May
+  const neetDate = new Date('2026-05-03T08:00:00+05:30');
+
+  function updateTimer() {
+    const now = new Date();
+    const diff = neetDate - now;
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '00';
+      });
+      return;
+    }
+    const days    = Math.floor(diff / 86400000);
+    const hours   = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000)  / 60000);
+    const seconds = Math.floor((diff % 60000)    / 1000);
+    const set = (id, val, pad) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String(val).padStart(pad || 2, '0');
+    };
+    set('cd-days',  days,    3);
+    set('cd-hours', hours,   2);
+    set('cd-mins',  minutes, 2);
+    set('cd-secs',  seconds, 2);
+  }
+  updateTimer();
+  setInterval(updateTimer, 1000);
+})();
+
+// ==============================
+// MOCK TEST TYPE SELECTOR
+// ==============================
+function selectMock(btn, type) {
+  document.querySelectorAll('.mock-type-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+  const configs = {
+    full:  { qs: 180, marks: 720, time: '200 min' },
+    phys:  { qs: 45,  marks: 180, time: '60 min'  },
+    chem:  { qs: 45,  marks: 180, time: '60 min'  },
+    bio:   { qs: 90,  marks: 360, time: '120 min' },
+  };
+  const c = configs[type] || configs.full;
+  const qEl = document.getElementById('mockQs');
+  const mEl = document.getElementById('mockMarks');
+  const tEl = document.getElementById('mockTime');
+  if (qEl) qEl.textContent = c.qs;
+  if (mEl) mEl.textContent = c.marks;
+  if (tEl) tEl.textContent = c.time;
+}
+
+// ==============================
+// AI CHAT — CLAUDE API
+// ==============================
+const SYSTEM_PROMPT = `You are Dr. NEET, an expert NEET UG preparation mentor for Indian medical students. 
+You have deep expertise in NEET Physics, Chemistry (Organic, Inorganic, Physical), Biology (Botany and Zoology).
+Help students by:
+- Explaining concepts step by step in simple language
+- Solving NEET-pattern questions with full working
+- Providing memory tricks and mnemonics
+- Highlighting important NEET weightage topics
+- Giving study tips and strategies
+Keep responses concise, clear, and focused on NEET syllabus. Use bullet points and numbered steps where helpful.
+Avoid long preambles — get to the explanation immediately.`;
+
+let chatHistory = [];
+let isThinking = false;
+
+function addMessage(text, role) {
+  const container = document.getElementById('chatMessages');
+  if (!container) return;
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role === 'user' ? 'msg-user' : 'msg-bot');
+  div.textContent = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  if (!container) return null;
+  const div = document.createElement('div');
+  div.className = 'msg msg-bot msg-typing';
+  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  div.id = 'typingIndicator';
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+async function sendChat() {
+  if (isThinking) return;
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSend');
+  if (!input || !input.value.trim()) return;
+
+  const userText = input.value.trim();
+  input.value = '';
+  addMessage(userText, 'user');
+  chatHistory.push({ role: 'user', content: userText });
+
+  isThinking = true;
+  if (sendBtn) sendBtn.disabled = true;
+  const typing = showTyping();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+    const data = await response.json();
+    if (typing) typing.remove();
+    const reply = (data.content && data.content[0] && data.content[0].text)
+      ? data.content[0].text
+      : 'Sorry, I couldn\'t generate a response. Please try again.';
+    addMessage(reply, 'bot');
+    chatHistory.push({ role: 'assistant', content: reply });
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+  } catch (err) {
+    if (typing) typing.remove();
+    addMessage('I\'m having trouble connecting right now. Please check your connection and try again.', 'bot');
+  }
+
+  isThinking = false;
+  if (sendBtn) sendBtn.disabled = false;
+}
+
+function askPreset(question) {
+  const input = document.getElementById('chatInput');
+  if (input) { input.value = question; sendChat(); }
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+
+// Keep global for onclick attributes
+window.sendChat = sendChat;
+window.askPreset = askPreset;
+window.handleChatKey = handleChatKey;
+window.selectMock = selectMock;
+window.closeMobileMenu = closeMobileMenu;
+</script>
 </body>
 </html>
